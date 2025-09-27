@@ -15,8 +15,6 @@ const Projects = () => {
       github: "#",
       demo: "#"
     },
-   
-    
   ];
 
   const filters = [
@@ -72,7 +70,7 @@ const Projects = () => {
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-48 object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                    className="w-full h-58 object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                   />
                   <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <a
