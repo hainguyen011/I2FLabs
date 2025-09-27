@@ -44,7 +44,7 @@ const About = () => {
             <h2 className="text-5xl md:text-6xl font-black mb-8 leading-none">
               ABOUT
               <br />
-              I2FLABS
+              I2FLABS VIETNAM
             </h2>
             <div className="w-20 h-1 bg-white mb-8" />
           </div>
