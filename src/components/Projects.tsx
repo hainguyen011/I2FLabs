@@ -10,12 +10,12 @@ const Projects = () => {
       title: "PIPERFLOW PLATFORM",
       description: "PiperFlow is a Multi-Agent Platform designed to help businesses automate workflows, enhance decision-making, and improve user interaction.",
       category: "ai",
-      tech: ["PYTHON","NODE", "LLM", "RAG", "MCP"],
+      tech: ["PYTHON","NODE", "LLMs", "RAG", "MCP", "AUTOMATION"],
       image: "https://imageio.forbes.com/specials-images/imageserve/679ba9e2635dd6b08cc629f3/Artificial-Intelligence/960x0.png?format=png&width=960",
       github: "#",
       demo: "#"
     },
-    
+   
     
   ];
 
@@ -64,7 +64,7 @@ const Projects = () => {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8  flex-center">
           {filteredProjects.map((project) => (
             <div key={project.id} className="group">
               <div className="border border-white bg-black hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105">
