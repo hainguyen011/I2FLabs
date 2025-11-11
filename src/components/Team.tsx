@@ -60,7 +60,6 @@ const Team = () => {
                     style={{
                       height: "400px",
                       objectFit: "cover",
-                      objectPosition: "10% 28%",
                       padding: "20px"
                     }}
                   />
