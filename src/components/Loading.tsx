@@ -1,178 +1,121 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Zap } from 'lucide-react';
+import gsap from 'gsap';
+import { useTranslation } from 'react-i18next';
 
 const Loading = () => {
+  const { t, i18n } = useTranslation();
   const [progress, setProgress] = useState(0);
+  const [logs, setLogs] = useState<string[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const duration = 2000; // 2 seconds
-    const interval = 20; // Update every 20ms
-    const steps = duration / interval;
-    const increment = 100 / steps;
-
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        const next = prev + increment;
-        return next >= 100 ? 100 : next;
+    const tacticalLogs = t('loading.logs', { returnObjects: true }) as string[];
+    const ctx = gsap.context(() => {
+      // 1. Progress Counter Animation
+      const progressObj = { val: 0 };
+      gsap.to(progressObj, {
+        val: 100,
+        duration: 3.5,
+        ease: "power2.inOut",
+        onUpdate: () => {
+          setProgress(Math.floor(progressObj.val));
+        }
       });
-    }, interval);
 
-    return () => clearInterval(timer);
-  }, []);
+      // 2. Narrative Logs Sequencing
+      const logTimeline = gsap.timeline();
+      tacticalLogs.forEach((log, index) => {
+        logTimeline.to({}, {
+          duration: 0.4,
+          onStart: () => {
+            setLogs(prev => [...prev, log].slice(-5)); // Keep last 5 logs
+          }
+        }, index * 0.45);
+      });
+    });
+
+    return () => ctx.revert();
+  }, [t, i18n.language]);
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9999] bg-black flex items-center justify-center"
+      ref={containerRef}
+      className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center overflow-hidden font-mono"
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      exit={{ 
+        opacity: 0,
+        scale: 1.1,
+        filter: "blur(20px) contrast(200%) brightness(200%)",
+        transition: { duration: 0.8, ease: "circIn" }
+      }}
     >
-      {/* Animated Grid Background */}
-      <div className="absolute inset-0 overflow-hidden opacity-20">
-        <motion.div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, white 1px, transparent 1px),
-              linear-gradient(to bottom, white 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-          }}
-          animate={{
-            backgroundPosition: ['0px 0px', '50px 50px'],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-        />
-      </div>
+      {/* 1. Pure Black Background */}
+      <div className="absolute inset-0 bg-black z-0" />
 
-      {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center space-y-8">
-        {/* Logo with Pulse Animation */}
-        <motion.div
-          className="relative"
-          initial={{ scale: 0, rotate: -180 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-        >
-          {/* Outer Ring */}
-          <motion.div
-            className="absolute inset-0 border-2 border-white rounded-full"
-            style={{ width: 120, height: 120, left: -10, top: -10 }}
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.5, 0.2, 0.5],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
+      {/* 2. Tactical Background Grid (Faint White) */}
+      <div className="absolute inset-0 opacity-[0.01] z-0" 
+           style={{ backgroundImage: 'linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
-          {/* Logo Container */}
-          <div className="w-24 h-24 flex items-center justify-center relative">
-            <motion.div
-              animate={{
-                rotate: [0, 0],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: 'linear',
-              }}
-            >
-             <img style={{width: '400px', height: '400px', objectFit: 'contain', overflow: 'hidden'}} src="https://res.cloudinary.com/piperflow-cloud/image/upload/v1768104551/logo-removebg-preview_avp5dg.png" alt="I2FLabs" />
-            </motion.div>
+      {/* 3. Progress — centered (no scanner ring) */}
+      <div className="relative z-30 flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="text-5xl font-black tracking-tighter text-white flex items-baseline">
+            <span className="drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">{progress.toString().padStart(3, '0')}</span>
+            <span className="text-[10px] ml-2 text-white/40 font-bold tracking-[0.2em] uppercase">{t('loading.sysInit')}</span>
           </div>
-        </motion.div>
+          <div className="flex space-x-1">
+            {[...Array(20)].map((_, i) => (
+              <div 
+                key={i} 
+                className={`w-1 h-3 border border-white/10 ${i < progress / 5 ? 'bg-white shadow-[0_0_5px_white]' : 'bg-transparent'}`} 
+              />
+            ))}
+          </div>
+        </div>
 
-        {/* Lab Name */}
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-        >
-          <h1 className="text-4xl font-black tracking-wider mb-2">I2FLABS</h1>
-          <p className="text-sm tracking-widest text-gray-400">I2FLABS VIET NAM</p>
-        </motion.div>
-
-        {/* Progress Bar */}
-        <motion.div
-          className="w-64 h-1 bg-gray-800 overflow-hidden"
-          initial={{ opacity: 0, width: 0 }}
-          animate={{ opacity: 1, width: 256 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-        >
-          <motion.div
-            className="h-full bg-white"
-            style={{ width: `${progress}%` }}
-            transition={{ duration: 0.1 }}
-          />
-        </motion.div>
-
-        {/* Loading Text */}
-        <motion.div
-          className="text-xs tracking-widest text-gray-500"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7, duration: 0.5 }}
-        >
-          <motion.span
-            animate={{ opacity: [1, 0.3, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          >
-            INITIALIZING AI SYSTEMS
-          </motion.span>
-          <motion.span
-            animate={{ opacity: [0, 1, 0] }}
-            transition={{ duration: 1, repeat: Infinity }}
-          >
-            ...
-          </motion.span>
-        </motion.div>
-
-        {/* Percentage */}
-        <motion.div
-          className="text-2xl font-bold tracking-wider"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.5 }}
-        >
-          {Math.round(progress)}%
-        </motion.div>
+        <AnimatePresence>
+          {progress === 100 && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="mt-10 flex flex-col items-center"
+            >
+              <div className="px-8 py-2 border border-white/20 bg-white/5 backdrop-blur-sm text-white font-black tracking-[0.8em] text-[10px] uppercase animate-pulse">
+                {t('loading.accessGranted')}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Corner Decorations */}
-      <motion.div
-        className="absolute top-8 left-8 w-16 h-16 border-t-2 border-l-2 border-white"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 0.5, scale: 1 }}
-        transition={{ delay: 0.2, duration: 0.6 }}
-      />
-      <motion.div
-        className="absolute top-8 right-8 w-16 h-16 border-t-2 border-r-2 border-white"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 0.5, scale: 1 }}
-        transition={{ delay: 0.3, duration: 0.6 }}
-      />
-      <motion.div
-        className="absolute bottom-8 left-8 w-16 h-16 border-b-2 border-l-2 border-white"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 0.5, scale: 1 }}
-        transition={{ delay: 0.4, duration: 0.6 }}
-      />
-      <motion.div
-        className="absolute bottom-8 right-8 w-16 h-16 border-b-2 border-r-2 border-white"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 0.5, scale: 1 }}
-        transition={{ delay: 0.5, duration: 0.6 }}
-      />
+      {/* 4. Terminal Logs (Bottom Left - Monochrome) */}
+      <div className="absolute bottom-12 left-12 z-40 max-w-md pointer-events-none">
+        <div className="text-[9px] uppercase tracking-[0.4em] text-white/30 mb-4 font-black">
+          {t('loading.terminalTitle')}
+        </div>
+        <div className="space-y-1">
+          {logs.map((log, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, x: -5 }}
+              animate={{ opacity: 1, x: 0 }}
+              className={`text-[10px] font-bold tracking-wider ${i === logs.length - 1 ? 'text-white' : 'text-white/20'}`}
+            >
+              {log.replace('_', ' ')}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* 5. Corner Decorations (Subtle) */}
+      <div className="absolute top-12 left-12 w-16 h-16 border-t border-l border-white/10" />
+      <div className="absolute top-12 right-12 w-16 h-16 border-t border-r border-white/10" />
+      <div className="absolute bottom-12 right-12 w-32 h-16 border-b border-r border-white/10 text-white/10 p-2 text-[8px] flex items-end justify-end tracking-tighter">
+        {t('loading.corner')}
+      </div>
+
     </motion.div>
   );
 };

@@ -1,0 +1,81 @@
+{
+  "version": "1.7.0",
+  "project": "I2FLabs",
+  "domains": [
+    {
+      "id": "ui-evolution",
+      "name": "Ui Evolution",
+      "path": ".aevum/domains/ui-evolution",
+      "plans": [],
+      "features": [
+        {
+          "id": "vercel-cloudv2-aesthetic",
+          "name": "Vercel Cloudv2 Aesthetic",
+          "path": ".aevum/domains/ui-evolution/features/vercel-cloudv2-aesthetic",
+          "plans": [
+            {
+              "name": "overhaul_portfolio_vercel_style_plan.md",
+              "status": "todo",
+              "updatedAt": "2026-04-03T17:47:43.845Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "UI_REFINEMENT",
+      "name": "UI REFINEMENT",
+      "path": ".aevum/domains/UI_REFINEMENT",
+      "plans": [],
+      "features": [
+        {
+          "id": "BLOG_INTEGRATION",
+          "name": "BLOG INTEGRATION",
+          "path": ".aevum/domains/UI_REFINEMENT/features/BLOG_INTEGRATION",
+          "plans": [
+            {
+              "name": "integrate_and_refine_blog_section_plan.md",
+              "status": "todo",
+              "updatedAt": "2026-04-03T17:34:17.591Z"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "global": {
+    "architecture": "global/architecture.md",
+    "conventions": "global/conventions.md",
+    "agent_rules": "global/agent_rules.md",
+    "tech_stack": "global/tech_stack.md",
+    "dictionary": "global/dictionary.md",
+    "memory": "global/memory.md",
+    "developer_profile": "global/developer_profile.md",
+    "companion_persona": "global/companion_persona.json",
+    "evolution_report": "global/evolution_report.md",
+    "knowledge_rules": "Every active persona has a dedicated knowledge folder in `.aevum/global/personas/<id>/knowledge/`. Log project-specific patterns and agent-exclusive wisdom there."
+  },
+  "agents": [
+    {
+      "id": "ENG-AN-7B9F1D",
+      "name": "Aevy",
+      "capability": "Context Optimization",
+      "level": 4,
+      "knowledgePath": ".aevum/global/personas/aevy/knowledge"
+    },
+    {
+      "id": "AID-UNKNOWN-AN",
+      "name": "An",
+      "capability": "Context Optimization",
+      "level": 4,
+      "knowledgePath": ".aevum/global/personas/an/knowledge"
+    },
+    {
+      "id": "DSN-LUNA-3C9A12",
+      "name": "Luna",
+      "capability": "UI Design",
+      "level": 1,
+      "knowledgePath": ".aevum/global/personas/dsn_luna_3c9a12/knowledge"
+    }
+  ]
+}

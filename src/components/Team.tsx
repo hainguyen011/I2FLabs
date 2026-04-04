@@ -1,151 +1,161 @@
-import React from 'react';
+import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Github, Linkedin, Twitter, Mail, Facebook } from 'lucide-react';
+import gsap from 'gsap';
 import { teamMembers } from '../data/teamData';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
-import { fadeInUp, staggerContainer, staggerItem } from '../animations/variants';
+import { fadeInUp, staggerContainer } from '../animations/variants';
 
 const Team = () => {
-  const { ref, isInView } = useScrollAnimation();
+  const { t } = useTranslation();
+  const teamRef = useRef(null);
+  const headerRef = useRef(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    if (window.innerWidth > 768) {
+      const ctx = gsap.context(() => {
+        // Sticky/Overlap entry effect from the bottom
+        gsap.fromTo(teamRef.current,
+          { y: 100, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            scrollTrigger: {
+              trigger: teamRef.current,
+              start: "top 80%",
+              end: "top 40%",
+              scrub: 1,
+            }
+          }
+        );
+
+        // Parallax speed differentials on cards
+        cardsRef.current.forEach((card, index) => {
+          gsap.fromTo(card,
+            { y: 150 + (index % 3) * 50 },
+            {
+              y: 0,
+              scrollTrigger: {
+                trigger: teamRef.current,
+                start: "top bottom",
+                end: "center center",
+                scrub: 1,
+              }
+            }
+          );
+        });
+      });
+      return () => ctx.revert();
+    }
+  }, []);
+
+  const mysticBg = `
+10101100 11010010
+01001011 00110101
+11100100 01101110
+10101010 11010101
+10011001 01100110
+  `;
 
   return (
-    <section id="team" className="py-20 bg-black border-t border-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="team" ref={teamRef} className="py-32 bg-black border-t border-white/5 relative z-20 overflow-hidden">
+      {/* Mystic ASCII Centered Background */}
+      <div className="absolute top-0 right-0 p-8 opacity-[0.02] select-none pointer-events-none text-right">
+        <pre className="font-mono text-2xl leading-none text-white">
+          {mysticBg}
+        </pre>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div 
-          ref={ref}
-          className="mb-16"
+          ref={headerRef}
+          className="mb-24 flex w-full flex-col items-center text-center"
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
         >
           <motion.h2 
-            className="text-5xl md:text-6xl font-black mb-8 leading-none"
+            className="max-w-5xl text-4xl font-extrabold tracking-tighter text-white/50 md:text-5xl mb-4"
             variants={fadeInUp}
           >
-            OUR
-            <br />
-            TEAM
+            {t('team.titleBefore')}<span className="text-white">{t('team.titleHighlight')}</span>{t('team.titleAfter')}
           </motion.h2>
-          <motion.div className="w-20 h-1 bg-white mb-8" variants={fadeInUp} />
           <motion.p 
-            className="text-xl text-gray-300 max-w-3xl"
+            className="max-w-2xl text-lg text-gray-500 mx-auto"
             variants={fadeInUp}
           >
-            A diverse group of talented individuals united by passion for innovation and cutting-edge technology.
+            {t('team.subtitle')}
           </motion.p>
         </motion.div>
 
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={staggerContainer}
-        >
-          {teamMembers.map((member, index) => (
-            <motion.div 
-              key={index} 
-              className="group"
-              variants={staggerItem}
-              custom={index}
-            >
-              <motion.div 
-                className="border border-white bg-black hover:bg-white hover:text-black transition-all duration-300 h-full flex flex-col"
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
+            {teamMembers.map((member, index) => (
+              <div 
+                key={index} 
+                ref={(el) => (cardsRef.current[index] = el)}
+                className="group"
               >
+                <div 
+                  className="border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-3xl overflow-hidden hover:border-white/20 transition-all duration-500 h-full flex flex-col relative group"
+                >
                 <div className="relative overflow-hidden">
                   <motion.img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-80 object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                    whileHover={{ scale: 1.1 }}
+                    className="w-full h-[22rem] object-cover object-[center_18%] grayscale opacity-60 transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100 md:h-[26rem] md:object-[center_20%]"
+                    whileHover={{ scale: 1.06 }}
                     transition={{ duration: 0.5 }}
                   />
 
-                  {/* Social Links */}
-                  <motion.div 
-                    className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileHover={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
+                  {/* Social Links Backdrop */}
+                  <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div 
+                    className="absolute bottom-6 left-0 right-0 flex justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   >
                     {member.social.github && (
-                      <motion.a
-                        href={member.social.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 bg-black text-white hover:bg-white hover:text-black transition-colors border border-white"
-                        whileHover={{ rotate: 5 }}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.1 }}
-                      >
+                      <a href={member.social.github} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-colors">
                         <Github className="w-4 h-4" />
-                      </motion.a>
+                      </a>
                     )}
                     {member.social.facebook && (
-                      <motion.a
-                        href={member.social.facebook}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 bg-black text-white hover:bg-white hover:text-black transition-colors border border-white"
-                        whileHover={{ rotate: -5 }}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2 }}
-                      >
+                      <a href={member.social.facebook} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-colors">
                         <Facebook className="w-4 h-4" />
-                      </motion.a>
+                      </a>
                     )}
                     {member.social.linkedin && (
-                      <motion.a
-                        href={member.social.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 bg-black text-white hover:bg-white hover:text-black transition-colors border border-white"
-                        whileHover={{ rotate: 5 }}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 }}
-                      >
+                      <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-colors">
                         <Linkedin className="w-4 h-4" />
-                      </motion.a>
+                      </a>
                     )}
                     {member.social.twitter && (
-                      <motion.a
-                        href={member.social.twitter}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 bg-black text-white hover:bg-white hover:text-black transition-colors border border-white"
-                        whileHover={{ rotate: -5 }}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4 }}
-                      >
+                      <a href={member.social.twitter} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-colors">
                         <Twitter className="w-4 h-4" />
-                      </motion.a>
+                      </a>
                     )}
                     {member.social.email && (
-                      <motion.a
-                        href={`mailto:${member.social.email}`}
-                        className="p-2 bg-black text-white hover:bg-white hover:text-black transition-colors border border-white"
-                        whileHover={{ rotate: 5 }}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.5 }}
-                      >
+                      <a href={`mailto:${member.social.email}`} className="p-2 bg-white/10 backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-colors">
                         <Mail className="w-4 h-4" />
-                      </motion.a>
+                      </a>
                     )}
-                  </motion.div>
+                  </div>
                 </div>
 
-                <div className="p-6 flex-grow flex flex-col">
-                  <h3 className="text-xl font-bold mb-2 tracking-wider">
+                <div className="p-8 flex-grow flex flex-col z-10 relative">
+                  <h3 className="text-xl font-bold mb-1 tracking-tight group-hover:text-white transition-colors">
                     {member.name}
                   </h3>
-                  <p className="text-gray-400 group-hover:text-gray-600 font-bold mb-3 text-sm tracking-wider">
+                  <p className="text-gray-500 font-medium mb-4 text-sm tracking-wide">
                     {member.role}
                   </p>
-                  <p className="text-gray-400 group-hover:text-gray-600 mb-6 leading-relaxed text-sm flex-grow">
+                  <p className="text-gray-400 mb-6 leading-relaxed text-sm flex-grow">
                     {member.bio}
                   </p>
 
@@ -156,40 +166,37 @@ const Team = () => {
                     whileHover="visible"
                   >
                     {member.specialties.map((specialty, idx) => (
-                      <motion.span
+                      <span
                         key={idx}
-                        className="px-2 py-1 border border-gray-400 group-hover:border-gray-600 text-gray-400 group-hover:text-gray-600 text-xs font-bold tracking-wider"
-                        variants={staggerItem}
-                        whileHover={{ borderColor: '#ffffff' }}
+                        className="px-3 py-1 bg-white/[0.02] border border-white/5 rounded-full text-gray-500 text-xs font-medium tracking-wide group-hover:border-white/20 group-hover:text-gray-300 transition-all duration-300"
                       >
                         {specialty}
-                      </motion.span>
+                      </span>
                     ))}
                   </motion.div>
                 </div>
-              </motion.div>
-            </motion.div>
-          ))}
-        </motion.div>
+                </div>
+              </div>
+            ))}
+          </motion.div>
 
-        <motion.div 
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ delay: 0.6 }}
-        >
-          <div className="border border-white p-8 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4 tracking-wider">JOIN OUR TEAM</h3>
-            <div className="w-20 h-1 bg-white mx-auto mb-6" />
-            <p className="text-gray-300 mb-6">
-              We're always looking for talented individuals who share our passion for innovation and technology.
-              If you're interested in pushing the boundaries of what's possible, we'd love to hear from you.
+          <motion.div 
+            className="text-center mt-32"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+          <div className="border border-white/5 bg-gradient-to-tr from-white/[0.02] to-transparent p-12 rounded-3xl max-w-4xl mx-auto flex flex-col items-center">
+            <h3 className="text-2xl font-bold mb-2 tracking-tighter">We're expanding the lab</h3>
+            <p className="text-gray-500 mb-8 max-w-md text-sm">
+              If you're interested in pushing the boundaries of what's possible in AI automation, we'd love to hear from you.
             </p>
             <motion.button 
-              className="px-8 py-3 bg-white text-black font-bold tracking-wider transition-all duration-300"
-              whileTap={{ scale: 0.95 }}
+              className="px-6 py-2 border border-white/20 text-white font-medium text-sm rounded-full hover:bg-white hover:text-black transition-all duration-300"
+              whileTap={{ scale: 0.98 }}
             >
-              VIEW OPEN POSITIONS
+              View Open Positions
             </motion.button>
           </div>
         </motion.div>

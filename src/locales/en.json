@@ -1,0 +1,311 @@
+{
+  "lang": {
+    "vi": "Vietnamese",
+    "en": "English",
+    "switch": "Language"
+  },
+  "nav": {
+    "brand": "I2FLABS",
+    "country": "VIETNAM"
+  },
+  "hero": {
+    "tagline": "I2FLabs Vietnam is a dynamic research lab dedicated to pushing the boundaries of artificial intelligence and building next-gen automation solutions.",
+    "oneLinerBadge": "POSITIONING // CREW",
+    "oneLiner": "Research doesn’t stop at slides — this crew ships it as real running infrastructure.",
+    "scrollHint": "Scroll to explore",
+    "sub1": {
+      "label": "IDENTIFICATION / NODE_ALPHA",
+      "body": "I2FLabs Vietnam exists to transform advanced artificial intelligence into systems that move industries forward, turning research into real infrastructure for a rapidly evolving world."
+    },
+    "sub2": {
+      "label": "CORE MISSION / STRATEGY",
+      "body": "We design AI-first platforms that empower organizations to think faster, operate smarter, and unlock new levels of autonomy in critical decision-making."
+    },
+    "sub3": {
+      "label": "FUTURE VISION / EVOLUTION",
+      "body": "Our vision is to help shape a future where Vietnam stands among the forces defining intelligent technology across Southeast Asia and beyond."
+    }
+  },
+  "brand": {
+    "line1": "We don't predict the future.",
+    "line2": "We automate it.",
+    "line3Prefix": "Initializing ",
+    "line3Brand": "I2FLabs Vietnam",
+    "line3Suffix": " — transforming research into intelligent infrastructure."
+  },
+  "partners": {
+    "badge": "Partners // Ecosystem",
+    "titleLine1": "Collaboration",
+    "titleLine2": "network.",
+    "intro": "Teams and organizations we build with — automation, AI, and production-grade systems.",
+    "sub": "Scaling automation & AI, together"
+  },
+  "story": {
+    "sectionHeading": "The I2FLabs story",
+    "chapters": {
+      "01": {
+        "title": "Roots",
+        "headline": "Vietnam",
+        "lead": "I2FLabs began as a domestic research lab — a place to prove models, pipelines, and AI-first thinking before they reach production.",
+        "sub": "Một lab nghiên cứu trong nước — nơi thử nghiệm mô hình, pipeline và tư duy AI-First trước khi đưa ra thực địa."
+      },
+      "02": {
+        "title": "Lab DNA",
+        "headline": "Research first, operations next",
+        "lead": "We prioritize evidence: benchmarks, reproducibility, and scale paths — not one-off slides or demos.",
+        "sub": "Ưu tiên bằng chứng: benchmark, tái lập được và lộ trình mở rộng — không chỉ slide hay demo một lần."
+      },
+      "03": {
+        "title": "How we build",
+        "headline": "Purposeful automation",
+        "lead": "Agents, data, and observability are designed together — less manual glue, more reliability and auditability.",
+        "sub": "Agent, dữ liệu và giám sát được thiết kế cùng nhau: giảm thao tác tay, tăng độ tin cậy và kiểm toán."
+      },
+      "04": {
+        "title": "Together",
+        "headline": "Partners & ecosystem",
+        "lead": "The lab is open for collaboration: joint research, rapid prototypes, and clearly scoped delivery.",
+        "sub": "Lab mở cho hợp tác: đồng nghiên cứu, prototype nhanh và triển khai có giới hạn rõ."
+      }
+    },
+    "railMeta": "I2FLABS VIETNAM — STORY_MODE // HORIZONTAL_SCROLL",
+    "narrative": "Narrative",
+    "chapterReadout": "CH."
+  },
+  "research": {
+    "badge": "Vision 2026 // Deep Intelligence",
+    "titleLine1": "ARCHITECTING",
+    "titleLine2": "THE SINGULARITY.",
+    "body": "We are building the fundamental layers of autonomous intelligence — a future where machine logic and human ambition converge into a single, automated workflow.",
+    "pillars": [
+      { "label": "01_AUTONOMY", "value": "Self-correcting multi-agent swarms." },
+      { "label": "02_INTUITION", "value": "RAG-driven contextual awareness." },
+      { "label": "03_SYNERGY", "value": "Human–AI collaborative synthesis." }
+    ],
+    "footer": "[ Monitoring neural convergence ... ]"
+  },
+  "bento": {
+    "headingLine1": "Architecture",
+    "headingLine2": "Topology.",
+    "cards": [
+      {
+        "title": "MODULE_01: RAG_KNOWLEDGE",
+        "description": "Cognitive retrieval engines bridging unstructured data with generative intellect."
+      },
+      {
+        "title": "MODULE_02: MULTI_AGENT",
+        "description": "Swarm logic orchestration. Autonomous entities executing complex parallel workflows."
+      },
+      {
+        "title": "MODULE_03: VISION_MATRIX",
+        "description": "Ocular interpretation systems. Decoding absolute pixel truths."
+      },
+      {
+        "title": "MODULE_04: LLM_TUNING",
+        "description": "Neural pathway optimization. Sculpting models to exact domain frequencies."
+      },
+      {
+        "title": "SYS.PIPERFLOW",
+        "description": "The overarching intelligence architecture platform."
+      }
+    ]
+  },
+  "process": {
+    "badge": "Operations // Delivery chain",
+    "titleLine1": "From",
+    "titleLine2": "hypothesis to production.",
+    "intro": "A clear pipeline to de-risk AI delivery: align the problem, prove value with prototypes, integrate safely, then observe and improve after go-live.",
+    "steps": [
+      {
+        "id": "01",
+        "title": "Problem framing",
+        "body": "Align business goals, available data, compliance constraints, and measurable success criteria before writing code."
+      },
+      {
+        "id": "02",
+        "title": "Evidence-backed prototypes",
+        "body": "Fast experiments on real data, reproducible benchmarks, and explicit no-go boundaries before scaling scope."
+      },
+      {
+        "id": "03",
+        "title": "Integration & safety",
+        "body": "Wire pipelines into existing systems: APIs, IAM, logging, human fallbacks, and playbooks for model drift."
+      },
+      {
+        "id": "04",
+        "title": "Observe & improve",
+        "body": "Track output quality, latency, cost, and UX; iterate in short cycles with an audit trail."
+      }
+    ]
+  },
+  "openLabs": {
+    "badge": "Source // Community",
+    "titleLine1": "Open",
+    "titleLine2": "Labs.",
+    "intro": "We ship parts of our work in the open for reuse, learning, and contribution — from agent platforms to lab-facing experiments.",
+    "viewRepo": "View on GitHub",
+    "metaStars": "Stars",
+    "metaForks": "Forks"
+  },
+  "metrics": {
+    "badge": "Metrics // Lab pulse",
+    "titleLine1": "Operational",
+    "titleLine2": "signals.",
+    "intro": "A compact view of R&D rhythm, integrations, and openness — rendered as dark, minimal charts for quick scanning.",
+    "disclaimer": "Illustrative internal scale — replace with audited figures in copy when available.",
+    "items": [
+      {
+        "label": "Prototype cycles / year",
+        "value": "24+",
+        "caption": "Experiment loops with benchmarks and written outcomes.",
+        "chartType": "bars",
+        "chartData": [32, 44, 38, 58, 52, 71, 64, 86]
+      },
+      {
+        "label": "Production-integrated flows",
+        "value": "18",
+        "caption": "AI/agent pipelines wired into live operations.",
+        "chartType": "line",
+        "chartData": [4, 6, 7, 9, 11, 13, 15, 18]
+      },
+      {
+        "label": "Open releases",
+        "value": "12",
+        "caption": "Public repos, modules, or starter kits on GitHub.",
+        "chartType": "bars",
+        "chartData": [12, 18, 15, 22, 19, 25, 21, 28]
+      },
+      {
+        "label": "Observability coverage",
+        "value": "72%",
+        "caption": "Share of flows with logging, alerts, or periodic review.",
+        "chartType": "radial",
+        "chartData": [72]
+      }
+    ]
+  },
+  "careers": {
+    "badge": "Careers // Grow the lab",
+    "titleLine1": "Join the",
+    "titleLine2": "crew.",
+    "intro": "We look for builders who want to push AI-first automation — close to research, but always biased toward systems that ship.",
+    "cta": "Apply / Get in touch",
+    "roles": [
+      {
+        "title": "ML / Agent systems engineer",
+        "type": "Full-time",
+        "location": "Vietnam (flexible)",
+        "summary": "Design and ship LLM, RAG, and multi-agent orchestration pipelines; strong preference for eval discipline and safe operations.",
+        "tags": ["Python", "PyTorch / vLLM", "RAG", "Evals"]
+      },
+      {
+        "title": "Full-stack / Platform engineer",
+        "type": "Full-time",
+        "location": "Hybrid",
+        "summary": "Product layer around APIs, dashboards, and delivery: TypeScript, lean infra, CI/CD, and observability baked in.",
+        "tags": ["TypeScript", "React", "API design", "K8s / Docker"]
+      },
+      {
+        "title": "Research associate (AI)",
+        "type": "Intern / Part-time",
+        "location": "Remote-first",
+        "summary": "Support model experiments, documentation, and reproducibility; suited to strong CS/math students or early-career researchers.",
+        "tags": ["Experiments", "Documentation", "Reproducibility"]
+      }
+    ]
+  },
+  "faq": {
+    "badge": "FAQ // Lab lens",
+    "titleLine1": "Innovation era",
+    "titleLine2": "& young labs.",
+    "intro": "A few questions on Vietnam’s innovation context and how small labs are carving out a new role.",
+    "items": [
+      {
+        "q": "Why are young labs surfacing more visibly in Vietnam right now?",
+        "a": "A deep engineering bench, lower cost to experiment with GenAI and automation, and growing demand from SMEs for pragmatic AI integration — together creating space for small R&D groups closer to the market than pure outsourcing shops."
+      },
+      {
+        "q": "How is a research lab different from a traditional outsourcing team?",
+        "a": "Outsourcing optimizes for fixed specs and timelines; labs often keep an internal agenda (exploration, open code, technical writing) and accept experiment risk in exchange for longer-term product or IP advantage."
+      },
+      {
+        "q": "How can a young lab stay solvent while keeping research alive?",
+        "a": "Many combine paid integration work with open tracks (OSS, templates, training) for cash flow and reputation. Clear boundaries between billable and exploratory work help avoid burnout."
+      },
+      {
+        "q": "How does the GenAI era change expectations of Vietnamese labs?",
+        "a": "Clients expect faster loops from idea to demo within weeks, but are also more sensitive to risk (hallucinations, data leakage). Labs must speak both product and compliance — not only model accuracy."
+      },
+      {
+        "q": "What role does open source play for a small lab?",
+        "a": "It is a hiring channel, learning surface, and low-cost credibility signal. Selective contributions align the lab with global tooling standards instead of rebuilding in isolation."
+      },
+      {
+        "q": "Should SMEs partner with a young lab instead of a large vendor?",
+        "a": "It depends on the problem: young labs are often nimble and close to decision-making engineers — great for prototypes and deep integration; large vendors fit when you need SLA, scale, and long contracts. Start small with clear metrics and data ownership."
+      }
+    ]
+  },
+  "team": {
+    "titleBefore": "The ",
+    "titleHighlight": "minds",
+    "titleAfter": " behind the intelligence.",
+    "subtitle": "A diverse group of researchers and engineers united by a passion for automation and cutting-edge technology."
+  },
+  "contact": {
+    "titleBefore": "Establish ",
+    "titleHighlight": "Connection",
+    "titleAfter": ".",
+    "intro": "Ready to collaborate on your next project? We'd love to hear from you and discuss how we can help bring your ideas to life.",
+    "formTitle": "Send a message",
+    "name": "Name",
+    "namePh": "Your name",
+    "email": "Email",
+    "subject": "Subject",
+    "subjectPh": "What's this about?",
+    "message": "Message",
+    "messagePh": "Tell us about your project...",
+    "submit": "Send message",
+    "infoTitle": "Contact info",
+    "location": "Location",
+    "followTitle": "Follow us",
+    "followBody": "Follow us for the latest updates on our projects, research, and insights into emerging technologies."
+  },
+  "footer": {
+    "columns": [
+      {
+        "title": "Products",
+        "links": ["PiperFlow", "Knowledge Base", "AI Agents", "API Reference"]
+      },
+      {
+        "title": "Research",
+        "links": ["Long-context LLMs", "Multi-Agent RAG", "Computer Vision", "Ethics in AI"]
+      },
+      {
+        "title": "Lab",
+        "links": ["About Us", "Team", "Careers", "Blog"]
+      },
+      {
+        "title": "Legal",
+        "links": ["Privacy Policy", "Terms of Service", "Cookie Policy"]
+      }
+    ],
+    "copyright": "© 2026 I2FLabs Vietnam. All rights reserved.",
+    "status": "All systems operational"
+  },
+  "loading": {
+    "sysInit": "/SYS_INIT",
+    "accessGranted": "ACCESS GRANTED",
+    "terminalTitle": "SYSTEM FEEDBACK // NODE_SECURE",
+    "corner": "SECURE_CORE // V4.02-STABLE",
+    "logs": [
+      "> INITIALIZING_COGNITIVE_MESH...",
+      "> LOADING_NEURAL_WEIGHTS_V4.2...",
+      "> SYNCHRONIZING_VIETNAM_TACTICAL_DATA...",
+      "> SECURING_QUANTUM_HANDSHAKE...",
+      "> ESTABLISHING_LAB_CONNECTIVITY...",
+      "> DEPLOYING_AUTOMATION_STREAMS...",
+      "> SYSTEM_READINESS_CONFIRMED."
+    ]
+  }
+}

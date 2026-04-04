@@ -42,4 +42,17 @@ export const teamMembers: TeamMember[] = [
     },
     specialties: ["JS", "C#", "PYTHON", "NODE", "REACT", "MCP"]
   },
+  {
+    name: "PHAM DAI HAO",
+    role: "CTO & SOFTWARE ENGINEER",
+    bio: "Backend & AI Engineer skilled in Node.js, JavaScript, and React.js, building stable systems and innovative AI solutions with creativity and determination.",
+    image: "https://res.cloudinary.com/piperflow-cloud/image/upload/q_auto/f_auto/v1775236807/Gemini_Generated_Image_ya8ndmya8ndmya8n_eplrzs.png",
+    social: {
+      github: "https://github.com/alinsbtc",
+      facebook: "https://www.facebook.com/chau.quocalin",
+      email: "chauquocalin1@gmail.com"
+       // removed empty/hash links
+    },
+    specialties: ["JS", "C#", "PYTHON", "NODE", "REACT", "MCP"]
+  },
 ];

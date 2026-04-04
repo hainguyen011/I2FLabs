@@ -1,0 +1,13 @@
+{
+  "aid": "DSN-LUNA-3C9A12",
+  "name": "Luna",
+  "level": 1,
+  "capabilities": [
+    "UI Design",
+    "UX Optimization",
+    "Visual Aesthetics"
+  ],
+  "exportedAt": "2026-04-03T17:08:38.299Z",
+  "protocolVersion": "2.0-PIPERNET",
+  "signature": "373c2019729f5fae60973fa3167f904547b45aee40ec14cabc5209b4591341a3"
+}

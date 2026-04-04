@@ -1,0 +1,311 @@
+{
+  "lang": {
+    "vi": "Tiếng Việt",
+    "en": "English",
+    "switch": "Ngôn ngữ"
+  },
+  "nav": {
+    "brand": "I2FLABS",
+    "country": "VIỆT NAM"
+  },
+  "hero": {
+    "tagline": "I2FLabs Việt Nam là một lab nghiên cứu năng động, đẩy giới hạn trí tuệ nhân tạo và kiến tạo các giải pháp tự động hóa thế hệ tiếp theo.",
+    "oneLinerBadge": "ĐỊNH VỊ // CREW",
+    "oneLiner": "Nghiên cứu không dừng ở slide — crew chúng tôi ship nó thành hạ tầng chạy thật.",
+    "scrollHint": "Cuộn để khám phá",
+    "sub1": {
+      "label": "NHẬN DIỆN / NODE_ALPHA",
+      "body": "I2FLabs Việt Nam tồn tại để biến trí tuệ nhân tạo tiên tiến thành hệ thống thúc đẩy ngành công nghiệp — biến nghiên cứu thành hạ tầng thật cho thế giới đang đổi nhanh."
+    },
+    "sub2": {
+      "label": "SỨ MỆNH CỐT LÕI / CHIẾN LƯỢC",
+      "body": "Chúng tôi thiết kế nền tảng AI-First giúp tổ chức suy nghĩ nhanh hơn, vận hành thông minh hơn và mở khóa mức độ tự chủ mới trong ra quyết định then chốt."
+    },
+    "sub3": {
+      "label": "TẦM NHÌN / TIẾN HÓA",
+      "body": "Tầm nhìn của chúng tôi là góp phần định hình tương lai nơi Việt Nam đứng trong nhóm các lực lượng định nghĩa công nghệ thông minh tại Đông Nam Á và xa hơn."
+    }
+  },
+  "brand": {
+    "line1": "Chúng tôi không dự đoán tương lai.",
+    "line2": "Chúng tôi tự động hóa nó.",
+    "line3Prefix": "Khởi tạo ",
+    "line3Brand": "I2FLabs Việt Nam",
+    "line3Suffix": " — biến nghiên cứu thành hạ tầng thông minh."
+  },
+  "partners": {
+    "badge": "Đối tác // Đồng hành",
+    "titleLine1": "Mạng lưới",
+    "titleLine2": "hợp tác.",
+    "intro": "Các đội ngũ và tổ chức đồng hành cùng lab trong tự động hóa, AI và triển khai thật trên hệ thống.",
+    "sub": "Cùng mở rộng biên giới tự động hóa & AI"
+  },
+  "story": {
+    "sectionHeading": "Câu chuyện I2FLabs",
+    "chapters": {
+      "01": {
+        "title": "Gốc rễ",
+        "headline": "Việt Nam",
+        "lead": "I2FLabs bắt đầu như một lab nghiên cứu trong nước — nơi thử nghiệm mô hình, pipeline và tư duy AI-First trước khi đưa ra thực địa.",
+        "sub": "A research lab rooted in Vietnam — where models, pipelines, and AI-first thinking are proven before they ship."
+      },
+      "02": {
+        "title": "DNA lab",
+        "headline": "Nghiên cứu trước, vận hành sau",
+        "lead": "Chúng tôi ưu tiên bằng chứng: benchmark, tái lập được, và khả năng mở rộng — không chỉ slide hay demo một lần.",
+        "sub": "Evidence over hype: reproducible benchmarks, operable systems, and paths to scale — not one-off demos."
+      },
+      "03": {
+        "title": "Cách làm",
+        "headline": "Tự động hóa có chủ đích",
+        "lead": "Agent, dữ liệu và giám sát được thiết kế cùng nhau: giảm thao tác tay, tăng độ tin cậy và khả năng kiểm toán.",
+        "sub": "Agents, data, and observability designed together — less manual glue, more reliability and auditability."
+      },
+      "04": {
+        "title": "Cùng đi",
+        "headline": "Đối tác & hệ sinh thái",
+        "lead": "Lab mở cho hợp tác: đồng nghiên cứu, prototype nhanh, và triển khai có giới hạn rõ — phù hợp doanh nghiệp và đội kỹ thuật.",
+        "sub": "Open to partners: joint research, rapid prototypes, and scoped delivery — for teams that want to build, not just browse."
+      }
+    },
+    "railMeta": "I2FLABS VIỆT NAM — STORY_MODE // HORIZONTAL_SCROLL",
+    "narrative": "Câu chuyện",
+    "chapterReadout": "CH."
+  },
+  "research": {
+    "badge": "Tầm nhìn 2026 // Deep Intelligence",
+    "titleLine1": "KIẾN TRÚC",
+    "titleLine2": "KỶ NGUYÊN ĐƠN THỂ.",
+    "body": "Chúng tôi đang xây các lớp nền tảng của trí thông minh tự chủ — nơi logic máy và tham vọng con người hòa vào một luồng vận hành tự động.",
+    "pillars": [
+      { "label": "01_TỰ CHỦ", "value": "Đàn agent tự hiệu chỉnh đa tác nhân." },
+      { "label": "02_TRỰC GIÁC", "value": "Nhận thức ngữ cảnh theo RAG." },
+      { "label": "03_CỘNG HƯỞNG", "value": "Tổng hợp cộng tác người–AI." }
+    ],
+    "footer": "[ Đang theo dõi hội tụ thần kinh ... ]"
+  },
+  "bento": {
+    "headingLine1": "Kiến trúc",
+    "headingLine2": "Topology.",
+    "cards": [
+      {
+        "title": "MODULE_01: RAG_KNOWLEDGE",
+        "description": "Động cơ truy xuất nhận thức: nối dữ liệu phi cấu trúc với trí tạo sinh."
+      },
+      {
+        "title": "MODULE_02: MULTI_AGENT",
+        "description": "Điều phối swarm: các thực thể tự chủ thực thi quy trình song song phức tạp."
+      },
+      {
+        "title": "MODULE_03: VISION_MATRIX",
+        "description": "Hệ thống thị giác: giải mã ngữ nghĩa từng pixel."
+      },
+      {
+        "title": "MODULE_04: LLM_TUNING",
+        "description": "Tối ưu đường thần kinh: tùy chỉnh mô hình theo miền ứng dụng."
+      },
+      {
+        "title": "SYS.PIPERFLOW",
+        "description": "Nền tảng kiến trúc trí thông minh tổng thể."
+      }
+    ]
+  },
+  "process": {
+    "badge": "Vận hành // Chuỗi giao hàng",
+    "titleLine1": "Từ",
+    "titleLine2": "giả thuyết → hiện trường.",
+    "intro": "Một pipeline rõ ràng để giảm rủi ro khi triển khai AI: làm rõ bài toán, chứng minh bằng prototype, tích hợp an toàn vào hệ thống, rồi giám sát liên tục sau go-live.",
+    "steps": [
+      {
+        "id": "01",
+        "title": "Khung bài toán",
+        "body": "Đồng bộ mục tiêu kinh doanh, dữ liệu khả dụng, ràng buộc tuân thủ và tiêu chí thành công đo được."
+      },
+      {
+        "id": "02",
+        "title": "Prototype có chứng cứ",
+        "body": "Thử nghiệm nhanh trên tập dữ liệu thật, benchmark có thể tái lập, và ranh giới từ chối rõ ràng trước khi mở rộng."
+      },
+      {
+        "id": "03",
+        "title": "Tích hợp & an toàn",
+        "body": "Nối pipeline vào quy trình hiện có: API, IAM, logging, fallback thủ công và kịch bản khi mô hình lệch pha."
+      },
+      {
+        "id": "04",
+        "title": "Quan sát & tối ưu",
+        "body": "Theo dõi chất lượng đầu ra, độ trễ, chi phí và trải nghiệm người dùng; hiệu chỉnh theo chu kỳ ngắn, có kiểm toán."
+      }
+    ]
+  },
+  "openLabs": {
+    "badge": "Mã nguồn // Cộng đồng",
+    "titleLine1": "Open",
+    "titleLine2": "Labs.",
+    "intro": "Một phần công việc được công khai để tái sử dụng, học hỏi và mời gọi đóng góp — từ nền tảng agent đến các thử nghiệm giao diện lab.",
+    "viewRepo": "GitHub",
+    "metaStars": "Sao",
+    "metaForks": "Fork"
+  },
+  "metrics": {
+    "badge": "Số liệu // Hoạt động lab",
+    "titleLine1": "Tín hiệu",
+    "titleLine2": "vận hành.",
+    "intro": "Tóm tắt nhịp R&D, tích hợp và mức độ mở của lab — trình bày dưới dạng biểu đồ tối giản để dễ quét nhanh.",
+    "disclaimer": "Minh họa quy mô nội bộ — cập nhật số liệu thật trong bản dịch khi cần.",
+    "items": [
+      {
+        "label": "Vòng prototype / năm",
+        "value": "24+",
+        "caption": "Chu kỳ thử nghiệm có benchmark và biên bản kết quả.",
+        "chartType": "bars",
+        "chartData": [32, 44, 38, 58, 52, 71, 64, 86]
+      },
+      {
+        "label": "Luồng production",
+        "value": "18",
+        "caption": "Pipeline AI/agent đã gắn vào hệ thống vận hành thật.",
+        "chartType": "line",
+        "chartData": [4, 6, 7, 9, 11, 13, 15, 18]
+      },
+      {
+        "label": "Bản phát hành mở",
+        "value": "12",
+        "caption": "Repo, module hoặc bộ mẫu công khai trên GitHub.",
+        "chartType": "bars",
+        "chartData": [12, 18, 15, 22, 19, 25, 21, 28]
+      },
+      {
+        "label": "Độ bao phủ quan sát",
+        "value": "72%",
+        "caption": "Tỷ lệ luồng có logging, cảnh báo hoặc đánh giá định kỳ.",
+        "chartType": "radial",
+        "chartData": [72]
+      }
+    ]
+  },
+  "careers": {
+    "badge": "Tuyển dụng // Mở rộng lab",
+    "titleLine1": "Gia nhập",
+    "titleLine2": "đội ngũ.",
+    "intro": "Chúng tôi tìm người muốn đẩy biên giới AI-First và tự động hóa — làm việc gần với nghiên cứu, nhưng luôn hướng tới hệ thống chạy được thật.",
+    "cta": "Ứng tuyển / Liên hệ",
+    "roles": [
+      {
+        "title": "Kỹ sư ML / Agent systems",
+        "type": "Full-time",
+        "location": "Việt Nam (linh hoạt)",
+        "summary": "Thiết kế và triển khai pipeline LLM, RAG và điều phối đa agent; ưu tiên kinh nghiệm đo lường chất lượng và vận hành an toàn.",
+        "tags": ["Python", "PyTorch / vLLM", "RAG", "Evals"]
+      },
+      {
+        "title": "Full-stack / Platform",
+        "type": "Full-time",
+        "location": "Hybrid",
+        "summary": "Xây lớp sản phẩm quanh API, dashboard và triển khai: TypeScript, hạ tầng gọn, tích hợp CI/CD và observability.",
+        "tags": ["TypeScript", "React", "API design", "K8s / Docker"]
+      },
+      {
+        "title": "Research associate (AI)",
+        "type": "Intern / Part-time",
+        "location": "Remote-first",
+        "summary": "Hỗ trợ thử nghiệm mô hình, tổng hợp tài liệu và tái lập kết quả; phù hợp sinh viên cao học hoặm mới ra trường có nền toán / CS vững.",
+        "tags": ["Experiments", "Documentation", "Reproducibility"]
+      }
+    ]
+  },
+  "faq": {
+    "badge": "FAQ // Góc nhìn lab",
+    "titleLine1": "Kỷ nguyên",
+    "titleLine2": "đổi mới & lab trẻ.",
+    "intro": "Một vài câu hỏi về bối cảnh đổi mới công nghệ và cách các lab nhỏ ở Việt Nam đang hình thành vai trò mới.",
+    "items": [
+      {
+        "q": "Vì sao các lab trẻ lại nổi lên rõ ở Việt Nam trong giai đoạn này?",
+        "a": "Nguồn nhân lực kỹ thuật dày, chi phí thử nghiệm GenAI và automation giảm, cùng nhu cầu doanh nghiệp vừa và nhỏ muốn tích hợp AI thực dụng — tạo khe cho các nhóm nhỏ làm R&D gần thị trường hơn so với mô hình outsourcing thuần túy."
+      },
+      {
+        "q": "Lab nghiên cứu khác gì so với đội outsourcing truyền thống?",
+        "a": "Outsourcing thường tối ưu theo spec và tiến độ cố định; lab thường giữ một phần agenda nội bộ (khám phá, mã mở, bài báo kỹ thuật) và chấp nhận rủi ro thử nghiệm để đổi lấy lợi thế sản phẩm hoặc IP dài hạn."
+      },
+      {
+        "q": "Lab trẻ làm sao vừa sống được vừa duy trì nghiên cứu?",
+        "a": "Nhiều lab kết hợp dự án triển khai có thù lao với các track mở (open source, template, đào tạo) để có dòng tiền và uy tín song song; ranh giới giữ 'billable' và 'exploratory' được đặt rõ từ đầu để tránh kiệt sức."
+      },
+      {
+        "q": "Kỷ nguyên GenAI thay đổi kỳ vọng đối với lab Việt Nam thế nào?",
+        "a": "Khách hàng kỳ vọng vòng lặp nhanh hơn: từ ý tưởng đến demo trong tuần, nhưng cũng nhạy hơn với rủi ro (ảo giác, rò rỉ dữ liệu). Lab phải nói được ngôn ngữ sản phẩm lẫn ngôn ngữ tuân thủ — không chỉ độ chính xác mô hình."
+      },
+      {
+        "q": "Cộng đồng open source có vai trò gì với lab nhỏ?",
+        "a": "Đó là kênh tuyển dụng, học hỏi và lan tỏa uy tín kỹ thuật với chi phí marketing thấp. Đóng góp có chọn lọc giúp lab đồng bộ với chuẩn công cụ toàn cầu thay vì xây lại mọi thứ trong im lặng."
+      },
+      {
+        "q": "Doanh nghiệp SME có nên hợp tác với lab trẻ thay vì vendor lớn?",
+        "a": "Phụ thuộc bài toán: lab trẻ thường linh hoạt và gần kỹ sư quyết định kỹ thuật, phù hợp prototype và tích hợp sâu; vendor lớn phù hợp khi cần SLA, quy mô và hợp đồng dài. Nên bắt đầu bằng phạm vi nhỏ, chỉ số rõ và quyền sở hữu dữ liệu/minh bạch."
+      }
+    ]
+  },
+  "team": {
+    "titleBefore": "Những ",
+    "titleHighlight": "bộ não",
+    "titleAfter": " sau hệ thống.",
+    "subtitle": "Một tập thể đa dạng gồm nhà nghiên cứu và kỹ sư, cùng chung đam mê tự động hóa và công nghệ tiên phong."
+  },
+  "contact": {
+    "titleBefore": "Thiết lập ",
+    "titleHighlight": "kết nối",
+    "titleAfter": ".",
+    "intro": "Sẵn sàng hợp tác dự án tiếp theo? Chúng tôi muốn lắng nghe và cùng bạn hiện thực hóa ý tưởng.",
+    "formTitle": "Gửi tin nhắn",
+    "name": "Họ tên",
+    "namePh": "Tên của bạn",
+    "email": "Email",
+    "subject": "Chủ đề",
+    "subjectPh": "Nội dung liên hệ?",
+    "message": "Nội dung",
+    "messagePh": "Mô tả dự án hoặc nhu cầu...",
+    "submit": "Gửi tin nhắn",
+    "infoTitle": "Thông tin liên hệ",
+    "location": "Địa điểm",
+    "followTitle": "Theo dõi",
+    "followBody": "Theo dõi để cập nhật dự án, nghiên cứu và góc nhìn về công nghệ mới nổi."
+  },
+  "footer": {
+    "columns": [
+      {
+        "title": "Sản phẩm",
+        "links": ["PiperFlow", "Knowledge Base", "AI Agents", "API Reference"]
+      },
+      {
+        "title": "Nghiên cứu",
+        "links": ["Long-context LLMs", "Multi-Agent RAG", "Computer Vision", "Ethics in AI"]
+      },
+      {
+        "title": "Lab",
+        "links": ["Về chúng tôi", "Đội ngũ", "Tuyển dụng", "Blog"]
+      },
+      {
+        "title": "Pháp lý",
+        "links": ["Chính sách bảo mật", "Điều khoản dịch vụ", "Chính sách cookie"]
+      }
+    ],
+    "copyright": "© 2026 I2FLabs Việt Nam. Mọi quyền được bảo lưu.",
+    "status": "Hệ thống hoạt động bình thường"
+  },
+  "loading": {
+    "sysInit": "/SYS_INIT",
+    "accessGranted": "TRUY CẬP ĐƯỢC CẤP",
+    "terminalTitle": "PHẢN HỒI HỆ THỐNG // NODE_SECURE",
+    "corner": "SECURE_CORE // V4.02-STABLE",
+    "logs": [
+      "> INITIALIZING_COGNITIVE_MESH...",
+      "> LOADING_NEURAL_WEIGHTS_V4.2...",
+      "> SYNCHRONIZING_VIETNAM_TACTICAL_DATA...",
+      "> SECURING_QUANTUM_HANDSHAKE...",
+      "> ESTABLISHING_LAB_CONNECTIVITY...",
+      "> DEPLOYING_AUTOMATION_STREAMS...",
+      "> SYSTEM_READINESS_CONFIRMED."
+    ]
+  }
+}
