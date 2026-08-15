@@ -569,8 +569,8 @@ export default function Hero() {
               className="flex items-center justify-between mb-4 px-3.5 sm:px-4"
               variants={{ hidden: { opacity: 0, y: -6 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } } }}
             >
-              <span className="text-xs tracking-[0.22em] uppercase text-neutral-400 font-medium">The Team</span>
-              <span className="text-xs text-neutral-300 tabular-nums">{teamMembers.length.toString().padStart(2,'0')}</span>
+              <span className="text-xs font-mono tracking-[0.3em] uppercase text-neutral-600">THE TEAM</span>
+              <span className="text-xs font-mono text-neutral-400 tabular-nums">{teamMembers.length.toString().padStart(2,'0')}</span>
             </motion.div>
 
             {/* Member rows */}
@@ -590,29 +590,41 @@ export default function Hero() {
                     {(i + 1).toString().padStart(2, '0')}
                   </span>
 
-                  {/* Avatar */}
+                  {/* Portrait Card (3:4 Editorial Ratio) */}
                   <div className="relative shrink-0">
                     <motion.div
-                      className="w-10 h-10 rounded-full overflow-hidden bg-[#1a1a1a]"
-                      whileHover={{ scale: 1.12 }}
+                      className="w-[50px] h-[62px] rounded-xl overflow-hidden bg-[#141416] shadow-sm relative group-hover:shadow-md transition-shadow duration-300"
+                      whileHover={{ scale: 1.06 }}
                       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                     >
                       <img
                         src={member.image}
                         alt={member.name}
-                        className="w-full h-full object-cover object-center grayscale group-hover:grayscale-0 transition-all duration-500"
+                        className="w-full h-full object-cover object-center grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
                       />
+                      {/* Subtle vignette gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none" />
                     </motion.div>
                   </div>
 
                   {/* Info */}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-[#111111] tracking-tight leading-none mb-1 truncate group-hover:text-black transition-colors">
+                  <div className="flex-1 min-w-0 flex flex-col justify-center">
+                    <p className="text-sm font-semibold text-[#111111] tracking-tight leading-none mb-1.5 truncate group-hover:text-black transition-colors">
                       {member.name}
                     </p>
-                    <p className="text-[11px] text-neutral-400 uppercase tracking-[0.1em] leading-none truncate group-hover:text-neutral-600 transition-colors duration-300">
+                    <p className="text-[10.5px] text-neutral-400 uppercase tracking-[0.08em] font-mono leading-none truncate group-hover:text-neutral-700 transition-colors duration-300">
                       {member.role.split('&')[0].trim()}
                     </p>
+                    {/* Specialties micro-badges on hover */}
+                    {member.specialties && member.specialties.length > 0 && (
+                      <div className="flex items-center gap-1 mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        {member.specialties.slice(0, 3).map((spec) => (
+                          <span key={spec} className="text-[8px] font-mono font-medium px-1.5 py-0.5 rounded bg-neutral-200/90 text-neutral-700 leading-none">
+                            {spec}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {/* Social icons — slide in from right on hover */}
