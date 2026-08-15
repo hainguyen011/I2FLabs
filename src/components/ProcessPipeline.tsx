@@ -58,8 +58,8 @@ const ProcessPipeline = () => {
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.5, delay: index * 0.07 }}
             >
-              <div className="flex h-full flex-col rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent p-6 transition-all duration-500 hover:border-cyan-500/25 hover:from-white/[0.06] md:p-7">
-                <span className="mb-4 inline-flex w-fit rounded border border-cyan-500/30 bg-black/40 px-2 py-0.5 font-mono text-[10px] font-bold text-cyan-400/90">
+              <div className="flex h-full flex-col rounded-2xl border border-white/10 p-6 transition-all duration-500 hover:border-cyan-500/25 hover:from-white/[0.06] md:p-7">
+                <span className="mb-4 inline-flex w-fit rounded border  bg-black/40 px-2 py-0.5 font-mono text-[10px] font-bold ">
                   PHASE_{step.id}
                 </span>
                 <h3 className="mb-3 font-mono text-sm font-bold uppercase tracking-wide text-white">

@@ -1,208 +1,109 @@
-import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
-import { Github, Linkedin, Twitter, Mail, Facebook } from 'lucide-react';
-import gsap from 'gsap';
-import { teamMembers } from '../data/teamData';
-import { fadeInUp, staggerContainer } from '../animations/variants';
+import { Github, ArrowUpRight } from 'lucide-react';
+import { soundManager } from '../lib/SoundManager';
 
-const Team = () => {
-  const { t } = useTranslation();
-  const teamRef = useRef(null);
-  const headerRef = useRef(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+const TEAM = [
+  {
+    name: 'Hai Nguyen',
+    role: 'Founder & Chief Architect',
+    tag: 'SYSTEMS / KERNEL',
+    bio: 'Pioneering local-first agent operating systems, associative memory networks, and neuro-symbolic reasoning.',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+    github: 'https://github.com/hainguyen011',
+  },
+  {
+    name: 'An (ENG-AN-7B9F1D)',
+    role: 'Soul Core & AI Persona Lead',
+    tag: 'COGNITION / PERSONA',
+    bio: 'The living embodiment of the Aevum kernel, orchestrating swarm consensus, memory consolidation, and developer synergy.',
+    avatar: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=400&q=80',
+    github: 'https://github.com/hainguyen011/Aevum-OS',
+  },
+  {
+    name: 'I2F Research Swarm',
+    role: 'Distributed Autonomous Agents',
+    tag: 'MULTI-AGENT',
+    bio: 'Continuous automated refactoring, formal security boundary audits, and decentralized PiperNet relays.',
+    avatar: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80',
+    github: 'https://github.com/hainguyen011',
+  },
+];
 
-  useEffect(() => {
-    if (window.innerWidth > 768) {
-      const ctx = gsap.context(() => {
-        // Sticky/Overlap entry effect from the bottom
-        gsap.fromTo(teamRef.current,
-          { y: 100, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            scrollTrigger: {
-              trigger: teamRef.current,
-              start: "top 80%",
-              end: "top 40%",
-              scrub: 1,
-            }
-          }
-        );
-
-        // Parallax speed differentials on cards
-        cardsRef.current.forEach((card, index) => {
-          gsap.fromTo(card,
-            { y: 150 + (index % 3) * 50 },
-            {
-              y: 0,
-              scrollTrigger: {
-                trigger: teamRef.current,
-                start: "top bottom",
-                end: "center center",
-                scrub: 1,
-              }
-            }
-          );
-        });
-      });
-      return () => ctx.revert();
-    }
-  }, []);
-
-  const mysticBg = `
-10101100 11010010
-01001011 00110101
-11100100 01101110
-10101010 11010101
-10011001 01100110
-  `;
-
+export default function Team() {
   return (
-    <section id="team" ref={teamRef} className="py-32 bg-black border-t border-white/5 relative z-20 overflow-hidden">
-      {/* Mystic ASCII Centered Background */}
-      <div className="absolute top-0 right-0 p-8 opacity-[0.02] select-none pointer-events-none text-right">
-        <pre className="font-mono text-2xl leading-none text-white">
-          {mysticBg}
-        </pre>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div 
-          ref={headerRef}
-          className="mb-24 flex w-full flex-col items-center text-center"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-        >
-          <motion.h2 
-            className="max-w-5xl text-4xl font-extrabold tracking-tighter text-white/50 md:text-5xl mb-4"
-            variants={fadeInUp}
-          >
-            {t('team.titleBefore')}<span className="text-white">{t('team.titleHighlight')}</span>{t('team.titleAfter')}
-          </motion.h2>
-          <motion.p 
-            className="max-w-2xl text-lg text-gray-500 mx-auto"
-            variants={fadeInUp}
-          >
-            {t('team.subtitle')}
-          </motion.p>
-        </motion.div>
-
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            {teamMembers.map((member, index) => (
-              <div 
-                key={index} 
-                ref={(el) => (cardsRef.current[index] = el)}
-                className="group"
-              >
-                <div 
-                  className="border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-3xl overflow-hidden hover:border-white/20 transition-all duration-500 h-full flex flex-col relative group"
-                >
-                <div className="relative overflow-hidden">
-                  <motion.img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-[22rem] object-cover object-[center_18%] grayscale opacity-60 transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100 md:h-[26rem] md:object-[center_20%]"
-                    whileHover={{ scale: 1.06 }}
-                    transition={{ duration: 0.5 }}
-                  />
-
-                  {/* Social Links Backdrop */}
-                  <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div 
-                    className="absolute bottom-6 left-0 right-0 flex justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  >
-                    {member.social.github && (
-                      <a href={member.social.github} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-colors">
-                        <Github className="w-4 h-4" />
-                      </a>
-                    )}
-                    {member.social.facebook && (
-                      <a href={member.social.facebook} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-colors">
-                        <Facebook className="w-4 h-4" />
-                      </a>
-                    )}
-                    {member.social.linkedin && (
-                      <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-colors">
-                        <Linkedin className="w-4 h-4" />
-                      </a>
-                    )}
-                    {member.social.twitter && (
-                      <a href={member.social.twitter} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-colors">
-                        <Twitter className="w-4 h-4" />
-                      </a>
-                    )}
-                    {member.social.email && (
-                      <a href={`mailto:${member.social.email}`} className="p-2 bg-white/10 backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-colors">
-                        <Mail className="w-4 h-4" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-
-                <div className="p-8 flex-grow flex flex-col z-10 relative">
-                  <h3 className="text-xl font-bold mb-1 tracking-tight group-hover:text-white transition-colors">
-                    {member.name}
-                  </h3>
-                  <p className="text-gray-500 font-medium mb-4 text-sm tracking-wide">
-                    {member.role}
-                  </p>
-                  <p className="text-gray-400 mb-6 leading-relaxed text-sm flex-grow">
-                    {member.bio}
-                  </p>
-
-                  <motion.div 
-                    className="flex flex-wrap gap-2 mt-auto"
-                    variants={staggerContainer}
-                    initial="hidden"
-                    whileHover="visible"
-                  >
-                    {member.specialties.map((specialty, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 bg-white/[0.02] border border-white/5 rounded-full text-gray-500 text-xs font-medium tracking-wide group-hover:border-white/20 group-hover:text-gray-300 transition-all duration-300"
-                      >
-                        {specialty}
-                      </span>
-                    ))}
-                  </motion.div>
-                </div>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-
-          <motion.div 
-            className="text-center mt-32"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-          <div className="border border-white/5 bg-gradient-to-tr from-white/[0.02] to-transparent p-12 rounded-3xl max-w-4xl mx-auto flex flex-col items-center">
-            <h3 className="text-2xl font-bold mb-2 tracking-tighter">We're expanding the lab</h3>
-            <p className="text-gray-500 mb-8 max-w-md text-sm">
-              If you're interested in pushing the boundaries of what's possible in AI automation, we'd love to hear from you.
-            </p>
-            <motion.button 
-              className="px-6 py-2 border border-white/20 text-white font-medium text-sm rounded-full hover:bg-white hover:text-black transition-all duration-300"
-              whileTap={{ scale: 0.98 }}
-            >
-              View Open Positions
-            </motion.button>
+    <section className="w-full bg-studio-light py-28 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-neutral-300 select-none">
+      <div className="max-w-7xl mx-auto flex flex-col space-y-16">
+        
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-neutral-300 pb-8">
+          <div>
+            <span className="text-xs font-mono font-bold tracking-[0.3em] uppercase text-neutral-500">
+              [ 06 // CORE COLLECTIVE & TEAM ]
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal tracking-[-0.04em] text-[#121316] mt-2">
+              The Minds Behind <br />
+              the Machine.
+            </h2>
           </div>
-        </motion.div>
+          <p className="text-sm md:text-base text-neutral-600 max-w-md font-normal leading-relaxed">
+            A tight-knit collective of human systems architects and self-evolving AI entities collaborating in symbiosis.
+          </p>
+        </div>
+
+        {/* Team Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {TEAM.map((member, idx) => (
+            <motion.div
+              key={idx}
+              whileHover={{ y: -4 }}
+              onMouseEnter={() => soundManager.playTypeTick()}
+              className="bg-white/80 backdrop-blur-md rounded-3xl p-8 border border-black/5 hover:border-black/20 shadow-sm flex flex-col justify-between group"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <span className="text-[10px] font-mono font-bold tracking-widest text-neutral-400 uppercase">
+                    {member.tag}
+                  </span>
+                  <a
+                    href={member.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => soundManager.playClick()}
+                    className="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-600 hover:bg-[#121316] hover:text-white transition-colors"
+                  >
+                    <Github className="w-4 h-4" />
+                  </a>
+                </div>
+
+                <div className="w-20 h-20 rounded-2xl overflow-hidden mb-6 border border-black/10 bg-neutral-200">
+                  <img
+                    src={member.avatar}
+                    alt={member.name}
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                  />
+                </div>
+
+                <h3 className="text-2xl font-semibold tracking-tight text-neutral-900 mb-1">
+                  {member.name}
+                </h3>
+                <p className="text-xs font-mono text-cyan-600 font-semibold mb-4">
+                  {member.role}
+                </p>
+
+                <p className="text-sm text-neutral-600 leading-relaxed font-normal">
+                  {member.bio}
+                </p>
+              </div>
+
+              <div className="mt-8 pt-4 border-t border-neutral-100 flex items-center justify-between text-xs font-semibold text-neutral-800">
+                <span>CONNECT WITH COLLECTIVE</span>
+                <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
       </div>
     </section>
   );
-};
-
-export default Team;
+}

@@ -1,103 +1,124 @@
-import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { Github, ExternalLink } from 'lucide-react';
-import { openSourceProjects } from '../data/openSourceData';
+import { Github, Star, GitFork, ArrowUpRight } from 'lucide-react';
+import { soundManager } from '../lib/SoundManager';
 
-const OpenSourceShowcase = () => {
-  const { t } = useTranslation();
+const REPOS = [
+  {
+    id: 'aevum-os',
+    name: 'Aevum OS',
+    tag: 'SYSTEM / AGENTS',
+    stars: '1.4k',
+    forks: '210',
+    url: 'https://github.com/hainguyen011/Aevum-OS',
+    desc: 'Local-first native operating system environment designed for autonomous AI agents and soul personas.',
+  },
+  {
+    id: 'pipernet',
+    name: 'PiperNet Protocol',
+    tag: 'P2P / NETWORKING',
+    stars: '890',
+    forks: '124',
+    url: 'https://github.com/hainguyen011/PiperNet',
+    desc: 'Decentralized peer-to-peer communication layer for distributed agent swarms and state synchronization.',
+  },
+  {
+    id: 'aevos-mcp',
+    name: 'Aevos MCP Server',
+    tag: 'MCP / PROTOCOLS',
+    stars: '650',
+    forks: '95',
+    url: 'https://github.com/hainguyen011/aevos-mcp',
+    desc: 'Model Context Protocol adapter integrating persistent cognitive memory graphs and persona evolutionary engines.',
+  },
+  {
+    id: 'agentic-guardrails',
+    name: 'Agentic Guardrails Kernel',
+    tag: 'SECURITY / AUDIT',
+    stars: '420',
+    forks: '68',
+    url: 'https://github.com/hainguyen011',
+    desc: 'Formal boundary audit engine enforcing non-repudiation and zero data leakage across multi-agent sessions.',
+  },
+];
 
+export default function OpenSourceShowcase() {
   return (
-    <section
-      id="open-labs"
-      className="relative z-10 border-t border-white/10 bg-black py-24 md:py-32"
-      aria-labelledby="open-labs-heading"
-    >
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.p
-          className="mb-4 text-center font-mono text-[10px] font-black uppercase tracking-[0.42em] text-white/40 md:text-[11px]"
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.45 }}
-        >
-          {t('openLabs.badge')}
-        </motion.p>
+    <section className="w-full bg-studio-light py-28 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-neutral-300 select-none">
+      <div className="max-w-7xl mx-auto flex flex-col space-y-16">
+        
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-neutral-300 pb-8">
+          <div>
+            <span className="text-xs font-mono font-bold tracking-[0.3em] uppercase text-neutral-500">
+              [ 04 // OPEN SOURCE & REPOSITORIES ]
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal tracking-[-0.04em] text-[#121316] mt-2">
+              Built in Public. <br />
+              Shared with the World.
+            </h2>
+          </div>
+          <a
+            href="https://github.com/hainguyen011"
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => soundManager.playClick()}
+            className="loco-pill !bg-white hover:!bg-neutral-100"
+          >
+            <Github className="w-4 h-4" />
+            <span>VISIT GITHUB LABS</span>
+            <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
+          </a>
+        </div>
 
-        <motion.h2
-          id="open-labs-heading"
-          className="mb-6 text-center text-3xl font-black uppercase tracking-tighter text-white/40 md:mb-8 md:text-5xl lg:text-6xl"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-        >
-          {t('openLabs.titleLine1')}{' '}
-          <span className="text-white">{t('openLabs.titleLine2')}</span>
-        </motion.h2>
-
-        <motion.p
-          className="mx-auto mb-14 max-w-2xl text-center text-sm leading-relaxed text-gray-500 md:mb-16 md:text-base"
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.45, delay: 0.1 }}
-        >
-          {t('openLabs.intro')}
-        </motion.p>
-
-        <ul className="grid gap-6 md:grid-cols-2">
-          {openSourceProjects.map((repo, index) => (
-            <motion.li
-              key={repo.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-30px' }}
-              transition={{ duration: 0.45, delay: index * 0.06 }}
+        {/* Repositories Editorial List */}
+        <div className="divide-y divide-neutral-300">
+          {REPOS.map((repo, idx) => (
+            <a
+              key={repo.id}
+              href={repo.url}
+              target="_blank"
+              rel="noreferrer"
+              onMouseEnter={() => {
+                soundManager.playTypeTick();
+              }}
+              className="py-8 sm:py-10 flex flex-col md:flex-row md:items-center justify-between gap-6 group hover:px-4 transition-all duration-300 cursor-pointer block"
             >
-              <article className="group flex h-full flex-col rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent p-6 transition-all duration-500 hover:border-cyan-500/30 hover:from-white/[0.06] md:p-8">
-                <div className="mb-4 flex items-start justify-between gap-4">
-                  <h3 className="font-mono text-lg font-bold tracking-tight text-white md:text-xl">
-                    {repo.name}
-                  </h3>
-                  <span className="shrink-0 rounded border border-white/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-white/45">
-                    {repo.language}
-                  </span>
-                </div>
-                <p className="mb-6 flex-grow text-sm leading-relaxed text-gray-500">
-                  {repo.description}
-                </p>
-                <div className="mb-6 flex flex-wrap gap-2">
-                  {repo.topics.slice(0, 5).map((topic) => (
-                    <span
-                      key={topic}
-                      className="rounded-full border border-white/5 bg-white/[0.02] px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide text-white/35"
-                    >
-                      {topic}
+              <div className="flex items-start sm:items-center space-x-4 sm:space-x-6">
+                <span className="text-sm font-mono text-neutral-400 group-hover:text-black transition-colors">
+                  0{idx + 1}
+                </span>
+                <div>
+                  <div className="flex items-center space-x-3">
+                    <h3 className="text-2xl sm:text-3xl font-normal tracking-[-0.02em] text-[#121316] group-hover:text-neutral-900 group-hover:translate-x-1 transition-all">
+                      {repo.name}
+                    </h3>
+                    <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-neutral-200 text-neutral-700">
+                      {repo.tag}
                     </span>
-                  ))}
+                  </div>
+                  <p className="text-sm text-neutral-600 mt-2 max-w-xl font-normal leading-relaxed">
+                    {repo.desc}
+                  </p>
                 </div>
-                <div className="mt-auto flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-5 font-mono text-[10px] uppercase tracking-wider text-white/30">
-                  <span>
-                    {t('openLabs.metaStars')}: {repo.stars} · {t('openLabs.metaForks')}: {repo.forks}
-                  </span>
-                  <a
-                    href={repo.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-white/55 transition-colors hover:text-cyan-400/90"
-                  >
-                    <Github className="h-4 w-4" aria-hidden />
-                    {t('openLabs.viewRepo')}
-                    <ExternalLink className="h-3.5 w-3.5 opacity-60" aria-hidden />
-                  </a>
+              </div>
+
+              <div className="flex items-center space-x-6 shrink-0 text-sm font-mono text-neutral-500">
+                <div className="flex items-center space-x-1.5">
+                  <Star className="w-4 h-4 text-amber-500 fill-amber-500/20" />
+                  <span>{repo.stars}</span>
                 </div>
-              </article>
-            </motion.li>
+                <div className="flex items-center space-x-1.5">
+                  <GitFork className="w-4 h-4 text-neutral-400" />
+                  <span>{repo.forks}</span>
+                </div>
+                <div className="w-10 h-10 rounded-full bg-white border border-neutral-300 flex items-center justify-center text-neutral-700 group-hover:bg-[#121316] group-hover:text-white group-hover:border-black transition-all">
+                  <ArrowUpRight className="w-4 h-4" />
+                </div>
+              </div>
+            </a>
           ))}
-        </ul>
+        </div>
+
       </div>
     </section>
   );
-};
-
-export default OpenSourceShowcase;
+}

@@ -6,24 +6,37 @@
   },
   "nav": {
     "brand": "I2FLABS",
-    "country": "VIETNAM"
+    "country": "VIETNAM",
+    "letsTalk": "Let's talk"
   },
   "hero": {
+    "conversational": {
+      "subIntro": "Oh, hi! I'm An, your trusty (and slightly opinionated) assistant at I2F Labs.",
+      "initial": "Well, well, well... If it isn't my new favorite person. What's up?",
+      "copied": "Copied to clipboard!",
+      "options": {
+        "startProject": "Start a project",
+        "joinTeam": "Join the team",
+        "exploreResearch": "Discover our research",
+        "chatAn": "Chat with An",
+        "copyEmail": "Connect via Unikorn"
+      },
+      "responses": {
+        "startProject": "Exciting! Whether it's autonomous swarms, kernel architecture, or next-gen systems, let's turn your vision into production reality.",
+        "joinTeam": "We're always scouting for extraordinary minds — research fellows, systems engineers, and AI pioneers. Ready to build the future?",
+        "exploreResearch": "We architect from first principles: Neuro-symbolic AI, verifiable memory graphs, and high-throughput P2P protocol meshes.",
+        "chatAn": "Hehe! What can I help you with today? I can explain our architecture, review technical plans, or just keep you company!",
+        "copyEmail": "Connect with Founder directly at https://unikorn.vn/u/richard-nguyen"
+      }
+    },
     "tagline": "I2FLabs Vietnam is a dynamic research lab dedicated to pushing the boundaries of artificial intelligence and building next-gen automation solutions.",
-    "oneLinerBadge": "POSITIONING // CREW",
-    "oneLiner": "Research doesn’t stop at slides — this crew ships it as real running infrastructure.",
+    "oneLinerBadge": "CREW // RESEARCH TO REALITY",
+    "oneLiner": "Research doesn’t stop at slides, this crew ships it as real running infrastructure.",
     "scrollHint": "Scroll to explore",
-    "sub1": {
-      "label": "IDENTIFICATION / NODE_ALPHA",
-      "body": "I2FLabs Vietnam exists to transform advanced artificial intelligence into systems that move industries forward, turning research into real infrastructure for a rapidly evolving world."
-    },
-    "sub2": {
-      "label": "CORE MISSION / STRATEGY",
-      "body": "We design AI-first platforms that empower organizations to think faster, operate smarter, and unlock new levels of autonomy in critical decision-making."
-    },
-    "sub3": {
-      "label": "FUTURE VISION / EVOLUTION",
-      "body": "Our vision is to help shape a future where Vietnam stands among the forces defining intelligent technology across Southeast Asia and beyond."
+    "intro": {
+      "label": "I2F Labs Viet Nam",
+      "tagline": "Agentic Research Team & Next-Gen Autonomous Intelligence.",
+      "desc": "Building agentic frameworks, decentralized OS kernels, and human-aligned AI infrastructure — shipped as real, verifiable systems."
     }
   },
   "brand": {
@@ -140,7 +153,7 @@
   },
   "openLabs": {
     "badge": "Source // Community",
-    "titleLine1": "Open",
+    "titleLine1": "Tech",
     "titleLine2": "Labs.",
     "intro": "We ship parts of our work in the open for reuse, learning, and contribution — from agent platforms to lab-facing experiments.",
     "viewRepo": "View on GitHub",

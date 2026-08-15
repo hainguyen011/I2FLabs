@@ -2,80 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Cinematic Tech-Noir Utilities */
-.noise {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.05;
-  pointer-events: none;
-}
-
-.scanlines {
-  background: linear-gradient(
-    to bottom,
-    rgba(18, 16, 16, 0) 50%,
-    rgba(0, 0, 0, 0.25) 50%
-  );
-  background-size: 100% 4px;
-  pointer-events: none;
-}
-
-@keyframes scanline-flicker {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(100%); }
-}
-
-.scanline-move::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(34, 211, 238, 0.05) 50%,
-    transparent 100%
-  );
-  height: 100px;
-  animation: scanline-flicker 4s linear infinite;
-}
-
-/* Hero one-liner — subtle gradient drift after decode */
-@keyframes hero-oneliner-shimmer {
-  0% {
-    background-position: 0% 50%;
+@layer base {
+  :root {
+    --studio-base: #bcbec3;
+    --studio-light: #e4e5e9;
+    --studio-dark: #989aa0;
   }
-  100% {
-    background-position: 200% 50%;
+
+  body {
+    background-color: #bcbec3;
+    color: #111111;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    user-select: none;
   }
 }
 
-.hero-oneliner-shimmer {
-  background-size: 220% auto;
-  animation: hero-oneliner-shimmer 9s linear infinite;
+/* Locomotive Studio Radial Lighting */
+.locomotive-studio {
+  background: radial-gradient(ellipse at 60% 45%, #eaebef 0%, #d4d5d9 35%, #bcbec3 70%, #9fa1a7 100%);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero-oneliner-shimmer {
-    animation: none;
-    background-position: 50% 50%;
-  }
+/* Stable intro text */
+.text-blur-intro {
+  color: #333333;
 }
 
-.glass-tactical {
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* Flat, Zero-Resizing Pill Buttons */
+.loco-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 1.15rem;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: #111111;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: none !important;
+  transform: none !important;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  cursor: pointer;
 }
 
-.glow-cyan {
-  text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+.loco-chip:hover {
+  background-color: #e8e9ec;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: none !important;
+  transform: none !important;
 }
 
-/* Global Scrollbar Removal for Immersive Experience */
-html, body {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+.loco-chip:active {
+  background-color: #dedfe3;
+  transform: none !important;
 }
 
-::-webkit-scrollbar {
-  display: none;
+/* Scanline and phosphor noise */
+.crt-screen-noise {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
+  background-size: 4px 4px;
+}
+
+/* Caret blink */
+.caret-blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }

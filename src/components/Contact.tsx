@@ -1,222 +1,183 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Mail, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react';
-import gsap from 'gsap';
-import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import { ArrowUpRight, Send, Check, Mail, MapPin } from 'lucide-react';
+import { soundManager } from '../lib/SoundManager';
 
-const Contact = () => {
-  const { t } = useTranslation();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+export default function Contact() {
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', message: '', projectType: 'Agentic AI' });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    soundManager.playChime();
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      setForm({ name: '', email: '', message: '', projectType: 'Agentic AI' });
+    }, 4000);
   };
 
-  const contactRef = useRef(null);
-
-  useEffect(() => {
-    if (window.innerWidth > 768) {
-      const ctx = gsap.context(() => {
-        gsap.fromTo(contactRef.current,
-          { y: 150, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            scrollTrigger: {
-              trigger: contactRef.current,
-              start: "top 85%",
-              end: "top 40%",
-              scrub: 1,
-            }
-          }
-        );
-      });
-      return () => ctx.revert();
-    }
-  }, []);
-
-  const terminalBg = `
-  root@i2f:~# ./connect --secure
-  [===================>] 100%
-  AWAITING HANDSHAKE...
-  _
-  `;
-
   return (
-    <section id="contact" ref={contactRef} className="py-32 bg-black border-t border-white/5 relative z-30 overflow-hidden">
-      {/* Mystic ASCII Centered Background */}
-      <div className="absolute bottom-0 left-0 p-8 opacity-[0.03] select-none pointer-events-none">
-        <pre className="font-mono text-xl md:text-3xl leading-none text-white whitespace-pre">
-          {terminalBg}
-        </pre>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="mb-16">
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tighter mb-4 text-white/50">
-            Establish <span className="text-white">Connection</span>.
+    <section id="contact" className="w-full bg-[#121316] text-[#f5f5f7] py-28 px-6 sm:px-12 md:px-16 lg:px-24 select-none">
+      <div className="max-w-7xl mx-auto flex flex-col space-y-16">
+        
+        {/* Giant Headline */}
+        <div className="border-b border-neutral-800 pb-12">
+          <span className="text-xs font-mono font-bold tracking-[0.3em] uppercase text-cyan-400">
+            [ 09 // CONTACT & INQUIRIES ]
+          </span>
+          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-[-0.05em] text-white mt-4 leading-[0.95]">
+            Let’s craft the future <br />
+            together.
           </h2>
-          <p className="text-lg text-gray-500 max-w-2xl">
-            Ready to collaborate on your next project? We'd love to hear from you and discuss how we can help bring your ideas to life.
-          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <div className="border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent p-8 md:p-12 rounded-3xl">
-            <h3 className="text-xl font-bold mb-8 tracking-tighter">{t('contact.formTitle')}</h3>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="name" className="block text-xs font-bold text-gray-500 mb-2 tracking-widest uppercase">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white placeholder-white/20 focus:outline-none focus:border-white/40 transition-colors font-mono text-sm"
-                    placeholder="Your Name"
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-xs font-bold text-gray-500 mb-2 tracking-widest uppercase">
-                    {t('contact.email')}
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white placeholder-white/20 focus:outline-none focus:border-white/40 transition-colors font-mono text-sm"
-                    placeholder="your@email.com"
-                    required
-                  />
-                </div>
-              </div>
-              
-              <div>
-                <label htmlFor="subject" className="block text-xs font-bold text-gray-500 mb-2 tracking-widest uppercase">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white placeholder-white/20 focus:outline-none focus:border-white/40 transition-colors font-mono text-sm"
-                  placeholder="What's this about?"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block text-xs font-bold text-gray-500 mb-2 tracking-widest uppercase">
-                  {t('contact.message')}
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={6}
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-black border border-white/10 rounded-xl text-white placeholder-white/20 focus:outline-none focus:border-white/40 transition-colors resize-none font-mono text-sm"
-                  placeholder={t('contact.messagePh')}
-                  required
-                ></textarea>
-              </div>
-              
-              <button
-                type="submit"
-                className="w-full px-8 py-4 bg-white text-black font-bold text-sm tracking-tight hover:bg-gray-200 transition-all duration-300 rounded-xl flex items-center justify-center group"
-              >
-                <Send className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform" />
-                {t('contact.submit')}
-              </button>
-            </form>
-          </div>
+        {/* Contact Form & Info Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          {/* Info Column */}
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-8">
+            <div className="space-y-6">
+              <p className="text-lg sm:text-xl text-neutral-300 font-normal leading-relaxed">
+                Whether you’re interested in collaborating on research, deploying Aevum OS in enterprise environments, or joining our engineering fellows, we’d love to connect.
+              </p>
 
-          {/* Contact Information */}
-          <div className="space-y-8">
-            <div className="border border-white/5 bg-gradient-to-tr from-white/[0.02] to-transparent p-8 md:p-12 rounded-3xl">
-              <h3 className="text-xl font-bold mb-8 tracking-tighter">Contact Info</h3>
-              
-              <div className="space-y-8">
-                <div className="flex items-center space-x-6">
-                  <div className="w-12 h-12 bg-white/[0.03] border border-white/10 rounded-2xl flex items-center justify-center text-gray-400">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 font-bold tracking-widest uppercase mb-1">Email</p>
-                    <p className="text-gray-300 font-mono text-sm">hainguyen0112358@gmail.com</p>
-                  </div>
+              <div className="space-y-3 pt-4 text-sm font-mono text-neutral-400">
+                <div className="flex items-center space-x-3">
+                  <ArrowUpRight className="w-4 h-4 text-cyan-400" />
+                  <a
+                    href="https://unikorn.vn/u/richard-nguyen"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => soundManager.playClick()}
+                    className="hover:text-white transition-colors underline underline-offset-4"
+                  >
+                    unikorn.vn/u/richard-nguyen
+                  </a>
                 </div>
-                
-                <div className="flex items-center space-x-6">
-                  <div className="w-12 h-12 bg-white/[0.03] border border-white/10 rounded-2xl flex items-center justify-center text-gray-400">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500 font-bold tracking-widest uppercase mb-1">{t('contact.location')}</p>
-                    <p className="text-gray-300 font-mono text-sm">Ho Chi Minh City, VN</p>
-                  </div>
+                <div className="flex items-center space-x-3">
+                  <Mail className="w-4 h-4 text-cyan-400" />
+                  <a
+                    href="https://unikorn.vn/u/richard-nguyen"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => soundManager.playClick()}
+                    className="hover:text-white transition-colors"
+                  >
+                    Direct Sync via Unikorn
+                  </a>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <MapPin className="w-4 h-4 text-cyan-400" />
+                  <span>Hanoi, Vietnam // Global Decentralized Mesh</span>
                 </div>
               </div>
             </div>
 
-            {/* Social Media */}
-            <div className="border border-white/5 bg-gradient-to-tr from-white/[0.02] to-transparent p-8 md:p-12 rounded-3xl">
-              <h3 className="text-xl font-bold mb-8 tracking-tighter">{t('contact.followTitle')}</h3>
-              
-              <div className="flex space-x-4">
-                <a
-                  href="#"
-                  className="w-12 h-12 rounded-2xl border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 hover:bg-white/[0.02] transition-all duration-300"
-                >
-                  <Github className="w-5 h-5" />
-                </a>
-                <a
-                  href="#"
-                  className="w-12 h-12 rounded-2xl border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 hover:bg-white/[0.02] transition-all duration-300"
-                >
-                  <Linkedin className="w-5 h-5" />
-                </a>
-                <a
-                  href="#"
-                  className="w-12 h-12 rounded-2xl border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 hover:bg-white/[0.02] transition-all duration-300"
-                >
-                  <Twitter className="w-5 h-5" />
-                </a>
-              </div>
-              
-              <p className="text-gray-500 mt-6 text-sm">
-                {t('contact.followBody')}
+            <div className="p-6 rounded-2xl bg-neutral-900 border border-neutral-800">
+              <span className="text-xs font-mono text-neutral-500 uppercase tracking-widest block mb-2">
+                DIRECT PGP & SECURITY
+              </span>
+              <p className="text-xs text-neutral-400 font-mono">
+                For vulnerability disclosures or cryptographically signed communication, please contact security@i2flabs.com.
               </p>
             </div>
           </div>
-        </div>
-      </div>
 
+          {/* Form Column */}
+          <div className="lg:col-span-7">
+            <form onSubmit={handleSubmit} className="space-y-6 bg-neutral-900/60 p-8 sm:p-10 rounded-3xl border border-neutral-800">
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-xs font-mono tracking-wider text-neutral-400 uppercase mb-2">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    placeholder="e.g. Satoshi Nakamoto"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-cyan-500 transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-mono tracking-wider text-neutral-400 uppercase mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    placeholder="satoshi@domain.com"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-cyan-500 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-mono tracking-wider text-neutral-400 uppercase mb-2">
+                  Project Domain
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {['Agentic AI', 'Aevum OS', 'Research Grants', 'Partnership'].map((type) => (
+                    <button
+                      type="button"
+                      key={type}
+                      onClick={() => {
+                        soundManager.playClick();
+                        setForm({ ...form, projectType: type });
+                      }}
+                      className={`loco-pill-dark !text-xs !py-1.5 !px-3.5 ${
+                        form.projectType === type ? '!bg-white !text-black !border-white font-semibold' : ''
+                      }`}
+                    >
+                      {type}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-mono tracking-wider text-neutral-400 uppercase mb-2">
+                  Message / Architecture Inquiry
+                </label>
+                <textarea
+                  rows={4}
+                  required
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  placeholder="Tell us about what you are building, research scope, or collaboration goals..."
+                  className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-cyan-500 transition-colors resize-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={submitted}
+                className="w-full loco-pill-dark !py-3.5 !bg-white !text-black hover:!bg-neutral-200 !border-white flex items-center justify-center space-x-2 font-medium"
+              >
+                {submitted ? (
+                  <>
+                    <Check className="w-4 h-4 text-emerald-600" />
+                    <span>TRANSMISSION SENT SUCCESSFULLY</span>
+                  </>
+                ) : (
+                  <>
+                    <span>SEND TRANSMISSION</span>
+                    <Send className="w-4 h-4 opacity-70" />
+                  </>
+                )}
+              </button>
+
+            </form>
+          </div>
+
+        </div>
+
+      </div>
     </section>
   );
-};
-
-export default Contact;
+}

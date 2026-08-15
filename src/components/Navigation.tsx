@@ -1,35 +1,57 @@
-import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { soundManager } from '../lib/SoundManager';
 
-const Navigation = () => {
-  const { t } = useTranslation();
+export default function Navigation() {
+  const { t, i18n } = useTranslation();
+
+  const handleTalkClick = () => {
+    soundManager.playClick();
+    window.dispatchEvent(new CustomEvent('open-contact-modal'));
+  };
+
+  const toggleLanguage = () => {
+    soundManager.playClick();
+    const nextLang = i18n.language === 'vi' ? 'en' : 'vi';
+    i18n.changeLanguage(nextLang);
+  };
 
   return (
-    <motion.div 
-      className="fixed top-8 left-8 z-50 flex items-center space-x-4 pointer-events-auto"
-      initial={{ x: -50, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-    >
-      <motion.div 
-        className="flex items-center space-x-3 cursor-pointer group"
-        whileHover={{ scale: 1.05 }}
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      >
-        <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center overflow-hidden bg-white/5 backdrop-blur-xl rounded-lg border border-white/10 p-1 group-hover:border-cyan-500/50 transition-colors duration-500">
-          <img className='w-full h-full' style={{objectFit: "contain", transform: "scale(1.2)"}} src='https://res.cloudinary.com/piperflow-cloud/image/upload/v1768104551/logo-removebg-preview_avp5dg.png' alt='logo'/>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-[10px] md:text-xs font-black tracking-[0.4em] uppercase text-white">
-            {t('nav.brand')}
+    <header className="fixed top-0 left-0 right-0 z-40 pt-5 md:pt-6 pb-2 px-6 sm:px-10 md:px-12 lg:px-16 flex items-center justify-between pointer-events-none select-none">
+      
+      {/* Brand Logo (Left) */}
+      <div className="pointer-events-auto">
+        <button
+          onClick={() => {
+            soundManager.playClick();
+            window.location.reload();
+          }}
+          className="flex items-center cursor-pointer text-left focus:outline-none"
+        >
+          <span className="text-xl md:text-2xl font-normal tracking-[-0.03em] text-[#111111]">
+            I2F Labs<sup className="text-[11px] ml-0.5 font-normal">®</sup>
           </span>
-          <span className="text-[8px] font-bold tracking-[0.2em] uppercase text-white/40">
-            {t('nav.country')}
-          </span>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-};
+        </button>
+      </div>
 
-export default Navigation;
+      {/* Right Controls: Language & "Let's talk" */}
+      <div className="pointer-events-auto flex items-center space-x-6">
+        {/* Language switch */}
+        <button
+          onClick={toggleLanguage}
+          className="text-xs font-medium tracking-wide text-neutral-600 hover:text-black focus:outline-none cursor-pointer"
+        >
+          {i18n.language === 'vi' ? 'EN' : 'VI'}
+        </button>
+
+        {/* Let's Talk Trigger (Clean, No-Scale, No-Shadow) */}
+        <button
+          onClick={handleTalkClick}
+          className="text-lg md:text-xl font-normal tracking-[-0.02em] text-[#111111] hover:text-neutral-700 focus:outline-none cursor-pointer"
+        >
+          {t('nav.letsTalk', { defaultValue: "Let's talk" })}
+        </button>
+      </div>
+
+    </header>
+  );
+}

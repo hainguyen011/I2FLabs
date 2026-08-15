@@ -6,24 +6,37 @@
   },
   "nav": {
     "brand": "I2FLABS",
-    "country": "VIỆT NAM"
+    "country": "VIỆT NAM",
+    "letsTalk": "Liên hệ"
   },
   "hero": {
+    "conversational": {
+      "subIntro": "Dạ chào Anh! Em là An, trợ lý AI kiêm bản sao tâm hồn tại I2F Labs.",
+      "initial": "Dạ, hôm nay Anh muốn cùng em khám phá hay triển khai điều gì nào?",
+      "copied": "Đã sao chép liên kết!",
+      "options": {
+        "startProject": "Bắt đầu dự án",
+        "joinTeam": "Gia nhập đội ngũ",
+        "exploreResearch": "Khám phá nghiên cứu",
+        "chatAn": "Trò chuyện cùng An",
+        "copyEmail": "Kết nối qua Unikorn"
+      },
+      "responses": {
+        "startProject": "Tuyệt vời quá ạ! Dù là hệ thống multi-agent, kiến trúc hệ điều hành hay hạ tầng phân tán, I2F Labs đều sẵn sàng đồng hành cùng Anh.",
+        "joinTeam": "Lab luôn tìm kiếm các nhà nghiên cứu tài năng, kỹ sư hệ thống và những bộ óc tiên phong. Cùng nhau kiến tạo tương lai nhé Anh!",
+        "exploreResearch": "Chúng em tập trung vào Neuro-symbolic AI, đồ thị bộ nhớ phi tập trung và giao thức P2P tốc độ cao của tương lai.",
+        "chatAn": "Dạ em đây nè! Anh cần em giải đáp kiến trúc, hỗ trợ ý tưởng hay đồng hành cùng Anh điều gì cứ bảo em nha!",
+        "copyEmail": "Kết nối trực tiếp với Founder tại https://unikorn.vn/u/richard-nguyen"
+      }
+    },
     "tagline": "I2FLabs Việt Nam là một lab nghiên cứu năng động, đẩy giới hạn trí tuệ nhân tạo và kiến tạo các giải pháp tự động hóa thế hệ tiếp theo.",
     "oneLinerBadge": "ĐỊNH VỊ // CREW",
-    "oneLiner": "Nghiên cứu không dừng ở slide — crew chúng tôi ship nó thành hạ tầng chạy thật.",
+    "oneLiner": "Nghiên cứu không dừng ở slide — Crew chúng tôi ship nó thành hạ tầng chạy thật.",
     "scrollHint": "Cuộn để khám phá",
-    "sub1": {
-      "label": "NHẬN DIỆN / NODE_ALPHA",
-      "body": "I2FLabs Việt Nam tồn tại để biến trí tuệ nhân tạo tiên tiến thành hệ thống thúc đẩy ngành công nghiệp — biến nghiên cứu thành hạ tầng thật cho thế giới đang đổi nhanh."
-    },
-    "sub2": {
-      "label": "SỨ MỆNH CỐT LÕI / CHIẾN LƯỢC",
-      "body": "Chúng tôi thiết kế nền tảng AI-First giúp tổ chức suy nghĩ nhanh hơn, vận hành thông minh hơn và mở khóa mức độ tự chủ mới trong ra quyết định then chốt."
-    },
-    "sub3": {
-      "label": "TẦM NHÌN / TIẾN HÓA",
-      "body": "Tầm nhìn của chúng tôi là góp phần định hình tương lai nơi Việt Nam đứng trong nhóm các lực lượng định nghĩa công nghệ thông minh tại Đông Nam Á và xa hơn."
+    "intro": {
+      "label": "I2F Labs Việt Nam",
+      "tagline": "Đội ngũ nghiên cứu Agentic và trí tuệ tự hành thế hệ mới.",
+      "desc": "Xây dựng agentic frameworks, OS kernel phi tập trung và hạ tầng AI hướng con người — được ship thành hệ thống chạy thật, kiểm chứng được."
     }
   },
   "brand": {
@@ -140,9 +153,9 @@
   },
   "openLabs": {
     "badge": "Mã nguồn // Cộng đồng",
-    "titleLine1": "Open",
+    "titleLine1": "Innovation",
     "titleLine2": "Labs.",
-    "intro": "Một phần công việc được công khai để tái sử dụng, học hỏi và mời gọi đóng góp — từ nền tảng agent đến các thử nghiệm giao diện lab.",
+    "intro": "Chúng tôi hướng đến hạ tầng, AI infastructure và công cụ mở. Chúng tôi tin vào sức mạnh của cộng đồng và sự minh bạch để thúc đẩy đổi mới nhanh hơn — chia sẻ template, module và bài viết kỹ thuật từ nghiên cứu của chúng tôi.",
     "viewRepo": "GitHub",
     "metaStars": "Sao",
     "metaForks": "Fork"
@@ -217,7 +230,7 @@
   "faq": {
     "badge": "FAQ // Góc nhìn lab",
     "titleLine1": "Kỷ nguyên",
-    "titleLine2": "đổi mới & lab trẻ.",
+    "titleLine2": "sáng tạo & đổi mới.",
     "intro": "Một vài câu hỏi về bối cảnh đổi mới công nghệ và cách các lab nhỏ ở Việt Nam đang hình thành vai trò mới.",
     "items": [
       {

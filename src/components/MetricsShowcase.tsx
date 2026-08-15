@@ -1,14 +1,6 @@
 import { useId } from 'react';
-import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-
-export type MetricChartItem = {
-  label: string;
-  value: string;
-  caption: string;
-  chartType: 'bars' | 'line' | 'radial';
-  chartData: number[];
-};
+import { soundManager } from '../lib/SoundManager';
 
 function MiniBars({ values, uid }: { values: number[]; uid: string }) {
   const max = Math.max(...values, 1);
@@ -17,18 +9,15 @@ function MiniBars({ values, uid }: { values: number[]; uid: string }) {
   const barW = slot * 0.55;
 
   return (
-    <svg viewBox="0 0 100 38" className="h-16 w-full" preserveAspectRatio="none" aria-hidden>
+    <svg viewBox="0 0 100 38" className="h-14 w-full" preserveAspectRatio="none" aria-hidden>
       <defs>
         <linearGradient id={`${uid}-bar`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="rgb(34 211 238)" stopOpacity="0.45" />
-          <stop offset="100%" stopColor="rgb(34 211 238)" stopOpacity="0.08" />
+          <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.2" />
         </linearGradient>
       </defs>
-      {[10, 20, 30].map((y) => (
-        <line key={y} x1="0" y1={y} x2="100" y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth="0.35" />
-      ))}
       {values.map((v, i) => {
-        const h = (v / max) * 26;
+        const h = (v / max) * 28;
         const x = slot * i + (slot - barW) / 2;
         const y = 34 - h;
         const last = i === n - 1;
@@ -39,10 +28,8 @@ function MiniBars({ values, uid }: { values: number[]; uid: string }) {
             y={y}
             width={barW}
             height={h}
-            rx="0.8"
-            fill={last ? `url(#${uid}-bar)` : 'rgba(255,255,255,0.07)'}
-            stroke={last ? 'rgba(34,211,238,0.35)' : 'rgba(255,255,255,0.12)'}
-            strokeWidth="0.4"
+            rx="1"
+            fill={last ? `url(#${uid}-bar)` : '#d1d5db'}
           />
         );
       })}
@@ -64,22 +51,19 @@ function MiniLine({ values, uid }: { values: number[]; uid: string }) {
   const fillPoints = `0,34 ${points} 100,34`;
 
   return (
-    <svg viewBox="0 0 100 36" className="h-16 w-full" preserveAspectRatio="none" aria-hidden>
+    <svg viewBox="0 0 100 36" className="h-14 w-full" preserveAspectRatio="none" aria-hidden>
       <defs>
         <linearGradient id={`${uid}-area`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="rgb(34 211 238)" stopOpacity="0.28" />
-          <stop offset="100%" stopColor="rgb(34 211 238)" stopOpacity="0" />
+          <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.25" />
+          <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />
         </linearGradient>
       </defs>
-      {[9, 18, 27].map((y) => (
-        <line key={y} x1="0" y1={y} x2="100" y2={y} stroke="rgba(255,255,255,0.06)" strokeWidth="0.35" />
-      ))}
       <polyline points={fillPoints} fill={`url(#${uid}-area)`} stroke="none" />
       <polyline
         points={points}
         fill="none"
-        stroke="rgba(34,211,238,0.55)"
-        strokeWidth="1.1"
+        stroke="#06b6d4"
+        strokeWidth="1.6"
         strokeLinejoin="round"
         strokeLinecap="round"
       />
@@ -87,129 +71,93 @@ function MiniLine({ values, uid }: { values: number[]; uid: string }) {
   );
 }
 
-function MiniRadial({ percent, uid }: { percent: number; uid: string }) {
-  const r = 16;
-  const c = 20;
-  const stroke = 2.2;
-  const circ = 2 * Math.PI * r;
-  const clamped = Math.min(100, Math.max(0, percent));
-  const offset = circ * (1 - clamped / 100);
+export default function MetricsShowcase() {
+  const uid = useId();
+
+  const metrics = [
+    {
+      label: 'SWARM WORKFLOWS',
+      value: '1.2M+',
+      caption: 'Agent tasks dispatched across nodes',
+      chart: 'bars',
+      data: [14, 28, 45, 60, 85, 110, 142],
+    },
+    {
+      label: 'LATENCY BENCHMARK',
+      value: '4.8ms',
+      caption: 'Mean P2P state propagation latency',
+      chart: 'line',
+      data: [22, 18, 14, 11, 8, 6, 4.8],
+    },
+    {
+      label: 'SECURITY AUDIT PASS',
+      value: '99.98%',
+      caption: 'Formal verification accuracy across MCP',
+      chart: 'line',
+      data: [98.2, 98.7, 99.1, 99.4, 99.7, 99.9, 99.98],
+    },
+    {
+      label: 'ACTIVE DEVELOPERS',
+      value: '4,500+',
+      caption: 'Engineers building on Aevum & PiperNet',
+      chart: 'bars',
+      data: [300, 850, 1400, 2200, 3100, 3900, 4500],
+    },
+  ];
 
   return (
-    <svg viewBox="0 0 40 40" className="mx-auto h-20 w-20" aria-hidden>
-      <defs>
-        <linearGradient id={`${uid}-rad`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="rgb(34 211 238)" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="rgb(147 197 253)" stopOpacity="0.35" />
-        </linearGradient>
-      </defs>
-      <circle cx={c} cy={c} r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={stroke} />
-      <circle
-        cx={c}
-        cy={c}
-        r={r}
-        fill="none"
-        stroke={`url(#${uid}-rad)`}
-        strokeWidth={stroke}
-        strokeLinecap="round"
-        strokeDasharray={circ}
-        strokeDashoffset={offset}
-        transform={`rotate(-90 ${c} ${c})`}
-      />
-    </svg>
-  );
-}
+    <section className="w-full bg-[#e5e6ea] py-28 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-neutral-300 select-none">
+      <div className="max-w-7xl mx-auto flex flex-col space-y-16">
+        
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-neutral-300 pb-8">
+          <div>
+            <span className="text-xs font-mono font-bold tracking-[0.3em] uppercase text-neutral-500">
+              [ 05 // SYSTEM TELEMETRY & METRICS ]
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal tracking-[-0.04em] text-[#121316] mt-2">
+              Performance by Design. <br />
+              Verified in Real-Time.
+            </h2>
+          </div>
+          <p className="text-sm md:text-base text-neutral-600 max-w-md font-normal leading-relaxed">
+            Real telemetry data aggregating throughput, consensus stability, and security guarantees across the ecosystem.
+          </p>
+        </div>
 
-function MetricChart({ item, index }: { item: MetricChartItem; index: number }) {
-  const reactId = useId().replace(/:/g, '');
-  const uid = `m-${index}-${reactId}`;
-
-  if (item.chartType === 'line') {
-    return <MiniLine values={item.chartData} uid={uid} />;
-  }
-  if (item.chartType === 'radial') {
-    const p = item.chartData[0] ?? 0;
-    return <MiniRadial percent={p} uid={uid} />;
-  }
-  return <MiniBars values={item.chartData} uid={uid} />;
-}
-
-const MetricsShowcase = () => {
-  const { t } = useTranslation();
-  const items = t('metrics.items', { returnObjects: true }) as MetricChartItem[];
-
-  return (
-    <section
-      id="metrics"
-      className="relative z-10 border-t border-white/10 bg-black py-24 md:py-32"
-      aria-labelledby="metrics-heading"
-    >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.p
-          className="mb-4 text-center font-mono text-[10px] font-black uppercase tracking-[0.42em] text-white/40 md:text-[11px]"
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.45 }}
-        >
-          {t('metrics.badge')}
-        </motion.p>
-
-        <motion.h2
-          id="metrics-heading"
-          className="mb-6 text-center text-3xl font-black uppercase tracking-tighter text-white/40 md:mb-8 md:text-5xl lg:text-6xl"
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-        >
-          {t('metrics.titleLine1')}{' '}
-          <span className="text-white">{t('metrics.titleLine2')}</span>
-        </motion.h2>
-
-        <motion.p
-          className="mx-auto mb-14 max-w-2xl text-center text-sm leading-relaxed text-gray-500 md:mb-16 md:text-base"
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.45, delay: 0.08 }}
-        >
-          {t('metrics.intro')}
-        </motion.p>
-
-        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
-          {items.map((item, index) => (
-            <motion.li
-              key={item.label}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: index * 0.06 }}
+        {/* Metrics Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {metrics.map((m, idx) => (
+            <motion.div
+              key={idx}
+              whileHover={{ y: -3 }}
+              onMouseEnter={() => soundManager.playTypeTick()}
+              className="bg-white/80 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-black/5 hover:border-black/20 shadow-sm flex flex-col justify-between"
             >
-              <article className="flex h-full flex-col rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.03] to-transparent p-5 transition-all duration-500 hover:border-white/20 md:p-6">
-                <p className="mb-1 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-white/35">
-                  {item.label}
-                </p>
-                <p className="mb-1 text-3xl font-black tabular-nums tracking-tight text-white md:text-4xl">
-                  {item.value}
-                </p>
-                <p className="mb-5 text-xs leading-relaxed text-gray-500 md:text-sm">{item.caption}</p>
-                <div className="mt-auto border-t border-white/5 pt-4">
-                  <MetricChart item={item} index={index} />
+              <div>
+                <span className="text-[10px] font-mono font-bold tracking-widest text-neutral-400 uppercase">
+                  {m.label}
+                </span>
+                <div className="text-3xl sm:text-4xl font-normal tracking-tight text-[#121316] mt-3 mb-1">
+                  {m.value}
                 </div>
-              </article>
-            </motion.li>
-          ))}
-        </ul>
+                <p className="text-xs text-neutral-500 leading-relaxed">
+                  {m.caption}
+                </p>
+              </div>
 
-        <p className="mt-10 text-center font-mono text-[9px] uppercase tracking-[0.28em] text-white/25">
-          {t('metrics.disclaimer')}
-        </p>
+              <div className="mt-8 pt-4 border-t border-neutral-100">
+                {m.chart === 'bars' ? (
+                  <MiniBars values={m.data} uid={`${uid}-${idx}`} />
+                ) : (
+                  <MiniLine values={m.data} uid={`${uid}-${idx}`} />
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
       </div>
     </section>
   );
-};
-
-export default MetricsShowcase;
+}

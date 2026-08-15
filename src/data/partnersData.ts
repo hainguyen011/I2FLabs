@@ -4,10 +4,12 @@ export type PartnerLogo = {
   /** Nhãn truy cập / SEO */
   alt: string;
   src: string;
+  url: string;
 };
 
 export const partnerLogos: PartnerLogo[] = [
-  { id: 'p1', alt: 'Partner Unikorn', src: '/partners/p1.png' },
-  { id: 'p2', alt: 'Partner PiperFlow', src: '/partners/p2.png' },  
-  { id: 'p3', alt: 'Partner', src: '/partners/p3.png' },
+  { id: 'p1', alt: 'Partner Unikorn', src: '/partners/p1.png', url: 'https://unikorn.vn/' },
+  { id: 'p3', alt: 'Partner', src: '/partners/p3.png', url: '' },
+  { id: 'p2', alt: 'Partner PiperFlow', src: '/partners/p2.png', url: 'https://piperflow.io.vn/' },
+
 ];
