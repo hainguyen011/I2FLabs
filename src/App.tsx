@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Loading from './components/Loading';
-import Navigation from './components/Navigation';
-import Hero from './components/Hero';
+import HorizontalStory from './components/HorizontalStory';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -10,7 +9,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1800); // Quick cinematic intro for punchy first impression
+    }, 1500); // 1.5s sharp cinematic scanline intro
 
     return () => clearTimeout(timer);
   }, []);
@@ -22,9 +21,8 @@ function App() {
       </AnimatePresence>
       
       {!loading && (
-        <main className="w-screen h-screen overflow-hidden bg-[#d6d7db] text-[#121316] font-sans relative flex flex-col justify-between select-none">
-          <Navigation />
-          <Hero />
+        <main className="w-screen h-screen overflow-hidden bg-black text-[#F8FAFC] font-sans relative flex flex-col justify-between select-none">
+          <HorizontalStory />
         </main>
       )}
     </>

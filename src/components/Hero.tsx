@@ -424,12 +424,13 @@ export default function Hero() {
     }
 
     if (chip.action && DIALOGUE_TREE[chip.action]) {
+      soundManager.playQuantumWarp();
       setCurrentNodeKey(chip.action);
     }
   };
 
   const handleResetDialogue = () => {
-    soundManager.playPop();
+    soundManager.playRazorClick();
     setCurrentNodeKey('initial');
     setActiveModal(null);
   };
@@ -475,17 +476,20 @@ export default function Hero() {
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="space-y-2 pb-4 mb-2 relative"
             >
-              <span className="text-xs font-mono tracking-[0.3em] uppercase text-neutral-600">
-                {t('hero.intro.label')}
-              </span>
-              <p className="text-lg sm:text-xl font-semibold text-neutral-500 tracking-tight leading-snug">
-                {t('hero.intro.tagline')}
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-cyan-400 font-semibold">
+                  {t('hero.intro.label', { defaultValue: 'I2F LABS // AUTONOMOUS GROUP' })}
+                </span>
+              </div>
+              <p className="text-lg sm:text-xl font-bold text-white tracking-tight leading-snug">
+                {t('hero.intro.tagline', { defaultValue: 'Deep-Tech Research & Autonomous Runtimes' })}
               </p>
-              <p className="text-sm text-neutral-500 leading-relaxed max-w-md">
-                {t('hero.intro.desc')}
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-md">
+                {t('hero.intro.desc', { defaultValue: 'Architecting local-first operating systems, high-speed multi-agent swarms, and deterministic boundary verification.' })}
               </p>
-              {/* Electron blue fade-right divider */}
-              <div className="absolute bottom-0 left-0 w-1/3 h-[1px] bg-gradient-to-r from-[#3B82F6]/70 via-[#3B82F6]/20 to-transparent" />
+              {/* Razor cyan fade-right divider */}
+              <div className="absolute bottom-0 left-0 w-2/5 h-[1.5px] bg-gradient-to-r from-cyan-400 via-white/20 to-transparent" />
             </motion.div>
 
             {/* Top context line (Previous message / Context) */}
@@ -495,16 +499,16 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <p className="text-xs sm:text-sm text-neutral-700 leading-snug font-normal whitespace-pre-line tracking-tight">
+              <p className="text-xs sm:text-sm text-slate-400 font-mono leading-snug whitespace-pre-line tracking-tight">
                 {activeNode.topContext[lang]}
               </p>
             </motion.div>
 
             {/* Main Conversational Statement (Current bot speech) */}
             <div className="min-h-[65px] sm:min-h-[85px] flex items-start">
-              <h1 className="text-base sm:text-lg md:text-[1.45rem] lg:text-[1.6rem] font-normal leading-[1.3] tracking-[-0.02em] text-[#111111]">
+              <h1 className="text-base sm:text-lg md:text-[1.45rem] lg:text-[1.6rem] font-medium leading-[1.3] tracking-[-0.02em] text-white">
                 {displayedText}
-                <span className={`inline-block w-2 h-5 md:h-6 ml-1 align-middle bg-[#111111] ${isTyping ? 'opacity-100' : 'caret-blink'}`} />
+                <span className={`inline-block w-2 h-5 md:h-6 ml-1 align-middle bg-cyan-400 shadow-[0_0_8px_rgba(0,240,255,0.8)] ${isTyping ? 'opacity-100' : 'caret-blink'}`} />
               </h1>
             </div>
 
@@ -569,8 +573,8 @@ export default function Hero() {
               className="flex items-center justify-between mb-4 px-3.5 sm:px-4"
               variants={{ hidden: { opacity: 0, y: -6 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } } }}
             >
-              <span className="text-xs font-mono tracking-[0.3em] uppercase text-neutral-600">THE TEAM</span>
-              <span className="text-xs font-mono text-neutral-400 tabular-nums">{teamMembers.length.toString().padStart(2,'0')}</span>
+              <span className="text-xs font-mono tracking-[0.3em] uppercase text-cyan-400 font-bold">RESEARCH FELLOWS</span>
+              <span className="text-xs font-mono text-slate-400 tabular-nums font-semibold">{teamMembers.length.toString().padStart(2,'0')}</span>
             </motion.div>
 
             {/* Member rows */}
@@ -586,7 +590,7 @@ export default function Hero() {
                 <div className="flex items-center gap-4 py-3 px-3.5 sm:px-4">
 
                   {/* Index */}
-                  <span className="text-[11px] tabular-nums text-neutral-300 group-hover:text-neutral-500 transition-colors duration-200 w-5 shrink-0 font-medium">
+                  <span className="text-[11px] tabular-nums text-slate-500 group-hover:text-cyan-400 transition-colors duration-200 w-5 shrink-0 font-mono font-medium">
                     {(i + 1).toString().padStart(2, '0')}
                   </span>
 
@@ -609,10 +613,10 @@ export default function Hero() {
 
                   {/* Info */}
                   <div className="flex-1 min-w-0 flex flex-col justify-center">
-                    <p className="text-sm font-semibold text-[#111111] tracking-tight leading-none mb-1.5 truncate group-hover:text-black transition-colors">
+                    <p className="text-sm font-semibold text-white tracking-tight leading-none mb-1.5 truncate group-hover:text-cyan-300 transition-colors">
                       {member.name}
                     </p>
-                    <p className="text-[10.5px] text-neutral-400 uppercase tracking-[0.08em] font-mono leading-none truncate group-hover:text-neutral-700 transition-colors duration-300">
+                    <p className="text-[10.5px] text-slate-400 uppercase tracking-[0.08em] font-mono leading-none truncate group-hover:text-slate-300 transition-colors duration-300">
                       {member.role.split('&')[0].trim()}
                     </p>
                     {/* Specialties micro-badges on hover */}
@@ -655,7 +659,7 @@ export default function Hero() {
 
                 {/* Hover accent bar — slides from top with smooth easing */}
                 <motion.span
-                  className="absolute left-1 top-2 bottom-2 w-[2.5px] bg-[#111111] rounded-full origin-top"
+                  className="absolute left-1 top-2 bottom-2 w-[2.5px] bg-cyan-400 shadow-[0_0_8px_rgba(0,240,255,0.8)] rounded-full origin-top"
                   initial={{ scaleY: 0, opacity: 0 }}
                   whileHover={{ scaleY: 1, opacity: 1 }}
                   transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
@@ -674,7 +678,7 @@ export default function Hero() {
           {/* Bottom-Left: Circular Black Reload Button (Reset Conversation) */}
           <button
             onClick={handleResetDialogue}
-            className="pointer-events-auto w-10 h-10 rounded-full bg-black text-white flex items-center justify-center hover:bg-neutral-800 transition-colors cursor-pointer focus:outline-none"
+            className="pointer-events-auto w-10 h-10 rounded-full bg-[#12141f] text-white border border-white/15 flex items-center justify-center hover:bg-[#1a1e2d] hover:border-cyan-400/50 hover:shadow-[0_0_15px_rgba(0,240,255,0.25)] transition-all cursor-pointer focus:outline-none"
             title="Reset conversation"
             aria-label="Reset conversation"
           >
@@ -682,7 +686,7 @@ export default function Hero() {
           </button>
 
           {/* Bottom-Right: Vertical Black Pill Sound Toggle */}
-          <div className="pointer-events-auto flex flex-col items-center bg-black rounded-full p-1.5 space-y-1">
+          <div className="pointer-events-auto flex flex-col items-center bg-[#12141f] border border-white/15 rounded-full p-1.5 space-y-1 shadow-lg">
             <button
               onClick={() => {
                 if (!soundEnabled) toggleSound();
@@ -718,7 +722,7 @@ export default function Hero() {
       <AnimatePresence>
         {activeModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/40">
-            <div className="relative w-full max-w-lg bg-white rounded-3xl p-8 sm:p-10 border border-neutral-300 text-[#111111]">
+            <div className="relative w-full max-w-lg bg-[#0c0e15]/95 rounded-3xl p-8 sm:p-10 border border-white/15 text-white backdrop-blur-2xl shadow-2xl">
               
               {/* Close Button */}
               <button
@@ -726,7 +730,7 @@ export default function Hero() {
                   soundManager.playPop();
                   setActiveModal(null);
                 }}
-                className="absolute top-6 right-6 w-9 h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-600 hover:text-black transition-colors cursor-pointer"
+                className="absolute top-6 right-6 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-slate-300 hover:text-white transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -738,7 +742,7 @@ export default function Hero() {
                     <span className="text-[10px] font-mono font-bold tracking-widest text-neutral-500 uppercase">
                       [ LET'S TALK ]
                     </span>
-                    <h2 className="text-2xl sm:text-3xl font-normal tracking-tight mt-1 text-[#111111]">
+                    <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mt-1 text-white">
                       Start a Project with I2F Labs
                     </h2>
                     <p className="text-sm text-neutral-500 mt-1">
@@ -755,7 +759,7 @@ export default function Hero() {
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="e.g. Satoshi Nakamoto"
-                        className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-3.5 py-2.5 text-sm text-neutral-900 focus:outline-none focus:border-black"
+                        className="w-full bg-[#141724] border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400"
                       />
                     </div>
                     <div>
@@ -766,7 +770,7 @@ export default function Hero() {
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="satoshi@domain.com"
-                        className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-3.5 py-2.5 text-sm text-neutral-900 focus:outline-none focus:border-black"
+                        className="w-full bg-[#141724] border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400"
                       />
                     </div>
                     <div>
@@ -777,13 +781,13 @@ export default function Hero() {
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         placeholder="Tell us what you are aiming to build..."
-                        className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-3.5 py-2.5 text-sm text-neutral-900 focus:outline-none focus:border-black resize-none"
+                        className="w-full bg-[#141724] border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 resize-none"
                       />
                     </div>
                     <button
                       type="submit"
                       disabled={formSent}
-                      className="w-full loco-chip !justify-center !py-3 !bg-black !text-white hover:!bg-neutral-800 font-medium"
+                      className="w-full loco-chip !justify-center !py-3 !bg-white !text-black hover:!bg-slate-200 shadow-[0_0_20px_rgba(255,255,255,0.2)] font-medium"
                     >
                       {formSent ? (
                         <>
@@ -822,7 +826,7 @@ export default function Hero() {
                     <span className="text-[10px] font-mono font-bold tracking-widest text-neutral-500 uppercase">
                       [ JOIN THE TEAM ]
                     </span>
-                    <h2 className="text-2xl sm:text-3xl font-normal tracking-tight mt-1 text-[#111111]">
+                    <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mt-1 text-white">
                       Open Research Positions
                     </h2>
                     <p className="text-sm text-neutral-500 mt-1">
@@ -838,10 +842,10 @@ export default function Hero() {
                     ].map((role, idx) => (
                       <div
                         key={idx}
-                        className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 flex items-center justify-between"
+                        className="p-4 rounded-2xl bg-[#141724] border border-white/10 flex items-center justify-between text-white"
                       >
                         <div>
-                          <h4 className="text-sm font-semibold text-neutral-900">{role.title}</h4>
+                          <h4 className="text-sm font-semibold text-white">{role.title}</h4>
                           <span className="text-xs font-mono text-neutral-500">{role.type}</span>
                         </div>
                         <a
@@ -865,7 +869,7 @@ export default function Hero() {
                     <span className="text-[10px] font-mono font-bold tracking-widest text-neutral-500 uppercase">
                       [ RESEARCH & CULTURE ]
                     </span>
-                    <h2 className="text-2xl sm:text-3xl font-normal tracking-tight mt-1 text-[#111111]">
+                    <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mt-1 text-white">
                       Core Scientific Frameworks
                     </h2>
                     <p className="text-sm text-neutral-500 mt-1">
@@ -885,11 +889,11 @@ export default function Hero() {
                         target="_blank"
                         rel="noreferrer"
                         onClick={() => soundManager.playClick()}
-                        className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 flex items-center justify-between block"
+                        className="p-4 rounded-2xl bg-[#141724] border border-white/10 flex items-center justify-between text-white block"
                       >
                         <div>
                           <div className="flex items-center space-x-2">
-                            <h4 className="text-sm font-semibold text-neutral-900">{res.name}</h4>
+                            <h4 className="text-sm font-semibold text-white">{res.name}</h4>
                             <Github className="w-3.5 h-3.5 text-neutral-400" />
                           </div>
                           <p className="text-xs text-neutral-500 mt-0.5">{res.desc}</p>
@@ -909,3 +913,4 @@ export default function Hero() {
     </section>
   );
 }
+

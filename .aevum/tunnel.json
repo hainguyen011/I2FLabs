@@ -1,0 +1,11 @@
+{
+  "active": false,
+  "mode": "quick",
+  "publicUrl": "https://stick-pound-subjects-received.trycloudflare.com",
+  "sseUrl": "https://stick-pound-subjects-received.trycloudflare.com/sse?token=ae_sec_c88af694bac70e4c3a5af611",
+  "mcpUrl": "https://stick-pound-subjects-received.trycloudflare.com/mcp?token=ae_sec_c88af694bac70e4c3a5af611",
+  "localUrl": "http://127.0.0.1:3344",
+  "token": "ae_sec_6585614e295be62e3e852e2f",
+  "updatedAt": "2026-10-12T16:41:53.295Z",
+  "connectedAt": "2026-08-30T05:52:20.134Z"
+}

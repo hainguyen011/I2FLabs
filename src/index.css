@@ -4,14 +4,16 @@
 
 @layer base {
   :root {
-    --studio-base: #bcbec3;
-    --studio-light: #e4e5e9;
-    --studio-dark: #989aa0;
+    --studio-base: #08090c;
+    --studio-light: #161922;
+    --studio-dark: #040507;
+    --razor-cyan: #00f0ff;
+    --razor-silver: #e2e8f0;
   }
 
   body {
-    background-color: #bcbec3;
-    color: #111111;
+    background-color: #08090c;
+    color: #f1f5f9;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -22,49 +24,91 @@
   }
 }
 
-/* Locomotive Studio Radial Lighting */
+/* Deep Obsidian Cyber-Kinetic Void Studio */
 .locomotive-studio {
-  background: radial-gradient(ellipse at 60% 45%, #eaebef 0%, #d4d5d9 35%, #bcbec3 70%, #9fa1a7 100%);
+  background: radial-gradient(ellipse at 50% 38%, #141724 0%, #0c0d14 45%, #06070a 100%);
+  position: relative;
 }
 
-/* Stable intro text */
-.text-blur-intro {
-  color: #333333;
+/* Subtle Quantum Matrix Grid lines */
+.locomotive-studio::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 1;
 }
 
-/* Flat, Zero-Resizing Pill Buttons */
+/* Dynamic Razor Edge Slanted Glow (Inspired by I2F Logo Slash) */
+.razor-ambient-slash {
+  position: absolute;
+  top: -20%;
+  left: 20%;
+  width: 140%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.15) 30%, rgba(0, 240, 255, 0.3) 60%, transparent 100%);
+  transform: rotate(-18deg);
+  pointer-events: none;
+  filter: blur(1px);
+  opacity: 0.6;
+}
+
+/* Cybernetic Glass Pill Chips (Sleek, High-Velocity, Tactile) */
 .loco-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.45rem 1.15rem;
+  gap: 0.4rem;
+  padding: 0.48rem 1.15rem;
   border-radius: 9999px;
   font-size: 0.8125rem;
-  font-weight: 400;
-  color: #111111;
-  background-color: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: none !important;
-  transform: none !important;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  font-weight: 500;
+  color: #f8fafc;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transform: translateY(0);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.loco-chip::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: transform 0.5s ease;
 }
 
 .loco-chip:hover {
-  background-color: #e8e9ec;
-  border-color: rgba(0, 0, 0, 0.08);
-  box-shadow: none !important;
-  transform: none !important;
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 255, 255, 0.08);
+}
+
+.loco-chip:hover::after {
+  transform: translateX(200%);
 }
 
 .loco-chip:active {
-  background-color: #dedfe3;
-  transform: none !important;
+  background-color: rgba(255, 255, 255, 0.08);
+  transform: translateY(0.5px);
 }
 
 /* Scanline and phosphor noise */
 .crt-screen-noise {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
   background-size: 4px 4px;
 }
 
@@ -76,4 +120,20 @@
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+/* Bio-luminescent heart pulse */
+@keyframes bioPulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.bio-pulse-glow {
+  animation: bioPulseGlow 3.2s ease-in-out infinite;
 }

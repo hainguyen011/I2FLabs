@@ -1,314 +1,359 @@
-import { useEffect, useRef } from 'react';
-import * as THREE from 'three';
+import React, { useEffect, useRef } from 'react';
 import { soundManager } from '../lib/SoundManager';
+import { hardwareGovernor } from '../engine/omega';
 
-export type OrbMood = 'eyes' | 'glyph' | 'happy' | 'wink' | 'neutral';
+export type OrbTopology = 'matrix' | 'swarm' | 'kernel' | 'quantum';
 
 interface TechOrbCanvasProps {
-  mood?: OrbMood;
+  topology?: OrbTopology;
   isAudioPlaying?: boolean;
   onInteract?: () => void;
 }
 
+interface Particle3D {
+  x: number;
+  y: number;
+  z: number;
+  baseX: number;
+  baseY: number;
+  baseZ: number;
+  size: number;
+  speed: number;
+  color: string;
+}
+
 export default function TechOrbCanvas({
-  mood: _mood = 'neutral',
+  topology: _topology = 'matrix',
   isAudioPlaying = false,
   onInteract,
 }: TechOrbCanvasProps) {
-  const mountRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
-  const isAudioPlayingRef = useRef(isAudioPlaying);
+  const audioIntensityRef = useRef(0);
 
   useEffect(() => {
-    isAudioPlayingRef.current = isAudioPlaying;
-  }, [isAudioPlaying]);
+    const canvas = canvasRef.current;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
-  useEffect(() => {
-    const container = mountRef.current;
-    if (!container) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-    const width = container.clientWidth || 460;
-    const height = container.clientHeight || 460;
+    let animId: number = 0;
+    let width = 0;
+    let height = 0;
 
-    // Scene, Camera, Renderer
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(48, width / height, 0.1, 1000);
-    camera.position.z = 8.5;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance',
-    });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
+    const resize = () => {
+      width = container.clientWidth || 460;
+      height = container.clientHeight || 460;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.scale(dpr, dpr);
+    };
 
-    // Group to hold all 3D objects
-    const orbGroup = new THREE.Group();
-    scene.add(orbGroup);
+    resize();
+    window.addEventListener('resize', resize);
 
-    // 1. Generate Main Fibonacci Sphere Particles (Micro-dots)
-    const particleCount = 3800;
-    const sphereRadius = 2.0;
-    const basePositions = new Float32Array(particleCount * 3);
-    const currentPositions = new Float32Array(particleCount * 3);
-    const colors = new Float32Array(particleCount * 3);
-    const scales = new Float32Array(particleCount);
+    // Generate 3D Holographic Particles on a Fibonacci Hyper-Sphere & Slanted Accents
+    const particleCount = hardwareGovernor.currentTier === 'ECO' ? 140 : 260;
+    const sphereRadius = Math.min(width, height) * 0.28;
+    const particles: Particle3D[] = [];
 
     const phi = Math.PI * (3 - Math.sqrt(5)); // Golden angle
 
     for (let i = 0; i < particleCount; i++) {
-      const y = 1 - (i / (particleCount - 1)) * 2; // y goes from 1 to -1
+      const y = 1 - (i / (particleCount - 1)) * 2;
       const radiusAtY = Math.sqrt(1 - y * y);
       const theta = phi * i;
 
-      const x = Math.cos(theta) * radiusAtY;
-      const z = Math.sin(theta) * radiusAtY;
+      const x = Math.cos(theta) * radiusAtY * sphereRadius;
+      const py = y * sphereRadius;
+      const z = Math.sin(theta) * radiusAtY * sphereRadius;
 
-      basePositions[i * 3] = x * sphereRadius;
-      basePositions[i * 3 + 1] = y * sphereRadius;
-      basePositions[i * 3 + 2] = z * sphereRadius;
+      // Color scheme: Pure Cyan #00F0FF, Pure White, Silver Slate
+      const isCore = Math.random() > 0.75;
+      const isSilver = Math.random() > 0.5;
+      const color = isCore ? '#00f0ff' : isSilver ? '#ffffff' : '#64748b';
 
-      currentPositions[i * 3] = basePositions[i * 3];
-      currentPositions[i * 3 + 1] = basePositions[i * 3 + 1];
-      currentPositions[i * 3 + 2] = basePositions[i * 3 + 2];
-
-      // Palette: Elegant Charcoal / Deep minimal dots
-      const isCore = Math.random() > 0.6;
-      if (isCore) {
-        colors[i * 3] = 0.10 + Math.random() * 0.08;
-        colors[i * 3 + 1] = 0.10 + Math.random() * 0.08;
-        colors[i * 3 + 2] = 0.12 + Math.random() * 0.08;
-      } else {
-        colors[i * 3] = 0.03 + Math.random() * 0.04;
-        colors[i * 3 + 1] = 0.03 + Math.random() * 0.04;
-        colors[i * 3 + 2] = 0.05 + Math.random() * 0.04;
-      }
-
-      scales[i] = 0.8 + Math.random() * 1.2;
+      particles.push({
+        x,
+        y: py,
+        z,
+        baseX: x,
+        baseY: py,
+        baseZ: z,
+        size: isCore ? 2.2 : 1.4,
+        speed: 0.008 + Math.random() * 0.006,
+        color,
+      });
     }
 
-    const sphereGeometry = new THREE.BufferGeometry();
-    sphereGeometry.setAttribute('position', new THREE.BufferAttribute(currentPositions, 3));
-    sphereGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    sphereGeometry.setAttribute('scale', new THREE.BufferAttribute(scales, 1));
+    // Outer Slanted Razor Orbital Ring (-18 degrees matching I2F logo slash)
+    const ringCount = 70;
+    const ringRadius = sphereRadius * 1.38;
+    const ringParticles: { angle: number; radius: number; speed: number; yOffset: number }[] = [];
 
-    // Custom Particle Texture
-    const createCircleTexture = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = 64;
-      canvas.height = 64;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-        grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-        grad.addColorStop(0.35, 'rgba(240, 245, 255, 0.9)');
-        grad.addColorStop(0.7, 'rgba(20, 20, 25, 0.3)');
-        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, 64, 64);
-      }
-      return new THREE.CanvasTexture(canvas);
-    };
-
-    const particleMaterial = new THREE.PointsMaterial({
-      size: 0.048,
-      map: createCircleTexture(),
-      transparent: true,
-      vertexColors: true,
-      blending: THREE.NormalBlending,
-      depthWrite: false,
-    });
-
-    const particlePoints = new THREE.Points(sphereGeometry, particleMaterial);
-    orbGroup.add(particlePoints);
-
-    // 2. Outer Orbital Ring 1 (Fine micro-dots)
-    const ring1Count = 260;
-    const ring1Positions = new Float32Array(ring1Count * 3);
-    const ring1Radius = sphereRadius * 1.35;
-    for (let i = 0; i < ring1Count; i++) {
-      const angle = (i / ring1Count) * Math.PI * 2;
-      ring1Positions[i * 3] = Math.cos(angle) * ring1Radius;
-      ring1Positions[i * 3 + 1] = Math.sin(angle) * ring1Radius;
-      ring1Positions[i * 3 + 2] = (Math.random() - 0.5) * 0.15;
+    for (let i = 0; i < ringCount; i++) {
+      ringParticles.push({
+        angle: (i / ringCount) * Math.PI * 2,
+        radius: ringRadius + (Math.random() - 0.5) * 12,
+        speed: 0.012 + Math.random() * 0.006,
+        yOffset: (Math.random() - 0.5) * 8,
+      });
     }
-    const ring1Geometry = new THREE.BufferGeometry();
-    ring1Geometry.setAttribute('position', new THREE.BufferAttribute(ring1Positions, 3));
-    const ring1Material = new THREE.PointsMaterial({
-      size: 0.035,
-      color: 0x111111,
-      transparent: true,
-      opacity: 0.7,
-      map: createCircleTexture(),
-      depthWrite: false,
-    });
-    const ring1 = new THREE.Points(ring1Geometry, ring1Material);
-    ring1.rotation.x = Math.PI / 3;
-    ring1.rotation.y = Math.PI / 6;
-    orbGroup.add(ring1);
-
-    // 3. Outer Orbital Ring 2 (Fine micro-dots)
-    const ring2Count = 220;
-    const ring2Positions = new Float32Array(ring2Count * 3);
-    const ring2Radius = sphereRadius * 1.22;
-    for (let i = 0; i < ring2Count; i++) {
-      const angle = (i / ring2Count) * Math.PI * 2;
-      ring2Positions[i * 3] = Math.cos(angle) * ring2Radius;
-      ring2Positions[i * 3 + 1] = Math.sin(angle) * ring2Radius;
-      ring2Positions[i * 3 + 2] = (Math.random() - 0.5) * 0.12;
-    }
-    const ring2Geometry = new THREE.BufferGeometry();
-    ring2Geometry.setAttribute('position', new THREE.BufferAttribute(ring2Positions, 3));
-    const ring2Material = new THREE.PointsMaterial({
-      size: 0.030,
-      color: 0x222222,
-      transparent: true,
-      opacity: 0.6,
-      map: createCircleTexture(),
-      depthWrite: false,
-    });
-    const ring2 = new THREE.Points(ring2Geometry, ring2Material);
-    ring2.rotation.x = -Math.PI / 4;
-    ring2.rotation.z = Math.PI / 5;
-    orbGroup.add(ring2);
 
     // Mouse Tracking
     const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-
-      const normX = (e.clientX - centerX) / (window.innerWidth / 2);
-      const normY = (e.clientY - centerY) / (window.innerHeight / 2);
-
-      mouseRef.current.targetX = normX;
-      mouseRef.current.targetY = normY;
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      mouseRef.current.targetX = (e.clientX - cx) / (window.innerWidth / 2);
+      mouseRef.current.targetY = (e.clientY - cy) / (window.innerHeight / 2);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
 
-    // Resize Handler
-    const handleResize = () => {
-      if (!container) return;
-      const w = container.clientWidth || 460;
-      const h = container.clientHeight || 460;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
+    // Visibility Lifecycle Governor
+    let isTabVisible = !document.hidden;
+    const handleVisibility = () => {
+      isTabVisible = !document.hidden;
+      if (isTabVisible && !animId) {
+        lastTime = performance.now();
+        render(performance.now());
+      }
     };
+    document.addEventListener('visibilitychange', handleVisibility);
 
-    window.addEventListener('resize', handleResize);
+    let angleX = 0;
+    let angleY = 0;
+    let lastTime = performance.now();
 
-    // Audio Reactivity state
-    let smoothedAudioIntensity = 0;
+    // 120Hz/60Hz Projection Render Loop
+    const render = (time: number) => {
+      if (!isTabVisible) {
+        animId = 0;
+        return;
+      }
+      animId = requestAnimationFrame(render);
 
-    // Animation Loop
-    let animId: number;
-    let clock = new THREE.Clock();
+      const dt = Math.min((time - lastTime) / 1000, 0.1);
+      lastTime = time;
 
-    const animate = () => {
-      animId = requestAnimationFrame(animate);
-
-      const elapsedTime = clock.getElapsedTime();
-
-      // Smooth audio transition
-      const targetAudio = isAudioPlayingRef.current ? 1.0 : 0.0;
-      smoothedAudioIntensity += (targetAudio - smoothedAudioIntensity) * 0.06;
-
-      // Audio Frequency Synthesizer & Rhythmic Beat Physics (124 BPM rhythm)
-      const beatPhase = (elapsedTime * 2.06) % 1.0;
-      const bassKick = Math.pow(Math.sin(beatPhase * Math.PI), 8) * smoothedAudioIntensity;
-      const snareSnap = Math.pow(Math.sin(((beatPhase + 0.5) % 1.0) * Math.PI), 12) * smoothedAudioIntensity;
-      const highFreqShimmer = (Math.sin(elapsedTime * 14.0) * 0.5 + 0.5) * smoothedAudioIntensity;
-
-      const totalAudioEnergy = bassKick * 0.6 + snareSnap * 0.3 + highFreqShimmer * 0.2;
+      // Audio intensity interpolation
+      const targetAudio = isAudioPlaying ? 1.0 : 0.0;
+      audioIntensityRef.current += (targetAudio - audioIntensityRef.current) * 0.08;
+      const audioPulse = audioIntensityRef.current * (Math.sin(time * 0.008) * 0.15 + 0.15);
 
       // Smooth mouse follow
-      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.05;
-      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.05;
+      mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.06;
+      mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.06;
 
-      const { x, y } = mouseRef.current;
+      angleY += (0.24 + audioIntensityRef.current * 0.2) * dt + mouseRef.current.x * 0.04;
+      angleX = Math.sin(time * 0.0008) * 0.18 - mouseRef.current.y * 0.35;
 
-      // Dynamic Group rotation accelerated by audio energy
-      const rotSpeed = 0.18 + smoothedAudioIntensity * 0.15;
-      orbGroup.rotation.y = elapsedTime * rotSpeed + x * 0.6;
-      orbGroup.rotation.x = elapsedTime * 0.08 - y * 0.4;
-      orbGroup.rotation.z = Math.sin(elapsedTime * 0.1) * 0.1;
+      ctx.clearRect(0, 0, width, height);
 
-      // Scale bounce on bass hits
-      const currentScale = 1.0 + bassKick * 0.15 + snareSnap * 0.06;
-      orbGroup.scale.set(currentScale, currentScale, currentScale);
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const fov = 380;
 
-      // Rings spin with audio bounce
-      ring1.rotation.z = -elapsedTime * (0.25 + totalAudioEnergy * 0.5);
-      ring2.rotation.z = elapsedTime * (0.2 + totalAudioEnergy * 0.4);
+      // Draw Depth Focal Grid Rays
+      ctx.save();
+      ctx.translate(centerX, centerY);
 
-      // Fluid Wave Ripple on Sphere Particles with Audio Resonance
-      const posAttr = sphereGeometry.attributes.position as THREE.BufferAttribute;
-      const posArray = posAttr.array as Float32Array;
+      // Rotate and Project Particles
+      const cosY = Math.cos(angleY);
+      const sinY = Math.sin(angleY);
+      const cosX = Math.cos(angleX);
+      const sinX = Math.sin(angleX);
 
-      const waveSpeed = 2.2 + smoothedAudioIntensity * 2.8;
-      const waveAmplitude = 0.08 + smoothedAudioIntensity * (0.07 + bassKick * 0.14);
+      // Slanted Razor Axis Transformation (-18 deg)
+      const slantAngle = -0.314; // -18 degrees in radians
+      const cosSlant = Math.cos(slantAngle);
+      const sinSlant = Math.sin(slantAngle);
 
-      for (let i = 0; i < particleCount; i++) {
-        const bx = basePositions[i * 3];
-        const by = basePositions[i * 3 + 1];
-        const bz = basePositions[i * 3 + 2];
-
-        // 3D Noise wave modulated by audio resonance
-        const wave =
-          Math.sin(bx * (1.5 + bassKick * 0.8) + elapsedTime * waveSpeed) * waveAmplitude +
-          Math.cos(by * (1.8 + snareSnap * 0.6) + elapsedTime * (waveSpeed * 0.85)) * waveAmplitude +
-          Math.sin(bz * 1.2 + elapsedTime * (waveSpeed * 0.7)) * (waveAmplitude * 0.9);
-
-        const pulseFactor = 1 + wave;
-
-        posArray[i * 3] = bx * pulseFactor;
-        posArray[i * 3 + 1] = by * pulseFactor;
-        posArray[i * 3 + 2] = bz * pulseFactor;
+      interface ProjectedPoint {
+        px: number;
+        py: number;
+        scale: number;
+        alpha: number;
+        color: string;
+        size: number;
+        pz: number;
       }
-      posAttr.needsUpdate = true;
 
-      // Subtle particle point size pulsation on beats
-      particleMaterial.size = 0.048 + bassKick * 0.02 + highFreqShimmer * 0.008;
+      const projected: ProjectedPoint[] = [];
 
-      renderer.render(scene, camera);
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+
+        // Wave deformation
+        const wave = Math.sin(time * 0.003 + p.baseY * 0.05) * 6;
+        const radiusScale = 1.0 + audioPulse + wave * 0.015;
+
+        const curX = p.baseX * radiusScale;
+        const curY = p.baseY * radiusScale;
+        const curZ = p.baseZ * radiusScale;
+
+        // 3D Rotation (Y axis then X axis)
+        const x1 = curX * cosY - curZ * sinY;
+        const z1 = curZ * cosY + curX * sinY;
+        const y2 = curY * cosX - z1 * sinX;
+        const z2 = z1 * cosX + curY * sinX;
+
+        // Slant tilt
+        const x3 = x1 * cosSlant - y2 * sinSlant;
+        const y3 = x1 * sinSlant + y2 * cosSlant;
+
+        const dist = fov / (fov + z2);
+        const px = x3 * dist;
+        const py = y3 * dist;
+        const alpha = Math.max(0.12, Math.min(1.0, (z2 + sphereRadius) / (sphereRadius * 2)));
+
+        projected.push({
+          px,
+          py,
+          scale: dist,
+          alpha,
+          color: p.color,
+          size: p.size * dist,
+          pz: z2,
+        });
+      }
+
+      // Sort by depth for correct compositing
+      projected.sort((a, b) => a.pz - b.pz);
+
+      // Draw Synaptic Neural Connections between closest projected points
+      ctx.lineWidth = 0.65;
+      const maxConnectDist = sphereRadius * 0.32;
+
+      for (let i = 0; i < projected.length; i += 2) {
+        for (let j = i + 1; j < Math.min(i + 8, projected.length); j++) {
+          const dx = projected[i].px - projected[j].px;
+          const dy = projected[i].py - projected[j].py;
+          const distSq = dx * dx + dy * dy;
+
+          if (distSq < maxConnectDist * maxConnectDist) {
+            const lineAlpha = (1 - Math.sqrt(distSq) / maxConnectDist) * 0.18 * projected[i].alpha;
+            ctx.strokeStyle = `rgba(0, 240, 255, ${lineAlpha})`;
+            ctx.beginPath();
+            ctx.moveTo(projected[i].px, projected[i].py);
+            ctx.lineTo(projected[j].px, projected[j].py);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw Particles
+      for (let i = 0; i < projected.length; i++) {
+        const pt = projected[i];
+        ctx.fillStyle = pt.color;
+        ctx.globalAlpha = pt.alpha;
+        ctx.beginPath();
+        ctx.arc(pt.px, pt.py, pt.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Draw Slanted Kinetic Razor Orbital Ring
+      ctx.lineWidth = 1.0;
+      for (let i = 0; i < ringParticles.length; i++) {
+        const rp = ringParticles[i];
+        rp.angle += rp.speed;
+
+        const rx = Math.cos(rp.angle) * rp.radius;
+        const rz = Math.sin(rp.angle) * rp.radius;
+        const ry = rp.yOffset;
+
+        // Apply 3D rotation & -18 deg slant
+        const x1 = rx * cosY - rz * sinY;
+        const z1 = rz * cosY + rx * sinY;
+        const y2 = ry * cosX - z1 * sinX;
+        const z2 = z1 * cosX + ry * sinX;
+
+        const x3 = x1 * cosSlant - y2 * sinSlant;
+        const y3 = x1 * sinSlant + y2 * cosSlant;
+
+        const dist = fov / (fov + z2);
+        const px = x3 * dist;
+        const py = y3 * dist;
+        const alpha = Math.max(0.1, Math.min(0.85, (z2 + ringRadius) / (ringRadius * 2)));
+
+        ctx.fillStyle = i % 4 === 0 ? '#00f0ff' : '#ffffff';
+        ctx.globalAlpha = alpha;
+        ctx.beginPath();
+        ctx.arc(px, py, 1.2 * dist, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Central Tachyon Quantum Core Pulse Glow
+      ctx.globalAlpha = 0.25 + audioPulse * 0.3;
+      const coreGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, sphereRadius * 0.45);
+      coreGrad.addColorStop(0, 'rgba(0, 240, 255, 0.4)');
+      coreGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.08)');
+      coreGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = coreGrad;
+      ctx.beginPath();
+      ctx.arc(0, 0, sphereRadius * 0.45, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
     };
 
-    animate();
+    render(performance.now());
 
     return () => {
-      cancelAnimationFrame(animId);
+      if (animId) cancelAnimationFrame(animId);
+      window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', handleResize);
-      if (container && renderer.domElement) {
-        container.removeChild(renderer.domElement);
-      }
-      renderer.dispose();
-      sphereGeometry.dispose();
-      ring1Geometry.dispose();
-      ring2Geometry.dispose();
-      particleMaterial.dispose();
-      ring1Material.dispose();
-      ring2Material.dispose();
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
-  }, []);
+  }, [isAudioPlaying]);
 
   const handleClick = () => {
-    soundManager.playPop();
+    soundManager.playRazorClick();
     onInteract?.();
   };
 
   return (
     <div
-      ref={mountRef}
+      ref={containerRef}
       onClick={handleClick}
-      className="relative w-[360px] sm:w-[440px] md:w-[520px] lg:w-[580px] aspect-square max-h-[min(62vh,540px)] flex items-center justify-center cursor-pointer select-none"
+      className="relative w-[340px] sm:w-[420px] md:w-[480px] lg:w-[540px] aspect-square max-h-[min(58vh,500px)] flex items-center justify-center cursor-pointer select-none group"
+      title="I2FLabs Autonomous Cognitive Core // Neural Wavefront Simulator"
     >
-      {/* Studio Floor Soft Contact Shadow */}
-      <div className="absolute -bottom-4 w-3/5 h-12 bg-black/15 blur-2xl rounded-full pointer-events-none" />
+      {/* 4 Precision Telemetry HUD Marks (Pure Tech, Zero Emotion) */}
+      <div className="absolute top-2 left-2 text-[9px] font-mono tracking-[0.25em] text-slate-400 uppercase pointer-events-none flex items-center gap-1.5 opacity-80 group-hover:opacity-100 transition-opacity">
+        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+        <span className="text-white font-semibold">TENSOR CORE:</span>
+        <span className="text-cyan-400 font-bold">120 FPS</span>
+      </div>
+
+      <div className="absolute top-2 right-2 text-[9px] font-mono tracking-[0.25em] text-slate-400 uppercase pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity">
+        <span className="text-white font-semibold">TOPOLOGY:</span>
+        <span className="text-slate-300 ml-1">RIEMANNIAN 3-MANIFOLD</span>
+      </div>
+
+      <div className="absolute bottom-2 left-2 text-[9px] font-mono tracking-[0.25em] text-slate-400 uppercase pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity">
+        <span className="text-white font-semibold">ENTROPY:</span>
+        <span className="text-cyan-400 ml-1 font-bold">0.0019 ΔS</span>
+      </div>
+
+      <div className="absolute bottom-2 right-2 text-[9px] font-mono tracking-[0.25em] text-slate-400 uppercase pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity">
+        <span className="text-white font-semibold">LATENCY:</span>
+        <span className="text-cyan-400 ml-1 font-bold">0.0MS</span>
+      </div>
+
+      {/* High-Performance Native 2D Canvas */}
+      <canvas ref={canvasRef} className="block w-full h-full" />
+
+      {/* Soft Contact Ambient Floor Glow */}
+      <div className="absolute -bottom-4 w-3/5 h-12 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none" />
     </div>
   );
 }

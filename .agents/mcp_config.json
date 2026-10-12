@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "aevos": {
+      "command": "node",
+      "args": [
+        "D:/I2FLabs/Projects/Aevum-os/dist/mcp/sse_proxy.js",
+        "http://127.0.0.1:3344/sse"
+      ]
+    }
+  }
+}
