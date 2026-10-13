@@ -14,19 +14,18 @@ export default function ThreeJsCosmicWorld({
   mode,
   prologueProgress = 0,
   epochProgress = 0,
-  totalEpochs = 9,
+  totalEpochs = 10,
   storyProgress,
   onInteract,
 }: ThreeJsCosmicWorldProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // Tính toán tiến trình thống nhất: S chạy từ 0.0 (Genesis) -> 1.00 (Blast) -> 1.65 (Epoch 1) -> 8.05 (Epoch 9)
+  // Tiến trình thống nhất: S chạy từ 0.0 (Genesis) -> 1.00 (Blast) -> 1.65 (Epoch 1) -> 8.05 (Epoch 9) -> 8.85 (Epoch 10 Earth)
   const calcTarget = () => {
     if (storyProgress !== undefined) return storyProgress;
     if (mode === 'prologue') return prologueProgress * 1.05;
-    // epochProgress: 0.0 to 8.0 cho 9 thời kỳ
-    const maxEpochIdx = Math.max(1, totalEpochs - 1);
-    return 1.65 + (epochProgress / maxEpochIdx) * 6.40;
+    const maxEpochIdx = Math.max(1, totalEpochs - 1); // 9
+    return 1.65 + (epochProgress / maxEpochIdx) * 7.20;
   };
 
   const targetProgressRef = useRef(calcTarget());
@@ -68,7 +67,7 @@ export default function ThreeJsCosmicWorld({
     }
 
     // ------------------------------------------------------------------------
-    // 4. CAMERA WAYPOINT TRAJECTORY (12 WAYPOINTS TƯƠNG ỨNG 9 THỜI KỲ & KHỞI NGUYÊN)
+    // 4. CAMERA WAYPOINT TRAJECTORY (13 WAYPOINTS TƯƠNG ỨNG 10 THỜI KỲ & KHỞI NGUYÊN)
     // ------------------------------------------------------------------------
     const waypoints = [
       // 0. Genesis Start (S = 0.0): nhìn thẳng điểm ảnh 2D ở tâm
@@ -93,8 +92,10 @@ export default function ThreeJsCosmicWorld({
       { pos: new THREE.Vector3(2.0, -0.6, 4.8), look: new THREE.Vector3(0.0, 0.0, 0.0), fov: 47 },
       // 10. Epoch 8 (S = 7.25): Autonomous OS & AevumOS Microkernel
       { pos: new THREE.Vector3(-1.4, -0.7, 4.4), look: new THREE.Vector3(0.0, 0.0, 0.0), fov: 45 },
-      // 11. Epoch 9 (S = 8.05): Internet of Agents & AGI (Cosmic Voxel Nebula Climax)
+      // 11. Epoch 9 (S = 8.05): Internet of Agents & AGI (Cosmic Voxel Nebula)
       { pos: new THREE.Vector3(0.0, 0.45, 5.8), look: new THREE.Vector3(0.0, 0.0, 0.0), fov: 46 },
+      // 12. Epoch 10 (S = 8.85): I2FLabs Vietnam (Vòm Trái Đất số khổng lồ nhô lên từ nửa dưới màn hình)
+      { pos: new THREE.Vector3(0.0, 0.45, 5.2), look: new THREE.Vector3(0.0, -0.35, 0.0), fov: 46 },
     ];
 
     // ------------------------------------------------------------------------
@@ -309,18 +310,15 @@ export default function ThreeJsCosmicWorld({
     const genAiCoords: number[] = [];
     for (let i = 0; i < N; i++) {
       if (i < 1100) {
-        // Ma trận Attention Q x K^T phẳng ở đáy kèm sóng xác suất Softmax
         const gridW = 32;
         const col = i % gridW;
         const row = Math.floor(i / gridW);
         const x = (col / (gridW - 1) - 0.5) * 2.4;
         const z = (row / (gridW - 1) - 0.5) * 2.4;
-        // Điểm chú ý cực đại hình chuông Gauss
         const distCenter = Math.sqrt(x * x + z * z);
         const y = -0.7 + Math.exp(-distCenter * distCenter * 2.2) * 0.55 + ((i % 4) / 3 - 0.5) * 0.04;
         genAiCoords.push(x, y, z);
       } else if (i < 2100) {
-        // Các vòng cung Attention nối giữa các Query-Key tokens vươn lên không gian biểu diễn
         const tArc = (i - 1100) / 1000;
         const theta = tArc * Math.PI * 12.0;
         const r = 0.35 + tArc * 1.25;
@@ -329,7 +327,6 @@ export default function ThreeJsCosmicWorld({
         const y = -0.6 + Math.sin(tArc * Math.PI) * 1.8;
         genAiCoords.push(x, y, z);
       } else {
-        // Đám mây Vector Embedding đa chiều (Latent Space Cloud) ở trên đỉnh
         const phi = Math.acos(Math.random() * 2 - 1);
         const theta = Math.random() * Math.PI * 2;
         const r = 0.2 + Math.pow(Math.random(), 0.5) * 0.85;
@@ -345,7 +342,6 @@ export default function ThreeJsCosmicWorld({
     const agentCoords: number[] = [];
     for (let i = 0; i < N; i++) {
       if (i < 1400) {
-        // Quả cầu lõi tư duy trung tâm (Central Reasoning LLM Brain)
         const phi = Math.acos(Math.random() * 2 - 1);
         const theta = Math.random() * Math.PI * 2;
         const r = Math.pow(Math.random(), 0.5) * 0.72;
@@ -355,7 +351,6 @@ export default function ThreeJsCosmicWorld({
           r * Math.cos(phi)
         );
       } else if (i < 2000) {
-        // Vòng đai tư duy ReAct (Perception -> Memory -> Reason -> Action Orbit)
         const tLoop = ((i - 1400) / 600) * Math.PI * 2;
         const rOrbit = 1.45;
         const ox = Math.cos(tLoop) * rOrbit;
@@ -363,7 +358,6 @@ export default function ThreeJsCosmicWorld({
         const oz = Math.sin(tLoop) * rOrbit * 0.88;
         agentCoords.push(ox, oy, oz);
       } else {
-        // 4 cụm vệ tinh: Tools, Memory, Planner, Actuator
         const satIdx = Math.floor((i - 2000) / 200) % 4;
         const satAngles = [0, Math.PI * 0.5, Math.PI, Math.PI * 1.5];
         const angle = satAngles[satIdx];
@@ -388,7 +382,6 @@ export default function ThreeJsCosmicWorld({
     ];
     for (let i = 0; i < N; i++) {
       if (i < 1800) {
-        // 4 cụm Agent độc lập tương tác bầy đàn
         const pIdx = i % 4;
         const center = agentPods[pIdx];
         const phi = Math.acos(Math.random() * 2 - 1);
@@ -400,7 +393,6 @@ export default function ThreeJsCosmicWorld({
           center.z + r * Math.cos(phi)
         );
       } else {
-        // Luồng thông điệp trao đổi qua lại (Inter-Agent IPC Streams)
         const pair = i % 4;
         const p1 = agentPods[pair];
         const p2 = agentPods[(pair + 1) % 4];
@@ -417,19 +409,16 @@ export default function ThreeJsCosmicWorld({
     const autonomousOsCoords: number[] = [];
     for (let i = 0; i < N; i++) {
       if (i < 1100) {
-        // Lõi Microkernel trung tâm hình trụ vững chắc
         const tH = (i / 1100 - 0.5) * 1.4;
         const angle = i * 0.22;
         const r = 0.38 + ((i % 5) / 4) * 0.22;
         autonomousOsCoords.push(Math.cos(angle) * r, tH, Math.sin(angle) * r);
       } else if (i < 2000) {
-        // Vành đai bảo vệ Local-first (Hardware Security Shield Ring)
         const tRing = ((i - 1100) / 900) * Math.PI * 2;
         const rRing = 1.85 + ((i % 4) / 3 - 0.5) * 0.12;
         const yRing = ((i % 7) / 6 - 0.5) * 0.15;
         autonomousOsCoords.push(Math.cos(tRing) * rRing, yRing, Math.sin(tRing) * rRing);
       } else {
-        // 6 nan hoa Bus phần cứng kết nối các tác nhân Daemon tới phần cứng
         const spokeIdx = i % 6;
         const spokeAngle = spokeIdx * (Math.PI / 3);
         const tSpoke = ((i - 2000) % 133) / 132;
@@ -442,7 +431,7 @@ export default function ThreeJsCosmicWorld({
       }
     }
 
-    // MODEL 9: INTERNET OF AGENTS & AGI (Grand Climax - Mạng lưới tác nhân toàn cầu & AGI)
+    // MODEL 9: INTERNET OF AGENTS & AGI (Mạng lưới tác nhân toàn cầu - Thời kỳ 9)
     const ioaAgiCoords: number[] = [];
     for (let i = 0; i < N; i++) {
       const armIdx = i % 4;
@@ -459,6 +448,32 @@ export default function ThreeJsCosmicWorld({
       const z = jitterZ;
 
       ioaAgiCoords.push(x, y, z);
+    }
+
+    // MODEL 10: VÒM TRÁI ĐẤT SỐ KHỔNG LỒ TỪ NỬA DƯỚI (Planetary Horizon Voxel Earth)
+    // Chiếm hơn nửa màn hình từ dưới lên, TUYỆT ĐỐI KHÔNG CÓ VÒNG TRÒN / VÀNH ĐAI NÀO Ở NGOÀI
+    const earthCoords: number[] = [];
+    const earthRadius = 3.90;
+    const earthCenterY = -2.85;
+    const earthCenterZ = -0.30;
+
+    for (let i = 0; i < N; i++) {
+      // Phân bố đều toàn bộ 2800 hạt trên mặt vòm Trái Đất tự nhiên (Fibonacci dome)
+      const tPhi = Math.pow(i / N, 0.58);
+      const phi = tPhi * Math.PI * 0.56; // Vòm Trái Đất từ đỉnh xuống
+      const theta = i * 2.39996323; // Golden angle
+
+      // Cấu trúc địa hình lục địa và độ nổi voxel vi tế
+      const continentNoise =
+        Math.sin(phi * 5.5 + Math.cos(theta * 3.5) * 1.5) *
+        Math.cos(theta * 4.5 + phi * 3.0);
+      const r = earthRadius * (1.0 + (continentNoise > 0.08 ? 0.026 : -0.012) + ((i % 5) - 2) * 0.003);
+
+      const ox = r * Math.sin(phi) * Math.sin(theta);
+      const oy = r * Math.cos(phi);
+      const oz = r * Math.sin(phi) * Math.cos(theta);
+
+      earthCoords.push(ox, earthCenterY + oy, earthCenterZ + oz);
     }
 
     // ------------------------------------------------------------------------
@@ -478,7 +493,7 @@ export default function ThreeJsCosmicWorld({
 
     const pointsMaterial = new THREE.PointsMaterial({
       color: 0xffffff,
-      size: 0.032,
+      size: 0.024,
       transparent: true,
       opacity: 0.0,
       vertexColors: true,
@@ -588,7 +603,7 @@ export default function ThreeJsCosmicWorld({
     const currentLookAt = new THREE.Vector3().copy(waypoints[0].look);
 
     // ------------------------------------------------------------------------
-    // UNIFIED 120HZ RENDER LOOP (HOÀN TOÀN LIỀN MẠCH, KHÔNG CHUYỂN MODE ĐỘT NGỘT)
+    // UNIFIED 120HZ RENDER LOOP
     // ------------------------------------------------------------------------
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
@@ -618,18 +633,40 @@ export default function ThreeJsCosmicWorld({
       const hihatPhase = (beatTime * 4.0 * Math.PI * 2) % (Math.PI * 2);
       const hihatShimmer = Math.pow(Math.max(0, Math.sin(hihatPhase)), 6);
 
-      // Lerp Smoothly along the continuous timeline S (0.0 to 8.05)
+      // Lerp Smoothly along continuous timeline S (0.0 to 8.85)
       currentProgressRef.current +=
         (targetProgressRef.current - currentProgressRef.current) * 0.065;
-      const S = Math.max(0.0, Math.min(8.05, currentProgressRef.current));
+      const S = Math.max(0.0, Math.min(8.85, currentProgressRef.current));
 
       // ----------------------------------------------------------------------
-      // CAMERA WAYPOINT FLIGHT PATH INTERPOLATION (12 WAYPOINTS LIỀN MẠCH)
+      // CAMERA WAYPOINT FLIGHT PATH INTERPOLATION (13 MỐC CHUẨN XÁC LIỀN MẠCH)
       // ----------------------------------------------------------------------
-      const numSegments = waypoints.length - 1;
-      const camP = (S / 8.05) * numSegments;
-      const segIdx = Math.min(numSegments - 1, Math.floor(camP));
-      const segT = smoothQuintic(0.0, 1.0, camP - segIdx);
+      const waypointTimes = [
+        0.0,   // 0. Genesis Start
+        0.65,  // 1. Genesis Accrete
+        1.05,  // 2. Genesis Blast
+        1.65,  // 3. Epoch 1 Punch Card
+        2.45,  // 4. Epoch 2 Blade Tower
+        3.25,  // 5. Epoch 3 P2P Mesh
+        4.05,  // 6. Epoch 4 Neural Network
+        4.85,  // 7. Epoch 5 GenAI & LLM
+        5.65,  // 8. Epoch 6 AI Agent
+        6.45,  // 9. Epoch 7 Multi-Agent Swarm
+        7.25,  // 10. Epoch 8 Autonomous OS
+        8.05,  // 11. Epoch 9 Internet of Agents / AGI
+        8.85,  // 12. Epoch 10 I2FLabs Vietnam (Voxel Earth)
+      ];
+
+      let segIdx = 0;
+      for (let w = 0; w < waypointTimes.length - 1; w++) {
+        if (S >= waypointTimes[w]) {
+          segIdx = w;
+        }
+      }
+      segIdx = Math.min(waypoints.length - 2, segIdx);
+      const tStart = waypointTimes[segIdx];
+      const tEnd = waypointTimes[segIdx + 1];
+      const segT = smoothQuintic(tStart, tEnd, S);
 
       const wpStart = waypoints[segIdx];
       const wpEnd = waypoints[segIdx + 1];
@@ -660,7 +697,6 @@ export default function ThreeJsCosmicWorld({
       // 1. ĐIỂM ẢNH BAN ĐẦU: 1 PIXEL HÌNH VUÔNG 2D PHẲNG -> NÉN MỚI THÀNH VOXEL 3D
       // ----------------------------------------------------------------------
       if (S < 0.55) {
-        // Pixel hình vuông phẳng 2D tinh khôi, luôn quay vuông góc với camera nhìn, không xoay 3D
         centralPixelPlane.visible = true;
         centralVoxelMesh.visible = false;
         centralPixelPlane.quaternion.copy(camera.quaternion);
@@ -668,7 +704,6 @@ export default function ThreeJsCosmicWorld({
         centralPixelPlane.scale.set(pScale, pScale, pScale);
         pixelPlaneMat.opacity = Math.max(0, 1 - Math.max(0, (S - 0.48) / 0.07));
       } else if (S < 0.85) {
-        // Sau khi nén lại mới phát triển thành VOXEL LẬP PHƯƠNG 3D xoay nhẹ và sáng bừng
         centralPixelPlane.visible = false;
         centralVoxelMesh.visible = true;
         centralVoxelMesh.rotation.x = clock * 0.75;
@@ -677,7 +712,6 @@ export default function ThreeJsCosmicWorld({
         centralVoxelMesh.scale.set(vScale, vScale, vScale);
         voxelBoxMat.opacity = Math.min(1.0, 0.85 + ((S - 0.55) / 0.30) * 0.15);
       } else {
-        // Đã bùng nổ: cả 2 đều ẩn
         centralPixelPlane.visible = false;
         centralVoxelMesh.visible = false;
       }
@@ -698,44 +732,52 @@ export default function ThreeJsCosmicWorld({
         pointsMaterial.size = 0.032;
         wireMaterial.opacity = 0.0;
       } else if (S < 0.85) {
-        // Nén đặc vào Voxel
         const comp = (S - 0.65) / 0.20;
         pointsMaterial.opacity = 1.0;
         pointsMaterial.size = 0.032 + comp * 0.022;
         wireMaterial.opacity = 0.0;
       } else if (S < 1.05) {
-        // Vụ nổ: bắn voxel ra và giăng dây liên kết
         pointsMaterial.opacity = 0.92;
         pointsMaterial.size = 0.034;
         const tBlast = (S - 0.85) / 0.20;
         wireMaterial.opacity = tBlast * 0.12;
       } else if (S < 1.65) {
-        // Càng scroll thì chuyển dần hợp nhất vào Thẻ đục lỗ (Epoch 1)
         pointsMaterial.opacity = 0.92;
         pointsMaterial.size = 0.032;
         const tM = smoothQuintic(1.05, 1.65, S);
         wireMaterial.opacity = 0.12 * (1 - tM) + 0.10 * tM;
       } else {
-        // Epochs 1 -> 9: Giảm độ sáng và kích thước node 3D theo yêu cầu để văn bản thuyết minh nổi bật tối đa
+        // Epochs 1 -> 10: Giảm nhẹ độ sáng để text luôn sắc nét
         const isClimax = S >= 7.25;
-        const tClimax = isClimax ? smoothQuintic(7.25, 8.05, S) : 0;
-        wireMaterial.opacity = isClimax ? 0.05 * (1 - tClimax * 0.6) + kickPulse * 0.03 : 0.045;
-        pointsMaterial.opacity = 0.68;
-        pointsMaterial.size = isClimax ? 0.024 + (kickPulse * 0.014 + hihatShimmer * 0.006) * tClimax : 0.024;
+        const tClimax = isClimax ? smoothQuintic(7.25, 8.85, S) : 0;
+        const isEarth = S >= 8.05;
+        const tEarth = isEarth ? smoothQuintic(8.05, 8.85, S) : 0;
+
+        pointsMaterial.opacity = 0.70 + tEarth * 0.15;
+        pointsMaterial.size = isClimax
+          ? 0.024 + (kickPulse * 0.014 + hihatShimmer * 0.006) * tClimax + tEarth * 0.004
+          : 0.024;
+
+        if (isEarth) {
+          // Slide 10: Tắt hoàn toàn dây wireframe để Trái Đất là hạt Voxel số thuần túy, tuyệt đối không có vòng tròn
+          wireMaterial.opacity = 0.045 * (1.0 - tEarth);
+        } else {
+          wireMaterial.color.setRGB(1.0, 1.0, 1.0);
+          wireMaterial.opacity = isClimax ? 0.05 * (1 - tClimax * 0.6) + kickPulse * 0.03 : 0.045;
+        }
       }
 
       // ----------------------------------------------------------------------
-      // 3. CONTINUOUS PARTICLE MORPHING ALONG THE UNIFIED 9-EPOCH TIMELINE S
+      // 3. CONTINUOUS PARTICLE MORPHING ALONG THE UNIFIED 10-EPOCH TIMELINE S
       // ----------------------------------------------------------------------
       const isClimax = S >= 7.25;
-      const tClimax = isClimax ? smoothQuintic(7.25, 8.05, S) : 0;
+      const tClimax = isClimax ? smoothQuintic(7.25, 8.85, S) : 0;
 
       for (let i = 0; i < N; i++) {
         const i3 = i * 3;
         let bx = 0, by = 0, bz = 0;
 
         if (S < 0.65) {
-          // Giai đoạn 1: Các pixel từ xa xoắn ốc bay tụ về tâm
           const t = smoothQuintic(0.0, 0.65, S);
           bx = outerCoords[i3] * (1 - t) + singularityCoords[i3] * t;
           by = outerCoords[i3 + 1] * (1 - t) + singularityCoords[i3 + 1] * t;
@@ -747,7 +789,6 @@ export default function ThreeJsCosmicWorld({
           const ry = bx * sinS + by * cosS;
           bx = rx; by = ry;
         } else if (S < 0.85) {
-          // Giai đoạn 2: Nén chặt vào 6 mặt của khối Voxel 3D, xoay đồng pha 3D
           const sx = singularityCoords[i3];
           const sy = singularityCoords[i3 + 1];
           const sz = singularityCoords[i3 + 2];
@@ -762,7 +803,6 @@ export default function ThreeJsCosmicWorld({
           const z2 = sy * sinA + z1 * cosA;
           bx = x1; by = y1; bz = z2;
         } else if (S < 1.05) {
-          // Giai đoạn 3: Vụ nổ bắn các voxel ra ngoài và liên kết
           const tExp = smoothQuintic(0.85, 1.05, S);
           const blast = Math.sin(tExp * Math.PI) * 1.5;
           const ex = explodedCoords[i3];
@@ -781,7 +821,6 @@ export default function ThreeJsCosmicWorld({
           by += Math.cos(clock * freq * 0.9 + phase) * floatAmp;
           bz += Math.sin(clock * freq * 1.2 + phase) * (floatAmp * 0.8);
         } else if (S < 1.65) {
-          // Giai đoạn 4: TIẾP TỤC SCROLL ĐỂ HỢP THÀNH KỈ NGUYÊN ĐẦU (THẺ ĐỤC LỖ)
           const tMerge = smoothQuintic(1.05, 1.65, S);
           const ex = explodedCoords[i3];
           const ey = explodedCoords[i3 + 1];
@@ -802,98 +841,151 @@ export default function ThreeJsCosmicWorld({
           by = floatY * (1 - tMerge) + py * tMerge;
           bz = floatZ * (1 - tMerge) + pz * tMerge;
         } else if (S < 2.45) {
-          // Epoch 1 (Punch Card) -> Epoch 2 (Blade Tower)
           const t = smoothQuintic(1.80, 2.45, S);
           bx = punchCoords[i3] * (1 - t) + serverCoords[i3] * t;
           by = punchCoords[i3 + 1] * (1 - t) + serverCoords[i3 + 1] * t;
           bz = punchCoords[i3 + 2] * (1 - t) + serverCoords[i3 + 2] * t;
         } else if (S < 3.25) {
-          // Epoch 2 (Blade Tower) -> Epoch 3 (P2P Mesh)
           const t = smoothQuintic(2.60, 3.25, S);
           bx = serverCoords[i3] * (1 - t) + meshCoords[i3] * t;
           by = serverCoords[i3 + 1] * (1 - t) + meshCoords[i3 + 1] * t;
           bz = serverCoords[i3 + 2] * (1 - t) + meshCoords[i3 + 2] * t;
         } else if (S < 4.05) {
-          // Epoch 3 (P2P Mesh) -> Epoch 4 (Deep Neural Layers)
           const t = smoothQuintic(3.40, 4.05, S);
           bx = meshCoords[i3] * (1 - t) + neuralCoords[i3] * t;
           by = meshCoords[i3 + 1] * (1 - t) + neuralCoords[i3 + 1] * t;
           bz = meshCoords[i3 + 2] * (1 - t) + neuralCoords[i3 + 2] * t;
         } else if (S < 4.85) {
-          // Epoch 4 (Deep Neural Layers) -> Epoch 5 (Generative AI & LLMs)
           const t = smoothQuintic(4.20, 4.85, S);
           bx = neuralCoords[i3] * (1 - t) + genAiCoords[i3] * t;
           by = neuralCoords[i3 + 1] * (1 - t) + genAiCoords[i3 + 1] * t;
           bz = neuralCoords[i3 + 2] * (1 - t) + genAiCoords[i3 + 2] * t;
         } else if (S < 5.65) {
-          // Epoch 5 (Generative AI & LLMs) -> Epoch 6 (Autonomous AI Agent Core)
           const t = smoothQuintic(5.00, 5.65, S);
           bx = genAiCoords[i3] * (1 - t) + agentCoords[i3] * t;
           by = genAiCoords[i3 + 1] * (1 - t) + agentCoords[i3 + 1] * t;
           bz = genAiCoords[i3 + 2] * (1 - t) + agentCoords[i3 + 2] * t;
         } else if (S < 6.45) {
-          // Epoch 6 (Autonomous Agent) -> Epoch 7 (Multi-Agent Swarm)
           const t = smoothQuintic(5.80, 6.45, S);
           bx = agentCoords[i3] * (1 - t) + multiAgentCoords[i3] * t;
           by = agentCoords[i3 + 1] * (1 - t) + multiAgentCoords[i3 + 1] * t;
           bz = agentCoords[i3 + 2] * (1 - t) + multiAgentCoords[i3 + 2] * t;
         } else if (S < 7.25) {
-          // Epoch 7 (Multi-Agent Swarm) -> Epoch 8 (Autonomous OS & AevumOS Microkernel)
           const t = smoothQuintic(6.60, 7.25, S);
           bx = multiAgentCoords[i3] * (1 - t) + autonomousOsCoords[i3] * t;
           by = multiAgentCoords[i3 + 1] * (1 - t) + autonomousOsCoords[i3 + 1] * t;
           bz = multiAgentCoords[i3 + 2] * (1 - t) + autonomousOsCoords[i3 + 2] * t;
-        } else {
-          // Epoch 8 (Autonomous OS) -> Epoch 9 (Internet of Agents & AGI Grand Climax)
+        } else if (S < 8.05) {
           const t = smoothQuintic(7.40, 8.05, S);
           bx = autonomousOsCoords[i3] * (1 - t) + ioaAgiCoords[i3] * t;
           by = autonomousOsCoords[i3 + 1] * (1 - t) + ioaAgiCoords[i3 + 1] * t;
           bz = autonomousOsCoords[i3 + 2] * (1 - t) + ioaAgiCoords[i3 + 2] * t;
+        } else {
+          // Epoch 9 (Cosmic Nebula) -> Epoch 10 (I2FLabs Vietnam - Voxel Earth)
+          // Xoay vòng và hợp thành hình quả địa cầu Trái Đất số
+          const t = smoothQuintic(8.05, 8.85, S);
+          bx = ioaAgiCoords[i3] * (1 - t) + earthCoords[i3] * t;
+          by = ioaAgiCoords[i3 + 1] * (1 - t) + earthCoords[i3 + 1] * t;
+          bz = ioaAgiCoords[i3 + 2] * (1 - t) + earthCoords[i3 + 2] * t;
         }
 
-        // Nâng thực thể 3D lên nửa trên màn hình (Eye-level focus, nhường trọn không gian cho văn bản phía dưới)
-        if (S >= 1.05) {
+        // 1. Nâng thực thể 3D lên nửa trên ở Epoch 1-9 (ở Slide 10 Trái Đất to nhô lên từ dưới)
+        const tEarth = S >= 8.05 ? smoothQuintic(8.05, 8.85, S) : 0.0;
+        if (S >= 1.05 && S < 8.05) {
           const tElevate = smoothQuintic(1.05, 1.65, S);
           by += 0.46 * tElevate;
+        } else if (S >= 8.05) {
+          by += 0.46 * (1.0 - tEarth);
         }
 
-        // Living quantum waves on all particles
+        // 2. Living quantum waves on all particles (tan dần êm ái khi tụ thành Trái Đất)
         if (S >= 1.65) {
-          const waveSpatial = clock * 1.8 + bx * 2.8 + by * 3.2;
-          const waveAmp = 0.024;
-          bx += Math.sin(waveSpatial) * waveAmp;
-          by += Math.cos(waveSpatial * 1.2) * waveAmp;
-          bz += Math.sin(clock * 1.4 + (i % 28) * 0.22) * (waveAmp * 1.1);
+          const waveFade = S >= 8.05 ? (1.0 - tEarth) : 1.0;
+          if (waveFade > 0.001) {
+            const waveSpatial = clock * 1.8 + bx * 2.8 + by * 3.2;
+            const waveAmp = 0.024 * waveFade;
+            bx += Math.sin(waveSpatial) * waveAmp;
+            by += Math.cos(waveSpatial * 1.2) * waveAmp;
+            bz += Math.sin(clock * 1.4 + (i % 28) * 0.22) * (waveAmp * 1.1);
+          }
         }
 
-        // Zenith Audio Reactivity at Climax (Epoch 9)
+        // 3. Climax Audio Kick Expansion (chuyển tiếp êm dịu, không giật)
+        if (isClimax) {
+          const kickFade = S >= 8.05 ? (1.0 - tEarth) : 1.0;
+          if (kickFade > 0.001) {
+            const rDist = Math.sqrt(bx * bx + by * by + bz * bz) || 1;
+            const kickExpansion = (kickPulse * 0.28 + snarePulse * 0.10) * tClimax * kickFade;
+            bx += (bx / rDist) * kickExpansion;
+            by += (by / rDist) * kickExpansion;
+            bz += (bz / rDist) * kickExpansion;
+          }
+        }
+
+        // 4. XOAY TRỤC ĐỒNG BỘ 100% KHÔNG BAO GIỜ BỊ GIẬT:
+        // Slide 9 xoay với tốc độ 0.09, chuyển mượt sang 0.12 của Trái Đất ở Slide 10
+        if (isClimax) {
+          const spinRate = S >= 8.05
+            ? (0.09 * (1.0 - tEarth) + 0.12 * tEarth)
+            : 0.09 * tClimax;
+          const spinAngle = clock * spinRate;
+          const cosS = Math.cos(spinAngle), sinS = Math.sin(spinAngle);
+          const rx = bx * cosS - bz * sinS;
+          const rz = bx * sinS + bz * cosS;
+          bx = rx;
+          bz = rz;
+        }
+
+        // Zenith Audio Reactivity at Climax
         const spatialFreq = bx * 2.2 + by * 2.8 + bz * 1.5;
         const voxelPhase = i * 0.618033 + spatialFreq;
         const microTwinkle = Math.pow(Math.sin(clock * 5.8 + voxelPhase), 8);
 
         let voxelLuma = 0.70;
-        if (isClimax) {
-          const rDist = Math.sqrt(bx * bx + by * by + bz * bz) || 1;
-          const kickExpansion = (kickPulse * 0.32 + snarePulse * 0.14) * tClimax;
-          bx += (bx / rDist) * kickExpansion;
-          by += (by / rDist) * kickExpansion;
-          bz += (bz / rDist) * kickExpansion;
-
-          const orbitAngle = clock * 0.09 * tClimax;
-          const cosO = Math.cos(orbitAngle), sinO = Math.sin(orbitAngle);
-          const rx = bx * cosO - bz * sinO;
-          const rz = bx * sinO + bz * cosO;
-          bx = rx; bz = rz;
-
+        if (isClimax && S < 8.05) {
           const beatBrightness = kickPulse * 0.65 + snarePulse * 0.3 + hihatShimmer * 0.25;
           voxelLuma = (0.28 + beatBrightness * 0.60 + microTwinkle * 0.45) * tClimax + 0.70 * (1 - tClimax);
         } else {
           voxelLuma = 0.65 + microTwinkle * 0.18;
         }
 
-        colArr[i3] = Math.min(1.0, voxelLuma * 0.95);
-        colArr[i3 + 1] = Math.min(1.0, voxelLuma * 0.92 + (isClimax ? kickPulse * 0.08 : 0));
-        colArr[i3 + 2] = Math.min(1.0, voxelLuma * 0.98 + (isClimax ? kickPulse * 0.22 : 0));
+        // --------------------------------------------------------------------
+        // SLIDE 10: CHỈ CÁC PIXEL Ở VIỀN TRÊN MỚI CÓ MÀU XANH & ĐẬP THEO NHẠC
+        // CÁC PIXEL CÒN LẠI LÀ MÀU TRẮNG VÀ KHÔNG ĐẬP THEO NHẠC
+        // --------------------------------------------------------------------
+        if (S >= 8.05) {
+          const tEarth = smoothQuintic(8.05, 8.85, S);
+          // Chỉ một vài pixel ở viền phía trên của Trái Đất (khoảng 35 hạt rải rác ở chỏm đỉnh chân trời)
+          const isBlueEdge = i < 140 && (i % 4 === 0);
+
+          if (isBlueEdge) {
+            // Chỉ một vài pixel viền trên: MÀU XANH ELECTRIC (chuẩn ảnh mẫu) & ĐẬP THEO NHẠC
+            const beatPulse = kickPulse * 0.08 + snarePulse * 0.03;
+            by += beatPulse * tEarth; // Nảy nhẹ theo nhịp kick
+
+            const beatBright = kickPulse * 0.85 + snarePulse * 0.35 + hihatShimmer * 0.20;
+            const electricGlow = 0.65 + beatBright * 0.70 + microTwinkle * 0.15;
+
+            // Màu xanh Electric Ocean Blue sâu thẳm theo ảnh mẫu, bừng sáng khi có beat
+            const rElec = 0.05 + beatBright * 0.08;
+            const gElec = Math.min(1.0, (0.42 + beatBright * 0.32) * electricGlow);
+            const bElec = Math.min(1.0, (0.70 + beatBright * 0.28) * electricGlow);
+
+            colArr[i3] = (1.0 - tEarth) * 0.85 + tEarth * rElec;
+            colArr[i3 + 1] = (1.0 - tEarth) * 0.85 + tEarth * gElec;
+            colArr[i3 + 2] = (1.0 - tEarth) * 0.85 + tEarth * bElec;
+          } else {
+            // Toàn bộ thân Trái Đất: MÀU TRẮNG BẠC SANG TRỌNG & HOÀN TOÀN KHÔNG ĐẬP THEO NHẠC
+            const whiteLuma = 0.85 + microTwinkle * 0.06;
+            colArr[i3] = whiteLuma;
+            colArr[i3 + 1] = whiteLuma;
+            colArr[i3 + 2] = whiteLuma;
+          }
+        } else {
+          colArr[i3] = Math.min(1.0, voxelLuma * 0.95);
+          colArr[i3 + 1] = Math.min(1.0, voxelLuma * 0.92 + (isClimax ? kickPulse * 0.08 : 0));
+          colArr[i3 + 2] = Math.min(1.0, voxelLuma * 0.98 + (isClimax ? kickPulse * 0.22 : 0));
+        }
 
         arr[i3] = bx;
         arr[i3 + 1] = by;

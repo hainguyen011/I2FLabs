@@ -172,6 +172,22 @@ const COMPUTING_EPOCHS: EpochInfo[] = [
     badge: 'INTERNET OF AGENTS & AGI',
     meta: ['Internet of Agents (IoA)', 'PiperNet Protocol', 'Decentralized Open AGI'],
   },
+  {
+    id: 'epoch_10',
+    stepNumber: '10',
+    era: { en: 'Điểm hội tụ', vi: 'Điểm hội tụ' },
+    title: { en: 'I2FLabs Vietnam', vi: 'I2FLabs Vietnam' },
+    subtitle: {
+      en: 'Quả địa cầu số bao bọc trong vầng hào quang electron khí quyển rực rỡ',
+      vi: 'Quả địa cầu số bao bọc trong vầng hào quang electron khí quyển rực rỡ',
+    },
+    story: {
+      en: 'Từ điểm ảnh nguyên bản đầu tiên, qua mọi thời kỳ thăng trầm của điện toán, mạng nơ-ron và tác nhân thông minh, các hạt ánh sáng hội tụ trở lại thành Trái Đất số bao bọc trong vầng hào quang electron xanh biếc. Tại I2FLabs Việt Nam, chúng tôi xây dựng hạ tầng Aevum OS và PiperNet để kết nối mọi con người và tác nhân trên hành tinh này trong một mạng lưới tự do, minh bạch và an toàn.',
+      vi: 'Từ điểm ảnh nguyên bản đầu tiên, qua mọi thời kỳ thăng trầm của điện toán, mạng nơ-ron và tác nhân thông minh, các hạt ánh sáng hội tụ trở lại thành Trái Đất số bao bọc trong vầng hào quang electron xanh biếc. Tại I2FLabs Việt Nam, chúng tôi xây dựng hạ tầng Aevum OS và PiperNet để kết nối mọi con người và tác nhân trên hành tinh này trong một mạng lưới tự do, minh bạch và an toàn.',
+    },
+    badge: 'PLANETARY VOXEL EARTH',
+    meta: ['Global Agent Mesh', 'Atmospheric Electron Glow', 'I2FLabs Vietnam', 'Aevum OS Fabric'],
+  },
 ];
 
 export default function HorizontalStory() {
@@ -545,11 +561,12 @@ export default function HorizontalStory() {
 
       {/* 5. CINEMATIC CONTINUOUS STORYTELLING SUBTITLES (EPOCHS MODE) */}
       {mode === 'epochs' && (
-        <div className="relative z-20 w-full flex-1 pointer-events-none flex flex-col justify-end items-center pb-20 sm:pb-24 px-6 sm:px-12">
-          {/* Lớp gradient tối mềm mại phía sau chữ giúp chữ luôn nổi bật và tách biệt hoàn toàn với thực thể 3D */}
-          <div className="absolute inset-x-0 bottom-0 h-[280px] sm:h-[340px] bg-gradient-to-t from-black via-black/85 to-transparent pointer-events-none" />
+        <>
+          {/* Lớp gradient tối mềm mại phủ suốt từ đáy màn hình lên trên, loại bỏ hoàn toàn hiện tượng hở khúc dưới */}
+          <div className="fixed inset-x-0 bottom-0 h-[380px] sm:h-[440px] bg-gradient-to-t from-black via-black/85 via-45% to-transparent pointer-events-none z-10" />
 
-          <div className="w-full max-w-3xl relative flex items-center justify-center min-h-[170px] pointer-events-auto">
+          <div className="relative z-20 w-full flex-1 pointer-events-none flex flex-col justify-end items-center pb-2 sm:pb-4 px-6 sm:px-12">
+            <div className="w-full max-w-3xl relative flex items-center justify-center min-h-[140px] pointer-events-auto">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentEpoch.id}
@@ -629,6 +646,7 @@ export default function HorizontalStory() {
             </AnimatePresence>
           </div>
         </div>
+        </>
       )}
 
       {/* 6. CONTINUOUS STORY STREAM FOOTER (EPOCHS MODE) */}
@@ -654,7 +672,7 @@ export default function HorizontalStory() {
                 style={{ fontFamily: 'Space Grotesk, sans-serif' }}
                 className="text-xs text-white/80 hidden sm:inline-block drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
               >
-                Không gian 3D - 9 thời kỳ máy tính & AI
+                Không gian 3D - 10 thời kỳ máy tính & AI
               </span>
             </div>
 
@@ -672,7 +690,7 @@ export default function HorizontalStory() {
                         : 'text-white/40 hover:text-white'
                     }`}
                   >
-                    0{i + 1}
+                    {i < 9 ? `0${i + 1}` : `${i + 1}`}
                   </button>
                 ))}
               </div>
