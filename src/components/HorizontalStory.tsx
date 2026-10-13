@@ -182,8 +182,8 @@ const COMPUTING_EPOCHS: EpochInfo[] = [
       vi: 'Quả địa cầu số bao bọc trong vầng hào quang electron khí quyển rực rỡ',
     },
     story: {
-      en: 'Từ điểm ảnh nguyên bản đầu tiên, qua mọi thời kỳ thăng trầm của điện toán, mạng nơ-ron và tác nhân thông minh, các hạt ánh sáng hội tụ trở lại thành Trái Đất số bao bọc trong vầng hào quang electron xanh biếc. Tại I2FLabs Việt Nam, chúng tôi xây dựng hạ tầng Aevum OS và PiperNet để kết nối mọi con người và tác nhân trên hành tinh này trong một mạng lưới tự do, minh bạch và an toàn.',
-      vi: 'Từ điểm ảnh nguyên bản đầu tiên, qua mọi thời kỳ thăng trầm của điện toán, mạng nơ-ron và tác nhân thông minh, các hạt ánh sáng hội tụ trở lại thành Trái Đất số bao bọc trong vầng hào quang electron xanh biếc. Tại I2FLabs Việt Nam, chúng tôi xây dựng hạ tầng Aevum OS và PiperNet để kết nối mọi con người và tác nhân trên hành tinh này trong một mạng lưới tự do, minh bạch và an toàn.',
+      en: 'Từ điểm ảnh nguyên bản đầu tiên, qua mọi thời kỳ thăng trầm của điện toán, mạng nơ-ron và tác nhân thông minh, các hạt ánh sáng hội tụ trở lại thành Trái Đất số. Tại I2FLabs Việt Nam, chúng tôi xây dựng hạ tầng Aevum OS và PiperNet để kết nối mọi con người và tác nhân trên hành tinh này trong một mạng lưới tự do, minh bạch và an toàn.',
+      vi: 'Từ điểm ảnh nguyên bản đầu tiên, qua mọi thời kỳ thăng trầm của điện toán, mạng nơ-ron và tác nhân thông minh, các hạt ánh sáng hội tụ trở lại thành Trái Đất số. Tại I2FLabs Việt Nam, chúng tôi xây dựng hạ tầng Aevum OS và PiperNet để kết nối mọi con người và tác nhân trên hành tinh này trong một mạng lưới tự do, minh bạch và an toàn.',
     },
     badge: 'PLANETARY VOXEL EARTH',
     meta: ['Global Agent Mesh', 'Atmospheric Electron Glow', 'I2FLabs Vietnam', 'Aevum OS Fabric'],
@@ -413,7 +413,7 @@ export default function HorizontalStory({ isLoading = false }: HorizontalStoryPr
 
   return (
     <section className="relative w-screen h-screen bg-black text-white overflow-hidden select-none flex flex-col justify-between font-sans">
-      
+
       {/* Background Ambient Audio Engine - Phát ngay khi xuất hiện chấm pixel đầu tiên sau loading */}
       <YouTubeAudio videoId="eeD0bjlVggo" isPlaying={!isLoading && soundEnabled} />
 
@@ -434,7 +434,7 @@ export default function HorizontalStory({ isLoading = false }: HorizontalStoryPr
       {/* ==================================================================== */}
       {mode === 'prologue' && (
         <div className="fixed inset-0 pointer-events-none z-20 flex flex-col items-center justify-center">
-          
+
           {/* MỘT PIXEL HÌNH VUÔNG NHỎ 2D PHẲNG Ở CHÍNH GIỮA MÀN HÌNH (sau khi nén lại mới thành voxel 3D) */}
           {prologueProgress < 0.65 && (
             <div
@@ -455,12 +455,12 @@ export default function HorizontalStory({ isLoading = false }: HorizontalStoryPr
                   prologueProgress < 0.18
                     ? 'void'
                     : prologueProgress < 0.60
-                    ? 'awakening'
-                    : prologueProgress < 0.85
-                    ? 'compression'
-                    : prologueProgress < 0.96
-                    ? 'explosion'
-                    : 'crystallization'
+                      ? 'awakening'
+                      : prologueProgress < 0.85
+                        ? 'compression'
+                        : prologueProgress < 0.96
+                          ? 'explosion'
+                          : 'crystallization'
                 }
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -575,85 +575,85 @@ export default function HorizontalStory({ isLoading = false }: HorizontalStoryPr
 
           <div className="relative z-20 w-full flex-1 pointer-events-none flex flex-col justify-end items-center pb-2 sm:pb-4 px-6 sm:px-12">
             <div className="w-full max-w-3xl relative flex items-center justify-center min-h-[140px] pointer-events-auto">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentEpoch.id}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.28, ease: 'easeOut' }}
-                className="w-full flex flex-col items-center justify-center text-center space-y-2.5 select-text relative z-10"
-              >
-                {/* Meta Badge & Step */}
-                <div className="flex items-center gap-2 flex-wrap justify-center drop-shadow-[0_2px_12px_rgba(0,0,0,1)]">
-                  <span
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentEpoch.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.28, ease: 'easeOut' }}
+                  className="w-full flex flex-col items-center justify-center text-center space-y-2.5 select-text relative z-10"
+                >
+                  {/* Meta Badge & Step */}
+                  <div className="flex items-center gap-2 flex-wrap justify-center drop-shadow-[0_2px_12px_rgba(0,0,0,1)]">
+                    <span
+                      style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                      className="text-xs font-bold tracking-widest text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]"
+                    >
+                      {currentEpoch.stepNumber}
+                    </span>
+                    <span className="text-white/40">/</span>
+                    <span
+                      style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                      className="text-[11px] uppercase tracking-wider text-slate-200 font-semibold"
+                    >
+                      {currentEpoch.badge}
+                    </span>
+                    <div className="hidden sm:flex items-center gap-1.5 pl-1.5">
+                      {currentEpoch.meta.map((m, mIdx) => (
+                        <span
+                          key={mIdx}
+                          style={{ fontFamily: 'JetBrains Mono, monospace' }}
+                          className="text-[9.5px] text-white/75 tracking-tight font-medium"
+                        >
+                          #{m}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Main Chapter Title */}
+                  <h2
                     style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                    className="text-xs font-bold tracking-widest text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]"
+                    className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,1)] [text-shadow:_0_2px_20px_rgba(0,0,0,0.95)]"
                   >
-                    {currentEpoch.stepNumber}
-                  </span>
-                  <span className="text-white/40">/</span>
-                  <span
+                    {currentEpoch.title[lang]}
+                  </h2>
+
+                  {/* Narrative Paragraph */}
+                  <p
                     style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                    className="text-[11px] uppercase tracking-wider text-slate-200 font-semibold"
+                    className="text-xs sm:text-sm md:text-[14.5px] text-slate-100 leading-relaxed max-w-2xl font-normal drop-shadow-[0_3px_16px_rgba(0,0,0,1)] [text-shadow:_0_1px_14px_rgba(0,0,0,0.95)] whitespace-pre-line px-2"
                   >
-                    {currentEpoch.badge}
-                  </span>
-                  <div className="hidden sm:flex items-center gap-1.5 pl-1.5">
-                    {currentEpoch.meta.map((m, mIdx) => (
-                      <span
-                        key={mIdx}
-                        style={{ fontFamily: 'JetBrains Mono, monospace' }}
-                        className="text-[9.5px] text-white/75 tracking-tight font-medium"
+                    {currentEpoch.story[lang]}
+                  </p>
+
+                  {/* Final Chapter 09: Grand Finale Action Links */}
+                  {currentEpochIndex === maxEpochIndex && (
+                    <div className="flex flex-wrap items-center gap-6 pt-2.5 justify-center">
+                      <button
+                        onClick={() => setModalOpen(true)}
+                        style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                        className="bg-transparent text-white hover:text-slate-300 font-semibold text-xs tracking-wider uppercase transition-colors cursor-pointer p-0 underline underline-offset-4 decoration-white/50 hover:decoration-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
                       >
-                        #{m}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Main Chapter Title */}
-                <h2
-                  style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                  className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,1)] [text-shadow:_0_2px_20px_rgba(0,0,0,0.95)]"
-                >
-                  {currentEpoch.title[lang]}
-                </h2>
-
-                {/* Narrative Paragraph */}
-                <p
-                  style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                  className="text-xs sm:text-sm md:text-[14.5px] text-slate-100 leading-relaxed max-w-2xl font-normal drop-shadow-[0_3px_16px_rgba(0,0,0,1)] [text-shadow:_0_1px_14px_rgba(0,0,0,0.95)] whitespace-pre-line px-2"
-                >
-                  {currentEpoch.story[lang]}
-                </p>
-
-                {/* Final Chapter 09: Grand Finale Action Links */}
-                {currentEpochIndex === maxEpochIndex && (
-                  <div className="flex flex-wrap items-center gap-6 pt-2.5 justify-center">
-                    <button
-                      onClick={() => setModalOpen(true)}
-                      style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                      className="bg-transparent text-white hover:text-slate-300 font-semibold text-xs tracking-wider uppercase transition-colors cursor-pointer p-0 underline underline-offset-4 decoration-white/50 hover:decoration-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
-                    >
-                      Trò chuyện cùng chúng tôi
-                    </button>
-                    <a
-                      href="https://github.com/hainguyen011"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                      className="bg-transparent text-white hover:text-slate-300 font-semibold text-xs tracking-wider uppercase transition-colors inline-flex items-center gap-1.5 cursor-pointer underline underline-offset-4 decoration-white/50 hover:decoration-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
-                    >
-                      <Github className="w-3.5 h-3.5" />
-                      <span>Xem mã nguồn mở</span>
-                    </a>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
+                        Trò chuyện cùng chúng tôi
+                      </button>
+                      <a
+                        href="https://github.com/hainguyen011"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                        className="bg-transparent text-white hover:text-slate-300 font-semibold text-xs tracking-wider uppercase transition-colors inline-flex items-center gap-1.5 cursor-pointer underline underline-offset-4 decoration-white/50 hover:decoration-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
+                      >
+                        <Github className="w-3.5 h-3.5" />
+                        <span>Xem mã nguồn mở</span>
+                      </a>
+                    </div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
-        </div>
         </>
       )}
 
@@ -692,11 +692,10 @@ export default function HorizontalStory({ isLoading = false }: HorizontalStoryPr
                     key={ep.id}
                     onClick={() => navigateToEpoch(i)}
                     style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                    className={`cursor-pointer transition-colors bg-transparent px-1.5 py-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] ${
-                      currentEpochIndex === i
-                        ? 'text-white font-bold scale-110'
-                        : 'text-white/40 hover:text-white'
-                    }`}
+                    className={`cursor-pointer transition-colors bg-transparent px-1.5 py-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] ${currentEpochIndex === i
+                      ? 'text-white font-bold scale-110'
+                      : 'text-white/40 hover:text-white'
+                      }`}
                   >
                     {i < 9 ? `0${i + 1}` : `${i + 1}`}
                   </button>
