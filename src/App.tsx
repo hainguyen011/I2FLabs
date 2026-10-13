@@ -8,15 +8,13 @@ function App() {
 
   return (
     <>
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {loading && <Loading key="loading" onComplete={() => setLoading(false)} />}
       </AnimatePresence>
       
-      {!loading && (
-        <main className="w-screen h-screen overflow-hidden bg-black text-[#F8FAFC] font-sans relative flex flex-col justify-between select-none">
-          <HorizontalStory />
-        </main>
-      )}
+      <main className="w-screen h-screen overflow-hidden bg-black text-[#F8FAFC] font-sans relative flex flex-col justify-between select-none">
+        <HorizontalStory isLoading={loading} />
+      </main>
     </>
   );
 }

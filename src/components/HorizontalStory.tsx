@@ -190,7 +190,11 @@ const COMPUTING_EPOCHS: EpochInfo[] = [
   },
 ];
 
-export default function HorizontalStory() {
+interface HorizontalStoryProps {
+  isLoading?: boolean;
+}
+
+export default function HorizontalStory({ isLoading = false }: HorizontalStoryProps) {
   const { i18n } = useTranslation();
   const lang = i18n.language === 'vi' ? 'vi' : 'en';
 
@@ -291,6 +295,7 @@ export default function HorizontalStory() {
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
+      if (isLoading) return;
       const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
 
       if (mode === 'prologue') {
@@ -308,10 +313,12 @@ export default function HorizontalStory() {
     };
 
     const handleTouchStart = (e: TouchEvent) => {
+      if (isLoading) return;
       touchStartY.current = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
+      if (isLoading) return;
       const currentY = e.touches[0].clientY;
       const deltaY = touchStartY.current - currentY;
       touchStartY.current = currentY;
@@ -331,6 +338,7 @@ export default function HorizontalStory() {
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (isLoading) return;
       if (mode === 'prologue') {
         if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown') {
           prologueVel.current += 0.035;
@@ -365,7 +373,7 @@ export default function HorizontalStory() {
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [mode, maxEpochIndex]);
+  }, [mode, maxEpochIndex, isLoading]);
 
   const navigateToEpoch = useCallback((targetIndex: number) => {
     const clamped = Math.max(0.0, Math.min(maxEpochIndex, targetIndex));
@@ -406,8 +414,8 @@ export default function HorizontalStory() {
   return (
     <section className="relative w-screen h-screen bg-black text-white overflow-hidden select-none flex flex-col justify-between font-sans">
       
-      {/* Background Ambient Audio Engine */}
-      <YouTubeAudio videoId="eeD0bjlVggo" isPlaying={soundEnabled} />
+      {/* Background Ambient Audio Engine - Phát ngay khi xuất hiện chấm pixel đầu tiên sau loading */}
+      <YouTubeAudio videoId="eeD0bjlVggo" isPlaying={!isLoading && soundEnabled} />
 
       {/* 1. Global Fullscreen 3D Three.js Particles & Wireframe World */}
       <ThreeJsCosmicWorld
@@ -660,7 +668,7 @@ export default function HorizontalStory() {
             className="relative z-30 w-full px-8 sm:px-14 py-5 flex items-center justify-between pointer-events-auto bg-transparent"
           >
             {/* Reset button: Quay về lại Trình chiếu Khởi nguyên */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 z-10">
               <button
                 onClick={resetToPrologue}
                 className="bg-transparent text-white hover:text-slate-300 transition-colors cursor-pointer p-0 flex items-center justify-center drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
@@ -670,14 +678,14 @@ export default function HorizontalStory() {
               </button>
               <span
                 style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                className="text-xs text-white/80 hidden sm:inline-block drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
+                className="text-xs text-white/80 hidden md:inline-block drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
               >
                 Không gian 3D - 10 thời kỳ máy tính & AI
               </span>
             </div>
 
-            {/* Continuous Progress Track */}
-            <div className="flex-1 max-w-md mx-6 flex flex-col items-center gap-1.5">
+            {/* Continuous Progress Track: CĂN CHÍNH GIỮA 100% CỦA BOTTOM MÀN HÌNH */}
+            <div className="absolute left-1/2 -translate-x-1/2 w-[80%] max-w-sm sm:max-w-md flex flex-col items-center gap-1.5 pointer-events-auto">
               <div className="w-full flex justify-between text-[11px] font-sans text-white/80">
                 {COMPUTING_EPOCHS.map((ep, i) => (
                   <button
@@ -705,7 +713,7 @@ export default function HorizontalStory() {
             </div>
 
             {/* Controls */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 z-10 ml-auto">
               <button
                 onClick={() => navigateToEpoch(Math.max(0.0, spatialProgress - 1.0))}
                 disabled={spatialProgress <= 0.05}

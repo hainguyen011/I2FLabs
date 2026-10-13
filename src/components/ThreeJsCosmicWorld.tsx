@@ -450,24 +450,24 @@ export default function ThreeJsCosmicWorld({
       ioaAgiCoords.push(x, y, z);
     }
 
-    // MODEL 10: VÒM TRÁI ĐẤT SỐ KHỔNG LỒ TỪ NỬA DƯỚI (Planetary Horizon Voxel Earth)
-    // Chiếm hơn nửa màn hình từ dưới lên, TUYỆT ĐỐI KHÔNG CÓ VÒNG TRÒN / VÀNH ĐAI NÀO Ở NGOÀI
+    // MODEL 10: VÒM TRÁI ĐẤT SỐ KHỔNG LỒ (Planetary Horizon Voxel Earth)
+    // Tròn và lớn hơn, 2 bên vượt ra ngoài màn hình, cân bằng đối xứng tuyệt đối
     const earthCoords: number[] = [];
-    const earthRadius = 3.90;
-    const earthCenterY = -2.85;
-    const earthCenterZ = -0.30;
+    const earthRadius = 5.60;
+    const earthCenterY = -4.50;
+    const earthCenterZ = -0.40;
 
     for (let i = 0; i < N; i++) {
-      // Phân bố đều toàn bộ 2800 hạt trên mặt vòm Trái Đất tự nhiên (Fibonacci dome)
-      const tPhi = Math.pow(i / N, 0.58);
-      const phi = tPhi * Math.PI * 0.56; // Vòm Trái Đất từ đỉnh xuống
+      // Phân bố đều 2800 hạt trên mặt vòm bán cầu Trái Đất tròn hoàn hảo (Fibonacci dome)
+      const tPhi = Math.pow(i / N, 0.60);
+      const phi = tPhi * Math.PI * 0.53; // Vòm Trái Đất mở rộng tràn qua 2 bên mép màn hình
       const theta = i * 2.39996323; // Golden angle
 
-      // Cấu trúc địa hình lục địa và độ nổi voxel vi tế
+      // Cấu trúc địa hình bề mặt voxel vi tế
       const continentNoise =
-        Math.sin(phi * 5.5 + Math.cos(theta * 3.5) * 1.5) *
-        Math.cos(theta * 4.5 + phi * 3.0);
-      const r = earthRadius * (1.0 + (continentNoise > 0.08 ? 0.026 : -0.012) + ((i % 5) - 2) * 0.003);
+        Math.sin(phi * 6.0 + Math.cos(theta * 4.0) * 1.5) *
+        Math.cos(theta * 5.0 + phi * 3.5);
+      const r = earthRadius * (1.0 + (continentNoise > 0.08 ? 0.024 : -0.012) + ((i % 5) - 2) * 0.003);
 
       const ox = r * Math.sin(phi) * Math.sin(theta);
       const oy = r * Math.cos(phi);
@@ -922,14 +922,15 @@ export default function ThreeJsCosmicWorld({
           }
         }
 
-        // 4. XOAY TRỤC ĐỒNG BỘ 100% KHÔNG BAO GIỜ BỊ GIẬT:
-        // Slide 9 xoay với tốc độ 0.09, chuyển mượt sang 0.12 của Trái Đất ở Slide 10
+        // 4. XOAY HÌNH THÁI ĐỒNG THỜI KHI SCROLL TỪ SLIDE 9 SANG SLIDE 10:
+        // Khi scroll từ Slide 9 sang Slide 10: hình thái của slide 9 vừa xoay mượt mà theo scroll vừa chuyển dần sang Trái Đất
+        // Góc scroll xoay đúng 1 vòng 360 độ (2 * PI) theo tay cuộn của người dùng, triệt tiêu 100% hiện tượng quay dư vòng hay giật
         if (isClimax) {
-          const spinRate = S >= 8.05
-            ? (0.09 * (1.0 - tEarth) + 0.12 * tEarth)
-            : 0.09 * tClimax;
-          const spinAngle = clock * spinRate;
-          const cosS = Math.cos(spinAngle), sinS = Math.sin(spinAngle);
+          const ambientAngle = clock * 0.08 * tClimax;
+          const scrollAngle = tEarth * Math.PI * 2.0; // Xoay đồng thời theo tiến trình scroll
+          const totalAngle = ambientAngle + scrollAngle;
+
+          const cosS = Math.cos(totalAngle), sinS = Math.sin(totalAngle);
           const rx = bx * cosS - bz * sinS;
           const rz = bx * sinS + bz * cosS;
           bx = rx;
@@ -950,37 +951,15 @@ export default function ThreeJsCosmicWorld({
         }
 
         // --------------------------------------------------------------------
-        // SLIDE 10: CHỈ CÁC PIXEL Ở VIỀN TRÊN MỚI CÓ MÀU XANH & ĐẬP THEO NHẠC
-        // CÁC PIXEL CÒN LẠI LÀ MÀU TRẮNG VÀ KHÔNG ĐẬP THEO NHẠC
+        // SLIDE 10: 100% TẤT CẢ CÁC HẠT TRÁI ĐẤT GIỮ MÀU TRẮNG BẠC TINH KHIẾT (BỎ CÁC ĐIỂM XANH)
         // --------------------------------------------------------------------
         if (S >= 8.05) {
           const tEarth = smoothQuintic(8.05, 8.85, S);
-          // Chỉ một vài pixel ở viền phía trên của Trái Đất (khoảng 35 hạt rải rác ở chỏm đỉnh chân trời)
-          const isBlueEdge = i < 140 && (i % 4 === 0);
-
-          if (isBlueEdge) {
-            // Chỉ một vài pixel viền trên: MÀU XANH ELECTRIC (chuẩn ảnh mẫu) & ĐẬP THEO NHẠC
-            const beatPulse = kickPulse * 0.08 + snarePulse * 0.03;
-            by += beatPulse * tEarth; // Nảy nhẹ theo nhịp kick
-
-            const beatBright = kickPulse * 0.85 + snarePulse * 0.35 + hihatShimmer * 0.20;
-            const electricGlow = 0.65 + beatBright * 0.70 + microTwinkle * 0.15;
-
-            // Màu xanh Electric Ocean Blue sâu thẳm theo ảnh mẫu, bừng sáng khi có beat
-            const rElec = 0.05 + beatBright * 0.08;
-            const gElec = Math.min(1.0, (0.42 + beatBright * 0.32) * electricGlow);
-            const bElec = Math.min(1.0, (0.70 + beatBright * 0.28) * electricGlow);
-
-            colArr[i3] = (1.0 - tEarth) * 0.85 + tEarth * rElec;
-            colArr[i3 + 1] = (1.0 - tEarth) * 0.85 + tEarth * gElec;
-            colArr[i3 + 2] = (1.0 - tEarth) * 0.85 + tEarth * bElec;
-          } else {
-            // Toàn bộ thân Trái Đất: MÀU TRẮNG BẠC SANG TRỌNG & HOÀN TOÀN KHÔNG ĐẬP THEO NHẠC
-            const whiteLuma = 0.85 + microTwinkle * 0.06;
-            colArr[i3] = whiteLuma;
-            colArr[i3 + 1] = whiteLuma;
-            colArr[i3 + 2] = whiteLuma;
-          }
+          const whiteLuma = 0.88 + microTwinkle * 0.06;
+          // Chuyển mượt mà từ màu vũ trụ sang màu trắng tinh khôi của Trái Đất số
+          colArr[i3] = (1.0 - tEarth) * Math.min(1.0, voxelLuma * 0.95) + tEarth * whiteLuma;
+          colArr[i3 + 1] = (1.0 - tEarth) * Math.min(1.0, voxelLuma * 0.92) + tEarth * whiteLuma;
+          colArr[i3 + 2] = (1.0 - tEarth) * Math.min(1.0, voxelLuma * 0.98) + tEarth * whiteLuma;
         } else {
           colArr[i3] = Math.min(1.0, voxelLuma * 0.95);
           colArr[i3 + 1] = Math.min(1.0, voxelLuma * 0.92 + (isClimax ? kickPulse * 0.08 : 0));
