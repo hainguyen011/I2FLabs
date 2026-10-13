@@ -1,11 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { soundManager } from '../lib/SoundManager';
 import { hardwareGovernor } from '../engine/omega';
 
-export type OrbTopology = 'matrix' | 'swarm' | 'kernel' | 'quantum';
+export type OrbMood = 'eyes' | 'happy' | 'glyph' | 'analytical' | 'creative' | 'technical' | 'visionary' | 'matrix' | 'swarm' | 'kernel' | 'quantum' | (string & {});
+export type OrbTopology = OrbMood;
 
 interface TechOrbCanvasProps {
   topology?: OrbTopology;
+  mood?: OrbMood;
   isAudioPlaying?: boolean;
   onInteract?: () => void;
 }
@@ -24,6 +26,7 @@ interface Particle3D {
 
 export default function TechOrbCanvas({
   topology: _topology = 'matrix',
+  mood: _mood,
   isAudioPlaying = false,
   onInteract,
 }: TechOrbCanvasProps) {

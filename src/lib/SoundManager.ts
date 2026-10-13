@@ -93,7 +93,7 @@ class SoundManager {
     } catch {}
   }
 
-  public playClick(pitch = 1) {
+  public playClick(_pitch = 1) {
     this.playRazorClick();
   }
 
@@ -151,6 +151,62 @@ class SoundManager {
         osc.start(start);
         osc.stop(start + 0.38);
       });
+    } catch {}
+  }
+  // 4. Singularity Accretion Hum (Resonant pitch rises as compression increases)
+  public playAccretionHum(pitchFactor: number = 0.5) {
+    if (!this.enabled) return;
+    try {
+      this.initCtx();
+      if (!this.ctx) return;
+      const t = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      const baseFreq = 75 + pitchFactor * 340;
+      osc.frequency.setValueAtTime(baseFreq, t);
+      osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.35, t + 0.08);
+      gain.gain.setValueAtTime(0.08, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(t);
+      osc.stop(t + 0.08);
+    } catch {}
+  }
+
+  // 5. Cosmic Big Bang Supernova Blast
+  public playBigBang() {
+    if (!this.enabled) return;
+    try {
+      this.initCtx();
+      if (!this.ctx) return;
+      const t = this.ctx.currentTime;
+      // Low rumble sub-bass shockwave
+      const oscLow = this.ctx.createOscillator();
+      const gainLow = this.ctx.createGain();
+      oscLow.type = 'sawtooth';
+      oscLow.frequency.setValueAtTime(160, t);
+      oscLow.frequency.exponentialRampToValueAtTime(24, t + 0.7);
+      gainLow.gain.setValueAtTime(0.3, t);
+      gainLow.gain.exponentialRampToValueAtTime(0.001, t + 0.7);
+      oscLow.connect(gainLow);
+      gainLow.connect(this.ctx.destination);
+      oscLow.start(t);
+      oscLow.stop(t + 0.7);
+
+      // High quantum shimmer
+      const oscHigh = this.ctx.createOscillator();
+      const gainHigh = this.ctx.createGain();
+      oscHigh.type = 'triangle';
+      oscHigh.frequency.setValueAtTime(1050, t);
+      oscHigh.frequency.exponentialRampToValueAtTime(180, t + 0.45);
+      gainHigh.gain.setValueAtTime(0.18, t);
+      gainHigh.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+      oscHigh.connect(gainHigh);
+      gainHigh.connect(this.ctx.destination);
+      oscHigh.start(t);
+      oscHigh.stop(t + 0.45);
     } catch {}
   }
 }

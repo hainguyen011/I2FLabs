@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Loading from './components/Loading';
 import HorizontalStory from './components/HorizontalStory';
@@ -6,18 +6,10 @@ import HorizontalStory from './components/HorizontalStory';
 function App() {
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1500); // 1.5s sharp cinematic scanline intro
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <>
       <AnimatePresence mode="wait">
-        {loading && <Loading key="loading" />}
+        {loading && <Loading key="loading" onComplete={() => setLoading(false)} />}
       </AnimatePresence>
       
       {!loading && (
